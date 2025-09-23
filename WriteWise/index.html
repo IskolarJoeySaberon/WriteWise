@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WriteWise - Home</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/index.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <script defer src="js/main.js"></script>
+    <script defer src="js/index.js"></script>
+  </head>
+
+  <body>
+    <a href="login.html" class="floating-login">Log In / Sign Up</a>
+
+    <!-- Header -->
+    <header class="responsive-header">
+      <div class="logo-title">
+        <img
+          src="images/logo-index.png"
+          alt="WriteWise Logo"
+          class="logo-img"
+        />
+        <h1>WriteWise</h1>
+        <button id="themeToggle" class="btn">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+        <button id="toggleSidebar" class="btn">☰</button>
+      </div>
+    </header>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <nav class="responsive-nav" id="sidebtn">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="chapter-guide.html">Chapter Guide</a>
+        <a class="nav-link" href="grammar.html">Grammar</a>
+        <a class="nav-link" href="tutorials.html">Tutorials</a>
+        <a class="nav-link" href="lessons.html">Lessons</a>
+        <a class="nav-link" href="keywords.html">Keywords</a>
+        <a class="nav-link" href="citations.html">Citations</a>
+        <a class="nav-link" href="contact.html">Contact</a>
+      </nav>
+    </div>
+
+    <!-- Hero Section -->
+    <section
+      class="hero-section"
+      style="background-image: url('images/index-back.jpg')"
+    >
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1>Empower Your Research Journey</h1>
+        <p>
+          Your trusted companion in crafting quality research and thesis
+          projects.
+        </p>
+        <div class="hero-buttons">
+          <a href="#getting-started" class="btn btn-primary">Start Now</a>
+          <a href="#features" class="btn btn-secondary">Learn More</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dashboard Preview -->
+    <section class="dashboard">
+      <h2>Your Dashboard</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>Progress</h3>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <p id="progressText">0% completed</p>
+        </div>
+        <div class="card">
+          <h3>Recent Activity</h3>
+          <ul>
+            <li>Chapter 1: Introduction</li>
+            <li>Chapter 2: Review of Related Literature</li>
+            <li>Chapter 3: Methodology</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Start Search -->
+    <section class="search">
+      <h2>Quick Start</h2>
+      <input
+        type="text"
+        placeholder="Type a topic to begin..."
+        class="search-input"
+      />
+    </section>
+
+    <!-- Quick Navigation Tiles -->
+    <section class="quick-nav" id="dark-mode">
+      <div class="tile" onclick="location.href='chapter-guide.html'">
+        Chapter Guides
+      </div>
+      <div class="tile" onclick="location.href='grammar.html'">
+        Grammar Support
+      </div>
+      <div class="tile" onclick="location.href='tutorials.html'">Tutorials</div>
+      <div class="tile" onclick="location.href='lessons.html'">Lessons</div>
+      <div class="tile" onclick="location.href='keywords.html'">
+        Keyword Generator
+      </div>
+      <div class="tile" onclick="location.href='citations.html'">
+        Citation Styles
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+      <h2>Why Use WriteWise?</h2>
+      <div class="features">
+        <div class="feature">
+          <img src="images/accessible.png" alt="Accessible" />
+          <h3>Accessible Anytime</h3>
+          <p>Use WriteWise on any device, anywhere.</p>
+        </div>
+        <div class="feature">
+          <img src="images/guided.png" alt="Guided Writing" />
+          <h3>Guided Research Writing</h3>
+          <p>Step-by-step guidance for every chapter.</p>
+        </div>
+        <div class="feature">
+          <img src="images/smart.png" alt="Smart Tools" />
+          <h3>Smart Writing Tools</h3>
+          <p>Grammar checks, citation help, and topic suggestions.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="testimonials-section">
+      <h2>What Students Say</h2>
+      <div class="testimonial-carousel">
+        <div class="testimonial">
+          <p>“WriteWise helped me finish Chapter 1 in just one night!”</p>
+          <span>- Mark, IT Student</span>
+        </div>
+        <div class="testimonial">
+          <p>“Best guide for thesis writing, hands down!”</p>
+          <span>- Clara, Engineering Student</span>
+        </div>
+        <div class="testimonial">
+          <p>“I didn’t know how to cite APA. Now I do.”</p>
+          <span>- Jonas, BSBA Student</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Getting Started Guide -->
+    <section class="getting-started" id="getting-started">
+      <h2>What is Research?</h2>
+      <div class="guide-content">
+        <div class="video-container">
+          <iframe
+            width="100%"
+            height="315"
+            src="https://youtu.be/mV0bUQpz468?si=bJti60sUeq8u1IpX"
+            title="What is Research?"
+            frameborder="0"
+            allowfullscreen
+          ></iframe>
+        </div>
+        <ul class="steps">
+          <li>
+            <strong>Definition:</strong> A systematic process of collecting and
+            analyzing data to increase knowledge.
+          </li>
+          <li>
+            <strong>Purpose:</strong> Solve problems, build theories, or improve
+            understanding of a topic.
+          </li>
+          <li>
+            <strong>Types:</strong> Qualitative, Quantitative, or Mixed Methods
+            research.
+          </li>
+          <li>
+            <strong>Importance:</strong> Drives innovation, policy, education,
+            and informed decision-making.
+          </li>
+          <li>
+            <strong>Basic Flow:</strong> Topic selection → Literature Review →
+            Methodology → Data Collection → Conclusion.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Chat Button -->
+    <button class="chat-button">💬 Help</button>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <p>&copy; 2025 WriteWise. All rights reserved.</p>
+    </footer>
+
+    <!-- GSAP Animations -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script defer src="js/hero.js"></script>
+  </body>
+</html>

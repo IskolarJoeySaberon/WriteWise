@@ -1,0 +1,653 @@
+/* contact.css */
+
+/* --- Base Styles --- */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f4f4f4;
+  transition: background 0.3s ease, color 0.3s ease; /* transition from dark mode */
+}
+
+/* --- Header Styles --- */
+header {
+  background-color: #0056b3;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  position: relative;
+}
+
+header nav {
+  display: flex;
+  flex-wrap: wrap; /* Allow nav items to wrap on smaller screens */
+  justify-content: center;
+  gap: 0.5rem 1rem; /* Row and column gap */
+}
+
+header nav a {
+  padding: 0.5rem 0.75rem;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+header nav a:hover {
+  background-color: #004494; /* Darker blue on hover */
+}
+
+header nav a.active {
+  font-weight: bold;
+  background-color: #003570; /* Even darker for active link */
+}
+
+/* --- Main Content Styles --- */
+main {
+  flex-grow: 1; /* Allow main to grow and push footer down */
+  width: 90%;
+  max-width: 850px; /* Max width for readability */
+  margin: 1.5rem auto; /* Center main content with margin */
+  padding: 2rem 1.5rem;
+  background-color: white; /* White background for main content area */
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+main .page-main-title {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+main .intro-text {
+  margin-bottom: 2.5rem;
+  color: #555;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.content-section {
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.content-section:last-of-type {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.content-section h3 {
+  display: flex;
+  align-items: center;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #004494; /* Darker Primary blue for section titles */
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.content-section h3 .icon {
+  margin-right: 0.75rem;
+  color: #0056b3;
+  font-size: 1.4rem;
+}
+
+.content-section p {
+  margin-bottom: 1rem;
+  color: #444;
+}
+
+.direct-email-link {
+  font-weight: 500;
+  color: #0056b3;
+  text-decoration: none;
+}
+
+.direct-email-link:hover {
+  text-decoration: underline;
+  color: #003570;
+}
+
+/* --- FAQ Accordion Styles --- */
+.accordion {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.accordion-item {
+  border-bottom: 1px solid #ddd;
+}
+
+.accordion-item:last-child {
+  border-bottom: none;
+}
+
+.accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 1rem 1.25rem;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #2c3e50;
+  background-color: #f8f9fa;
+  text-align: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.accordion-header:hover,
+.accordion-header[aria-expanded="true"] {
+  background-color: #e9ecef;
+}
+
+.accordion-icon {
+  color: #0056b3;
+  font-size: 1.2rem;
+  font-weight: bold;
+  transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.accordion-header[aria-expanded="true"] .accordion-icon {
+  transform: rotate(45deg);
+}
+
+.accordion-content {
+  max-height: 0;
+  padding: 0 1.25rem;
+  color: #333;
+  background-color: white;
+  overflow: hidden;
+  transition: max-height 0.35s ease-in-out, padding 0.35s ease-in-out;
+}
+
+.accordion-content p {
+  margin: 1rem 0;
+  line-height: 1.7;
+}
+
+.accordion-content a {
+  color: #0056b3;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.accordion-content a:hover {
+  color: #003570;
+  text-decoration: underline;
+}
+
+/*sidebar starts here*/
+#toggleSidebar {
+  position: absolute; /* Keeps it separate from the nav content */
+  top: 55px; /* Adjust based on design */
+  left: 32px; /* Moves it to the left corner */
+  z-index: 9999; /* Ensures it's above other elements */
+  color: #fff;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+}
+
+.sidebar.show {
+  transform: translateX(0);
+}
+
+a.nav-link {
+  width: 75px;
+  position: relative;
+  width: 75px;
+  height: 30px;
+  padding: 10px; /* Adds 10px of space on all sides */
+  top: 85px;
+}
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+nav {
+  display: block;
+  unicode-bidi: isolate;
+}
+/* Make nav links wrap and center on smaller screens */
+.responsive-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.sidebar {
+  position: fixed;
+  left: -300px; /* Initially hidden */
+  top: 0;
+  width: 85px;
+  height: 100vh;
+  background-color: #011f4b;
+  transition: left 0.3s ease-in-out;
+  z-index: 1000;
+  padding: 30px;
+}
+nav a {
+  color: white;
+  text-decoration: none;
+  background-color: #004494;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+}
+.sidebar nav a {
+  display: block;
+  color: white;
+  padding: 10px;
+  text-decoration: none;
+}
+
+.sidebar nav a:hover {
+  background: #555;
+}
+
+.sidebar.show {
+  left: 0; /* Shows sidebar when toggled */
+}
+/* ends here */
+
+/* Unified Button Styling */
+.btn {
+  background: #004494;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  background: #003570;
+  transform: scale(1.05);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* #theme - Apply to Entire Body */
+body.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+body.dark-mode header {
+  background-color: #003570;
+}
+
+body.dark-mode nav a {
+  background-color: #002855;
+  color: #ffffff;
+}
+
+body.dark-mode nav a.active,
+body.dark-mode nav a:hover {
+  background-color: #001f40;
+}
+
+body.dark-mode main {
+  background: #222;
+  color: #e0e0e0;
+}
+
+body.dark-mode footer {
+  background: #333;
+  color: #e0e0e0;
+}
+
+/* Dark mode for accordion headers */
+.dark-mode .accordion-header {
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #555;
+}
+
+/* Dark mode for input fields */
+.dark-mode input {
+  background-color: #222;
+  color: white;
+  border: 1px solid #555;
+  padding: 8px;
+}
+
+/* Dark mode for textarea */
+.dark-mode textarea {
+  background-color: #222;
+  color: white;
+  border: 1px solid #555;
+  padding: 10px;
+}
+
+/* Dark mode for concern-category dropdown */
+.dark-mode select#concernCategory {
+  background-color: #222;
+  color: white;
+  border: 1px solid #555;
+  padding: 8px;
+}
+
+/* Dark mode for live chat widget container */
+.dark-mode #live-chat-widget-container {
+  background-color: #2a2a2a;
+  color: white;
+  padding: 12px;
+  border-radius: 6px;
+  border-left: 4px solid #0056b3;
+}
+/* Dark Mode Toggle Styling */
+#themeToggle {
+  position: absolute;
+  background: #004494;
+  color: white;
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  top: 57px;
+  left: 82px;
+  width: 52px;
+  z-index: 9999;
+}
+/* --- Contact Form Styles --- */
+.styled-form .form-group {
+  margin-bottom: 1.25rem;
+}
+
+.styled-form .form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.styled-form .form-group input[type="text"],
+.styled-form .form-group input[type="email"],
+.styled-form .form-group select,
+.styled-form .form-group textarea {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1rem;
+  font-family: Arial, sans-serif;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.styled-form .form-group select {
+  appearance: none;
+  background-color: white;
+}
+
+.styled-form .form-group input:focus,
+.styled-form .form-group select:focus,
+.styled-form .form-group textarea:focus {
+  border-color: #0056b3;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.2);
+}
+
+.submit-btn,
+.submit-btn-alt {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.75rem;
+  color: white;
+  background-color: #0056b3;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, transform 0.1s ease;
+}
+
+.submit-btn:hover,
+.submit-btn-alt:hover {
+  background-color: #004494;
+  transform: translateY(-1px);
+}
+
+.submit-btn:active,
+.submit-btn-alt:active {
+  transform: translateY(0px);
+}
+
+.submit-btn-alt {
+  background-color: #6c757d;
+}
+
+.submit-btn-alt:hover {
+  background-color: #5a6268;
+}
+
+.styled-form .form-message {
+  display: none;
+  min-height: 1.4em;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  font-size: 0.95rem;
+  text-align: left;
+  border-radius: 5px;
+}
+
+.styled-form .form-message.success {
+  display: block;
+  color: #155724;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+}
+
+.styled-form .form-message.error {
+  display: block;
+  color: #721c24;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+}
+
+/* --- Help Articles/Guides Styles --- */
+.link-list {
+  padding-left: 0;
+  list-style: none;
+}
+
+.link-list li {
+  position: relative;
+  margin-bottom: 0.75rem;
+  padding-left: 1.5rem;
+}
+
+.link-list li::before {
+  content: "›";
+  position: absolute;
+  left: 0;
+  top: 0px;
+  color: #0056b3;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.link-list li a {
+  color: #0056b3;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.link-list li a:hover {
+  color: #003570;
+  text-decoration: underline;
+}
+
+/* --- Social Media Links Styles - UPDATED FOR ICONS --- */
+.social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem; /* Adjusted gap for potentially wider buttons with text */
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.9rem; /* Slightly adjusted padding */
+  color: #0056b3;
+  text-decoration: none;
+  border: 1px solid #0056b3;
+  border-radius: 20px; /* Pill shape */
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease,
+    box-shadow 0.1s ease;
+  min-height: 38px; /* Ensure consistent height */
+  box-sizing: border-box;
+}
+
+.social-link i {
+  /* Style Font Awesome icons */
+  font-size: 1.1rem; /* Adjust icon size as preferred */
+  line-height: 1; /* Helps with vertical alignment consistency */
+}
+
+.social-link span {
+  /* Style the text next to the icon */
+  margin-left: 0.4em; /* Space between icon and text */
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+/* If you want ICON-ONLY buttons, comment out/remove .social-link span styles */
+/* and adjust .social-link padding, e.g., padding: 0.6rem; and add min-width: 38px; */
+
+.social-link:hover {
+  background-color: #0056b3;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Live Chat Placeholder Style --- */
+#live-chat-widget-container {
+  margin-top: 1rem;
+  padding: 1.5rem;
+  background-color: #f0f6ff;
+  border: 1px solid #cce0ff;
+  border-radius: 8px;
+  text-align: center;
+}
+
+#live-chat-widget-container p {
+  margin: 0 0 1rem 0;
+  color: #495057;
+}
+
+/* --- Footer Styles --- */
+footer {
+  flex-shrink: 0;
+  margin-top: auto;
+  padding: 1.5rem 1rem;
+  color: #495057;
+  background-color: #e9ecef;
+  font-size: 0.9rem;
+  text-align: center;
+  border-top: 1px solid #ddd;
+}
+
+footer p {
+  margin: 0;
+}
+
+/* --- Responsive Adaptations --- */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 1.8rem;
+  }
+  header nav {
+    gap: 0.3rem 0.75rem;
+  }
+  header nav a {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.9rem;
+  }
+  main .page-main-title {
+    font-size: 1.8rem;
+  }
+  main .intro-text {
+    font-size: 1rem;
+  }
+  .content-section h3 {
+    font-size: 1.4rem;
+  }
+  .accordion-header {
+    padding: 0.9rem 1rem;
+    font-size: 1rem;
+  }
+  .social-links {
+    justify-content: center;
+  } /* Center links if they wrap */
+}
+
+@media (max-width: 600px) {
+  header {
+    padding: 1rem;
+  }
+  header h1 {
+    margin-bottom: 0.5rem;
+    font-size: 1.6rem;
+  }
+  header nav a {
+    width: calc(50% - 1rem);
+    box-sizing: border-box;
+    text-align: center;
+  }
+  main {
+    width: auto;
+    margin: 1rem 0.5rem;
+    padding: 1.5rem 1rem;
+  }
+  .styled-form .submit-btn {
+    width: 100%;
+  }
+
+  .social-links {
+    flex-direction: column; /* Stack social links */
+    align-items: center; /* Center them when stacked */
+  }
+  .social-link {
+    width: 60%; /* Make them a reasonable width when stacked with text */
+    /* If icon-only, you might set a fixed width e.g. width: 150px; or width: auto; with more padding */
+    justify-content: flex-start; /* Align icon and text to the start */
+    padding-left: 1rem; /* Add more padding on the left when stacked */
+  }
+  .social-link i {
+    font-size: 1.2rem; /* Slightly larger icons on mobile if desired */
+  }
+  .social-link span {
+    font-size: 0.9rem; /* Slightly larger text on mobile if desired */
+  }
+}

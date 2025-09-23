@@ -1,0 +1,265 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f4f4f4;
+  transition: background 0.3s ease, color 0.3s ease; /* transition from dark mode */
+}
+
+header {
+  background-color: #0056b3;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  background-color: #004494;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+}
+
+nav a.active,
+nav a:hover {
+  background-color: #003570;
+}
+
+main {
+  padding: 1.5rem;
+  background: white;
+  margin: 1rem auto;
+  max-width: 700px;
+  border-radius: 10px;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: #ddd;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  nav {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/*sidebar starts here*/
+#toggleSidebar {
+  position: absolute; /* Keeps it separate from the nav content */
+  top: 65px; /* Adjust based on design */
+  left: 32px; /* Moves it to the left corner */
+  z-index: 9999; /* Ensures it's above other elements */
+  color: #fff;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+}
+
+.sidebar.show {
+  transform: translateX(0);
+}
+a.nav-link {
+  position: relative;
+  width: 75px;
+  height: 30px;
+  padding: 10px; /* Adds 10px of space on all sides */
+  top: 70px;
+}
+
+.sidebar {
+  position: fixed;
+  left: -300px; /* Initially hidden */
+  top: 0;
+  width: 85px;
+  height: 100vh;
+  background-color: #011f4b;
+  transition: left 0.3s ease-in-out;
+  z-index: 1000;
+  padding: 30px;
+}
+
+.sidebar nav a {
+  display: block;
+  color: white;
+  padding: 10px;
+  text-decoration: none;
+}
+
+.sidebar nav a:hover {
+  background: #555;
+}
+
+.sidebar.show {
+  left: 0; /* Shows sidebar when toggled */
+}
+/* ends here */
+/* Dark Mode Toggle Styling */
+#themeToggle {
+  position: absolute;
+  background: #004494;
+  color: white;
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  top: 66px;
+  left: 82px;
+  width: 52px;
+  z-index: 9999;
+}
+
+#themeToggle:hover {
+  background: #003570;
+  transform: scale(1.05);
+}
+
+#themeToggle:active {
+  transform: scale(0.98);
+}
+
+/* #theme - Apply to Entire Body */
+body.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+body.dark-mode header {
+  background-color: #003570;
+}
+
+body.dark-mode nav a.active,
+body.dark-mode nav a:hover {
+  background-color: #001f40;
+}
+
+body.dark-mode main {
+  background: #222;
+  color: #e0e0e0;
+}
+
+body.dark-mode footer {
+  background: #333;
+  color: #e0e0e0;
+}
+
+body.dark-mode .thesis-card {
+  background: #2a2a2a;
+  border-left: 4px solid #0056b3;
+  color: #ffffff;
+}
+
+/* Styled Input Field */
+input#topicInput {
+  width: 100%;
+  padding: 12px 2px;
+  font-size: 16px;
+  border: 2px solid #004494;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Focus Effect */
+input#topicInput:focus {
+  border-color: #007bff;
+  box-shadow: 3px 6px 12px rgba(0, 123, 255, 0.3);
+}
+
+/* Dark Mode Styling */
+body.dark-mode input#topicInput {
+  background: #222;
+  color: #e0e0e0;
+  border-color: #0056b3;
+}
+
+body.dark-mode input#topicInput:focus {
+  border-color: #007bff;
+  box-shadow: 3px 6px 12px rgba(0, 123, 255, 0.5);
+}
+
+/* Unified Button Styling */
+.btn {
+  background: #004494;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  background: #003570;
+  transform: scale(1.05);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* Unique Styling for Generate Button */
+#generateButton {
+  background: linear-gradient(135deg, #0056b3, #004494);
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 8px;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#generateButton:hover {
+  background: linear-gradient(135deg, #004494, #003570);
+  box-shadow: 3px 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Keyword Cloud */
+.keyword-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.keyword-cloud span {
+  background-color: #007bff;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  animation: float 1s ease-in-out forwards;
+}
+
+@keyframes float {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Thesis Card Design */
+.thesis-card {
+  background: #f4f4f4;
+  padding: 10px;
+  margin: 5px 0;
+  border-left: 4px solid #007bff;
+}

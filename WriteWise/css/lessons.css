@@ -1,0 +1,349 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f4f4f4;
+  transition: background 0.3s ease, color 0.3s ease; /* transition from dark mode */
+}
+header {
+  background-color: #0056b3;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+nav a {
+  color: white;
+  text-decoration: none;
+  background-color: #004494;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+}
+nav a.active,
+nav a:hover {
+  background-color: #003570;
+}
+main {
+  padding: 1.5rem;
+  background: white;
+  margin: 1rem auto;
+  max-width: 700px;
+  border-radius: 10px;
+}
+footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: #ddd;
+}
+
+/* Lessons Section Styles */
+.lessons-container {
+  display: grid;
+  grid-template-columns: 1fr; /* Single column layout for smaller screens, adjust for more columns */
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.lesson-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  background-color: #f9f9f9;
+}
+
+.lesson-title {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.lesson-description {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.lesson-status {
+  font-size: 0.8rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 5px;
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+.completed {
+  background-color: #f0f4c3; /* Light yellow */
+  color: #827717;
+}
+
+.available {
+  background-color: #c8e6c9; /* Light green */
+  color: #1b5e20; /* Darker green */
+}
+
+.in-progress {
+  background-color: #bbdefb; /* Light blue */
+  color: #0d47a1;
+}
+
+.not-started {
+  background-color: #eeeeee; /* Light gray */
+  color: #424242;
+}
+
+.lesson-actions {
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+
+.lesson-button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  border-radius: 5px;
+  color: white;
+}
+
+.view-button {
+  background-color: #007bff; /* Blue */
+}
+
+/*sidebar starts here*/
+#toggleSidebar {
+  position: absolute; /* Keeps it separate from the nav content */
+  top: 65px; /* Adjust based on design */
+  left: 32px; /* Moves it to the left corner */
+  z-index: 9999; /* Ensures it's above other elements */
+  color: #fff;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+}
+.sidebar.show {
+  transform: translateX(0);
+}
+a.nav-link {
+  position: relative;
+  width: 75px;
+  height: 30px;
+  padding: 10px; /* Adds 10px of space on all sides */
+  top: 70px;
+}
+
+.sidebar {
+  position: fixed;
+  left: -300px; /* Initially hidden */
+  top: 0;
+  width: 85px;
+  height: 100vh;
+  background-color: #011f4b;
+  transition: left 0.3s ease-in-out;
+  z-index: 1000;
+  padding: 30px;
+}
+
+.sidebar nav a {
+  display: block;
+  color: white;
+  padding: 10px;
+  text-decoration: none;
+}
+
+.sidebar nav a:hover {
+  background: #555;
+}
+
+.sidebar.show {
+  left: 0; /* Shows sidebar when toggled */
+}
+/* ends here */
+
+/* Unified Button Styling */
+.btn {
+  background: #004494;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  background: #003570;
+  transform: scale(1.05);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* #theme - Apply to Entire Body */
+body.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+body.dark-mode header {
+  background-color: #003570;
+}
+
+body.dark-mode nav a.active,
+body.dark-mode nav a:hover {
+  background-color: #001f40;
+}
+
+body.dark-mode main {
+  background: #222;
+  color: #e0e0e0;
+}
+
+body.dark-mode footer {
+  background: #333;
+  color: #e0e0e0;
+}
+
+body.dark-mode .thesis-card {
+  background: #2a2a2a;
+  border-left: 4px solid #0056b3;
+  color: #ffffff;
+}
+/* Dark Mode Toggle Styling */
+#themeToggle {
+  position: absolute;
+  background: #004494;
+  color: white;
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  top: 66px;
+  left: 82px;
+  width: 52px;
+  z-index: 9999;
+}
+
+/* Apply dark mode only to div elements inside chapters */
+.dark-mode .chapter {
+  background-color: #222;
+  color: white;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+/* Ensure all text inside chapter divs turns white */
+.dark-mode .chapter h1,
+.dark-mode .chapter h2,
+.dark-mode .chapter h3,
+.dark-mode .chapter h4,
+.dark-mode .chapter h5,
+.dark-mode .chapter h6,
+.dark-mode .chapter p,
+.dark-mode .chapter strong,
+.dark-mode .chapter a {
+  color: white !important;
+}
+
+/* Lesson Cards */
+.dark-mode .chapter .lesson-card {
+  background-color: #333;
+  border: 2px solid #555;
+  box-shadow: 0px 2px 6px rgba(255, 255, 255, 0.1);
+}
+
+/* Lesson Actions */
+.dark-mode .chapter .lesson-actions {
+  background: #1a1a1a;
+  padding: 10px;
+}
+
+/* Chapter Navigation */
+.dark-mode .chapter .chapter1 .chapter-navigation {
+  background: #333;
+  padding: 8px;
+  border-radius: 5px;
+}
+
+/* Chapter Styles */
+.chapter {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.chapter-title {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+.chapter-navigation {
+  display: flex;
+  justify-content: space-between; /* Default for double buttons */
+  margin-top: 1rem;
+}
+
+.chapter-navigation a {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  border-radius: 5px;
+  color: white;
+  background-color: #007bff; /* Blue */
+  cursor: pointer; /* Add cursor for better interaction */
+}
+
+.chapter-navigation a:hover {
+  background-color: #0056b3;
+}
+
+.chapter-navigation.single-button-right {
+  justify-content: flex-end; /* Align single button to the right */
+}
+
+.chapter-navigation.single-button-left {
+  justify-content: flex-start; /* Align single button to the left */
+}
+
+.chapter-navigation.double-button {
+  justify-content: space-between; /* Keep space between two buttons */
+}
+
+/* Initially hide all chapters except the first one */
+.chapter:not(:first-child) {
+  display: none;
+}
+
+/* Initially hide the main navigation */
+.chapter-navigation.main-navigation {
+  display: none;
+}
+
+/* Responsive Grid */
+@media (min-width: 600px) {
+  .lessons-container {
+    grid-template-columns: 1fr 1fr; /* Two columns on larger screens */
+  }
+}
+
+@media (max-width: 600px) {
+  nav {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

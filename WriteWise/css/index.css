@@ -1,0 +1,809 @@
+/* index.css - Page-specific styling for index.html */
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f4f4f4;
+  transition: background 0.3s ease, color 0.3s ease; /* transition from dark mode */
+}
+
+.hero-section {
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  color: white;
+  text-align: center;
+  padding: 6rem 2rem 4rem;
+}
+
+.hero-content h1 {
+  font-size: 2.8rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.hero-section {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.responsive-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+}
+
+.logo-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.logo-img {
+  height: 40px;
+  width: auto;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); /* Adjust 0.4 to darken more */
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2; /* Ensure content stays above the overlay */
+}
+
+/*sidebar starts here*/
+#toggleSidebar {
+  position: absolute; /* Keeps it separate from the nav content */
+  top: 65px; /* Adjust based on design */
+  left: 32px; /* Moves it to the left corner */
+  z-index: 9999; /* Ensures it's above other elements */
+  color: #fff;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+}
+
+.sidebar.show {
+  transform: translateX(0);
+}
+a.nav-link {
+  position: relative;
+  width: 75px;
+  height: 30px;
+  padding: 10px; /* Adds 10px of space on all sides */
+  top: 70px;
+}
+
+.sidebar {
+  position: fixed;
+  left: -300px; /* Initially hidden */
+  top: 0;
+  width: 85px;
+  height: 100vh;
+  background-color: #011f4b;
+  transition: left 0.3s ease-in-out;
+  z-index: 1000;
+  padding: 30px;
+}
+
+.sidebar nav a {
+  display: block;
+  color: white;
+  padding: 10px;
+  text-decoration: none;
+}
+
+.sidebar nav a:hover {
+  background: #555;
+}
+
+.sidebar.show {
+  left: 0; /* Shows sidebar when toggled */
+}
+/* ends here */
+/* === Global Dark Mode === */
+.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+/* Header */
+.dark-mode header {
+  background-color: #003570;
+}
+.dark-mode nav a {
+  color: #ffffff;
+}
+.dark-mode nav a.active,
+.dark-mode nav a:hover {
+  background-color: #001f40;
+}
+
+/* Sections & Main Content */
+.dark-mode section,
+.dark-mode .hero-section,
+.dark-mode .quick-nav,
+.dark-mode .features-section,
+.dark-mode .testimonials-section,
+.dark-mode .getting-started {
+  background: #222;
+  color: #e0e0e0;
+}
+
+/* Footer */
+.dark-mode footer {
+  background: #333;
+  color: #e0e0e0;
+}
+
+/* Tiles, Features, Testimonials */
+.dark-mode .tile {
+  background: #2a2a2a;
+  color: #ffffff;
+}
+.dark-mode .feature {
+  background: #2a2a2a;
+}
+.dark-mode .testimonial {
+  background: #1a1a1a;
+  color: #ffffff;
+}
+
+/* === Buttons in Dark Mode === */
+.dark-mode .btn-primary {
+  background-color: #1e40af; /* deep indigo */
+  color: #ffffff;
+}
+.dark-mode .btn-primary:hover {
+  background-color: #3b82f6;
+  color: #ffffff;
+}
+
+.dark-mode .btn-secondary {
+  background-color: transparent;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+}
+.dark-mode .btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: #bbb;
+}
+
+/* === Dashboard in Dark Mode === */
+.dark-mode .card {
+  background: #1e1e1e;
+  color: #e0e0e0;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+}
+.dark-mode .progress-bar {
+  background: #333;
+}
+.dark-mode .progress-fill {
+  background: #3b82f6; /* vivid blue */
+}
+.dark-mode #progressText {
+  color: #aaa;
+}
+
+/* === Quick Start Search in Dark Mode === */
+.dark-mode .search-input {
+  background: #1e1e1e;
+  border: 1px solid #444;
+  color: #e0e0e0;
+}
+.dark-mode .search-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+  outline: none;
+}
+
+/* === Dark Mode Toggle Button === */
+.dark-mode #themeToggle {
+  background: #004494;
+  color: white;
+}
+/* Dark Mode Toggle Styling */
+#themeToggle {
+  position: absolute;
+  background: #004494;
+  color: white;
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  top: 66px;
+  left: 82px;
+  width: 52px;
+  z-index: 9999;
+}
+#themeToggle:hover {
+  background: #003570;
+  transform: scale(1.05);
+}
+#themeToggle:active {
+  transform: scale(0.98);
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.btn,
+.btn-secondary {
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+.btn-secondary {
+  background-color: #fff;
+  color: #007bff;
+  border: 2px solid #007bff;
+}
+
+.btn-secondary:hover {
+  background-color: #e6f0ff;
+}
+
+.quick-nav {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 15px;
+  padding: 40px 20px;
+  background-color: #ffffff;
+  text-align: center;
+}
+
+.tile {
+  background-color: #e6f0ff;
+  padding: 30px 15px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s, background-color 0.3s;
+}
+
+.tile:hover {
+  transform: scale(1.05);
+  background-color: #d0e2ff;
+}
+
+.features-section {
+  padding: 60px 20px;
+  background-color: #f0f4ff;
+  text-align: center;
+}
+
+.features-section h2 {
+  font-size: 2rem;
+  margin-bottom: 40px;
+}
+
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+
+.feature {
+  max-width: 280px;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.features .feature img {
+  width: 120px; /* Adjust size here */
+  height: 120px;
+  object-fit: contain; /* Ensures SVGs and images scale nicely */
+  margin-bottom: 1rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.feature img {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 15px;
+}
+
+.testimonials-section {
+  padding: 60px 20px;
+  background-color: #fff;
+  text-align: center;
+}
+
+.testimonials-section h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+
+.testimonial-carousel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.testimonial {
+  max-width: 300px;
+  padding: 20px;
+  background-color: #f0f4ff;
+  border-radius: 12px;
+  font-style: italic;
+}
+
+.getting-started {
+  padding: 3rem 2rem;
+  background-color: white;
+  text-align: center;
+}
+
+.getting-started h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.guide-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.video-container {
+  width: 100%;
+  max-width: 640px;
+  margin-bottom: 2rem;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  width: 100%;
+  max-width: 700px;
+}
+
+.steps li {
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+  position: relative;
+  line-height: 1.7;
+}
+
+.steps li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #007bff;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.chat-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 12px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.chat-button:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+  }
+
+  .features {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .testimonial-carousel {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .guide-content {
+    flex-direction: column;
+  }
+}
+
+/* Floating Login Button */
+.floating-login {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  background-color: #004494;
+  color: white;
+  padding: 0.7rem 1rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: bold;
+  z-index: 999;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Make nav links wrap and center on smaller screens */
+.responsive-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+/* Optional: Improve spacing on smaller screens */
+@media (max-width: 768px) {
+  .responsive-header {
+    padding: 1rem 0.5rem;
+  }
+
+  .logo-title {
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .responsive-nav {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .responsive-nav a {
+    padding: 0.5rem;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.floating-login:hover {
+  background-color: #003570;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Styled Input Field */
+input#topicInput {
+  width: 100%;
+  padding: 12px 2px;
+  font-size: 16px;
+  border: 2px solid #004494;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Focus Effect */
+input#topicInput:focus {
+  border-color: #007bff;
+  box-shadow: 3px 6px 12px rgba(0, 123, 255, 0.3);
+}
+
+/* Unified Button Styling */
+.btn {
+  background: #004494;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  background: #003570;
+  transform: scale(1.05);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* Unique Styling for Generate Button */
+#generateButton {
+  background: linear-gradient(135deg, #0056b3, #004494);
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 8px;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#generateButton:hover {
+  background: linear-gradient(135deg, #004494, #003570);
+  box-shadow: 3px 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* === Hero Section === */
+.hero-section {
+  position: relative;
+  min-height: 60vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1rem;
+  color: #fff;
+  text-align: center;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+}
+
+.hero-content h1 {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.hero-content p {
+  font-size: 1.25rem;
+  color: #ffffffcc;
+  margin-bottom: 2rem;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* === Button Styles (stable version) === */
+.btn {
+  display: inline-block;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 0.9rem 1.75rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Primary Button (outlined white) */
+.btn-primary {
+  background: transparent;
+  color: #fff;
+  border: 2px solid #fff;
+}
+.btn-primary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #ddd;
+}
+
+/* Secondary Button (outlined white) */
+.btn-secondary {
+  background: transparent;
+  color: #fff;
+  border: 2px solid #fff;
+}
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #ddd;
+}
+
+/* Dark Mode Overrides for Buttons */
+.dark-mode .btn-primary,
+.dark-mode .btn-secondary {
+  background: transparent;
+  color: #fff;
+  border: 2px solid #fff;
+}
+.dark-mode .btn-primary:hover,
+.dark-mode .btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #bbb;
+}
+
+/* === Dashboard Preview === */
+.dashboard {
+  max-width: 900px;
+  margin: 3rem auto;
+  padding: 2rem 1rem;
+  background: #fff; /* light mode */
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+.dark-mode .dashboard {
+  background: #1e1e1e; /* dark mode */
+}
+
+.dashboard h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.cards {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .cards {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.card {
+  background: #fff;
+  color: #111;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+.dark-mode .card {
+  background: #2a2a2a;
+  color: #e0e0e0;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+}
+
+.card h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.progress-bar {
+  background: #e5e7eb;
+  border-radius: 999px;
+  height: 10px;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+.dark-mode .progress-bar {
+  background: #333;
+}
+
+.progress-fill {
+  background: #6366f1;
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+}
+.dark-mode .progress-fill {
+  background: #3b82f6;
+}
+
+#progressText {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+.dark-mode #progressText {
+  color: #aaa;
+}
+
+/* === Quick Start Search (compact version) === */
+.search {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.dark-mode .search {
+  background: #1e1e1e;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.search h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: -0.5rem; /* moves it slightly up */
+  margin-bottom: 1rem; /* keeps spacing below */
+}
+
+.search-input {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 0.9rem 1.25rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1.1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+  display: block;
+}
+
+.search-input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+  outline: none;
+}
+
+.dark-mode .search-input {
+  background: #1e1e1e;
+  border: 1px solid #444;
+  color: #e0e0e0;
+}
+
+.dark-mode .search-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <title>Citation Generator</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/citation.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Citation Styles</h1>
+      <button id="toggleSidebar" class="btn">☰</button>
+      <button id="themeToggle" class="btn">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+    </header>
+
+    <div class="sidebar">
+      <nav class="responsive-nav" id="sidebtn">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="chapter-guide.html">Chapter Guide</a>
+        <a class="nav-link" href="grammar.html">Grammar</a>
+        <a class="nav-link" href="tutorials.html">Tutorials</a>
+        <a class="nav-link" href="lessons.html">Lessons</a>
+        <a class="nav-link" href="keywords.html">Keywords</a>
+        <a class="nav-link" href="citations.html" class="active">Citations</a>
+        <a class="nav-link" href="contact.html">Contact</a>
+      </nav>
+    </div>
+
+    <main>
+      <h2>Citation Generator</h2>
+      <p>Enter the details of your source below to generate citations.</p>
+
+      <form id="citation-form">
+        <div class="form-group">
+          <label for="author">Author(s):</label>
+          <input
+            type="text"
+            id="author"
+            name="author"
+            placeholder="e.g., Smith, John A. or Smith, J. A."
+          />
+          <small
+            >Use format: Last Name, First Initial(s). Separate multiple authors
+            with semicolons (;).</small
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="year">Publication Year:</label>
+          <input type="number" id="year" name="year" placeholder="e.g., 2023" />
+        </div>
+
+        <div class="form-group">
+          <label for="title">Title:</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            placeholder="e.g., The Principles of Citation"
+          />
+          <small>Title of the book, article, or specific web page.</small>
+        </div>
+
+        <div class="form-group">
+          <label for="publisher-source"
+            >Publisher / Journal / Website Name:</label
+          >
+          <input
+            type="text"
+            id="publisher-source"
+            name="publisher-source"
+            placeholder="e.g., Academic Press or The Example Times"
+          />
+          <small
+            >Publisher for books, Journal Name for articles, Main Website Name
+            for web pages.</small
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="url">URL (if applicable):</label>
+          <input
+            type="url"
+            id="url"
+            name="url"
+            placeholder="e.g., https://www.example.com/page"
+          />
+        </div>
+
+        <button type="submit">Generate Citations</button>
+      </form>
+
+      <div id="citation-results">
+        <h3>Generated Citations:</h3>
+        <div id="apa-output">
+          <strong>APA:</strong> <span>Waiting for input...</span>
+        </div>
+        <div id="mla-output">
+          <strong>MLA:</strong> <span>Waiting for input...</span>
+        </div>
+        <div id="chicago-output">
+          <strong>Chicago (Bibliography):</strong>
+          <span>Waiting for input...</span>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>© 2025 WriteWise</p>
+    </footer>
+
+    <script src="js/citation.js"></script>
+  </body>
+</html>
