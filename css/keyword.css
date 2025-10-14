@@ -1,0 +1,135 @@
+body.dark-mode .thesis-card {
+  background: #2a2a2a;
+  border-left: 4px solid #0056b3;
+  color: #ffffff;
+}
+
+/* Add spacing below top controls before the nav links */
+.sidebar .sidebar-nav {
+  margin-top: 30px; /* pushes link group away from header region */
+}
+
+/* Match Chapter Guide header font size */
+.responsive-header {
+  font-size: 10px;
+}
+
+/* Header logo/title layout (fallback if page loads without lessons.css) */
+.logo-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+.logo-img {
+  height: 32px; /* smaller logo for Keywords header */
+  width: auto;
+}
+
+/* Smaller title for Keywords header only */
+.logo-title h1 {
+  font-size: 18px;
+  line-height: 1.1;
+  margin: 0;
+}
+
+/* Styled Input Field */
+input#topicInput {
+  width: 100%;
+  padding: 12px 2px;
+  font-size: 16px;
+  border: 2px solid #004494;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Focus Effect */
+input#topicInput:focus {
+  border-color: #007bff;
+  box-shadow: 3px 6px 12px rgba(0, 123, 255, 0.3);
+}
+
+/* Dark Mode Styling */
+body.dark-mode input#topicInput {
+  background: #222;
+  color: #e0e0e0;
+  border-color: #0056b3;
+}
+
+body.dark-mode input#topicInput:focus {
+  border-color: #007bff;
+  box-shadow: 3px 6px 12px rgba(0, 123, 255, 0.5);
+}
+
+/* Unified Button Styling (scoped) */
+.page-main .btn {
+  background: #004494;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.page-main .btn:hover {
+  background: #003570;
+  transform: scale(1.05);
+}
+
+.page-main .btn:active {
+  transform: scale(0.98);
+}
+
+/* Unique Styling for Generate Button */
+#generateButton {
+  background: linear-gradient(135deg, #0056b3, #004494);
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 8px;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#generateButton:hover {
+  background: linear-gradient(135deg, #004494, #003570);
+  box-shadow: 3px 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Keyword Cloud */
+.keyword-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.keyword-cloud span {
+  background-color: #007bff;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  animation: float 1s ease-in-out forwards;
+}
+
+@keyframes float {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Thesis Card Design */
+.page-main .thesis-card {
+  background: #f4f4f4;
+  padding: 10px;
+  margin: 5px 0;
+  border-left: 4px solid #007bff;
+}

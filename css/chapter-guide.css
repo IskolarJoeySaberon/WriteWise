@@ -1,0 +1,1941 @@
+.progress-bar.overall {
+  position: relative;
+  height: 28px;
+  background: #eaf4ff;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+/* Overall progress bar uses a separate fill and text overlay */
+.progress-bar.overall .fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0%;
+  background: linear-gradient(90deg, #7ec2ff, #4ea1ff);
+  transition: width 0.35s ease;
+  z-index: 1;
+}
+.progress-bar.overall .progress-text {
+  position: absolute;
+  inset: 0;
+  width: 100% !important; /* override base .progress-bar span width */
+  height: 100% !important; /* override base .progress-bar span height */
+  display: flex !important;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: var(--progress-text-offset, 16px);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #004494;
+  z-index: 2;
+  pointer-events: none;
+  background: transparent !important; /* prevent appearing filled at 0% */
+}
+/* Checklist label clickable for guide */
+.checklist-label {
+  cursor: pointer;
+  color: #222;
+  font-weight: 500;
+  margin-right: 10px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.18s, color 0.18s;
+  background: transparent;
+}
+.checklist-label:hover {
+  background: #eaf4ff;
+  color: #004494;
+  text-decoration: none;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.04);
+}
+.tasks-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+.tasks-list input[type="checkbox"] {
+  margin-left: 0;
+  margin-right: 0.5em;
+  accent-color: #007bff;
+  cursor: pointer;
+}
+/* Chapter Guide Modal Popup */
+.chapter-guide-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.32);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+.chapter-guide-modal .modal-content {
+  background: #fff;
+  border-radius: 14px;
+  max-width: 420px;
+  width: 95vw;
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  box-shadow: 0 8px 32px rgba(20, 30, 60, 0.18);
+  position: relative;
+  animation: popIn 0.25s cubic-bezier(0.4, 1.6, 0.6, 1) both;
+}
+.chapter-guide-modal .close-modal {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.chapter-guide-modal .close-modal:hover {
+  color: #e04b4b;
+}
+.chapter-guide-modal h2 {
+  margin-top: 0;
+  font-size: 1.4rem;
+  color: #004494;
+  margin-bottom: 1rem;
+}
+.chapter-guide-modal ul {
+  padding-left: 1.2em;
+  margin-bottom: 0.5em;
+}
+.chapter-guide-modal li {
+  margin-bottom: 0.6em;
+  font-size: 1.05rem;
+}
+.chapter-guide-modal strong {
+  color: #007bff;
+}
+@keyframes popIn {
+  0% {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+:root {
+  --bg: #f9fbfd;
+  --card: #ffffff;
+  --text: #222222;
+  --muted: #666666;
+  --primary: #007bff; /* main blue */
+  --primary-600: #0056b3;
+  --accent: #00aaff;
+  --success: #28a745;
+  --warn: #ffc107;
+  --danger: #dc3545;
+  --input-border: #d0d7e6;
+  --shadow: rgba(0, 0, 0, 0.06);
+  /* Header-aware offsets for floating timer so it never covers the title */
+  --timer-top-offset: 64px; /* expanded timer */
+  --timer-top-offset-min: 64px; /* minimized timer */
+  --progress-text-offset: 16px; /* nudge percent text slightly right for overall bar text */
+  /* End floating-timer styles */
+}
+
+/* ---------------------------
+   Base layout (inherits from global style)
+   --------------------------- */
+.responsive-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+}
+
+.logo-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.logo-img {
+  height: 40px;
+  width: auto;
+}
+
+/* Main container */
+.plagiarism-page {
+  padding: 3rem 1rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  color: var(--text);
+  background: transparent; /* main background handled by style.css */
+}
+
+/* Page heading */
+.plagiarism-page h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: var(--text);
+}
+
+.plagiarism-page p {
+  margin-bottom: 1.6rem;
+  text-align: center;
+  color: var(--muted);
+}
+
+/* ============================
+   Input layout — responsive grid
+   ============================ */
+
+.input-section {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  align-items: start;
+  margin-bottom: 1.5rem;
+}
+
+/* Input Box */
+.input-box {
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* ✅ allows shrinking in grid */
+  flex: 1 1 auto; /* ✅ lets it resize smoothly */
+}
+
+.input-box textarea {
+  width: 100%;
+  min-height: 150px;
+  max-height: 60vh;
+  resize: vertical;
+  padding: 12px;
+  font-size: 0.95rem;
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--text);
+  box-sizing: border-box; /* ✅ prevents overflow */
+  overflow: auto;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .input-section {
+    grid-template-columns: 1fr; /* stack vertically */
+  }
+}
+/* Page base */
+body {
+  background: var(--bg);
+  color: #222;
+}
+.chapter-guide-container {
+  padding: 2rem;
+  max-width: 1100px;
+  margin: 2.2rem auto;
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(20, 30, 60, 0.06);
+  font-family: inherit;
+}
+
+/* Intro */
+.intro {
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+/* Top controls */
+.top-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+.overall-progress,
+.batch-actions {
+  flex: 1 1 300px;
+  padding: 1rem;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #fff, #fbfdff);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+  border: 1px solid #eef6ff;
+}
+.batch-actions {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Action buttons */
+.btn-action {
+  background: var(--primary);
+  color: #fff;
+  padding: 0.5rem 0.85rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+}
+.btn-action.warn {
+  background: #e04b4b;
+}
+
+/* Tabs – updated to match Lessons/Tutorials pill buttons */
+.chapter-tabs {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 12px 0 16px;
+  justify-content: center;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 6px;
+}
+.chapter-tabs::-webkit-scrollbar {
+  height: 6px;
+}
+.chapter-tabs::-webkit-scrollbar-thumb {
+  background: #cfd8e3;
+  border-radius: 999px;
+}
+
+.chapter-tabs .tab-btn {
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 999px;
+  padding: 8px 16px;
+  border: 1px solid var(--input-border);
+  background: var(--card-bg);
+  color: var(--text);
+  font-weight: 600;
+  line-height: 1.1;
+  cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease,
+    color 150ms ease, box-shadow 150ms ease, transform 50ms ease;
+}
+.chapter-tabs .tab-btn:hover {
+  background: color-mix(in sRGB, var(--btn-bg) 10%, var(--card-bg));
+  border-color: color-mix(in sRGB, var(--btn-bg) 35%, var(--input-border));
+}
+.chapter-tabs .tab-btn:active {
+  transform: translateY(1px);
+}
+.chapter-tabs .tab-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in sRGB, var(--link) 28%, transparent);
+}
+.chapter-tabs .tab-btn.active {
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border-color: transparent;
+  box-shadow: 0 6px 18px rgba(16, 82, 147, 0.18);
+}
+
+/* Dark mode variants aligned with Lessons/Tutorials */
+.dark-mode .chapter-tabs .tab-btn {
+  background: #1f1f1f;
+  color: var(--text);
+  border-color: #333;
+}
+.dark-mode .chapter-tabs .tab-btn:hover {
+  background: #243144;
+  border-color: #3a4f73;
+}
+.dark-mode .chapter-tabs .tab-btn.active {
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border-color: transparent;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45);
+}
+
+/* Chapter card */
+.chapter-section {
+  padding: 1.2rem;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #fff, #fbfdff);
+  border: 1px solid #eef5ff;
+  margin-bottom: 1rem;
+}
+.chapter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+  flex-wrap: wrap;
+}
+.chapter-header h3 {
+  margin: 0;
+  color: var(--primary-dark);
+}
+.chapter-controls {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* small buttons */
+.btn-small {
+  border: 1px solid #d7e9ff;
+  color: var(--primary-dark);
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  color: #353535;
+}
+.btn-small:hover {
+  background: #f1fbff;
+}
+
+/* Badge */
+.badge {
+  display: inline-block;
+  min-width: 36px;
+  min-height: 20px;
+  background: linear-gradient(90deg, var(--accent), var(--primary));
+  color: #fff;
+  border-radius: 12px;
+  text-align: center;
+  padding: 3px 8px;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+/* Progress styles */
+.progress-box {
+  margin: 0.6rem 0 1rem 0;
+}
+.progress-box label {
+  font-weight: 700;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 6px;
+}
+.progress-bar {
+  width: 100%;
+  height: 14px;
+  background: #f1f6ff;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #eef6ff;
+}
+.progress-bar span {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--primary));
+  transition: width 0.3s ease;
+}
+
+/* Tasks card */
+.tasks {
+  margin: 0.8rem 0;
+  padding: 0.8rem;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid #eef6ff;
+}
+.tasks-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+}
+.tasks-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.new-task-input {
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 0.95rem;
+  flex: 1 1 220px;
+  min-width: 0;
+  box-sizing: border-box;
+}
+.tasks-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.tasks-list li {
+  padding: 8px 6px;
+  border-bottom: 1px dashed #f1f6ff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+/* Make the text column grow so all checkboxes align in one vertical column */
+.tasks-list li .checklist-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: inline-block;
+}
+.tasks-list li label {
+  cursor: pointer;
+  width: 100%;
+}
+.tasks-list li .remove-task {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  color: #e04b4b;
+  cursor: pointer;
+}
+
+/* Spacing for footer actions under checklist */
+.tasks-footer {
+  margin-top: 12px;
+}
+
+/* Collapsible */
+.collapse-toggle {
+  background: #eef8ff;
+  border: 1px solid #e1f0ff;
+  color: var(--primary-dark);
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+}
+.collapse-content {
+  display: none;
+  margin-top: 8px;
+  padding: 10px;
+  background: #fbfdff;
+  border-left: 4px solid var(--primary);
+  border-radius: 6px;
+}
+
+/* Sample snippet card */
+.sample-snippet {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid #eef6ff;
+}
+/* User-created section inherits sample-snippet card */
+.user-section {
+  margin-top: 1rem;
+}
+.user-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.user-section-title {
+  font-weight: 700;
+}
+.user-section-actions {
+  display: flex;
+  gap: 8px;
+}
+.sample-snippet label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.snippet-input {
+  width: 100%;
+  min-height: 110px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #e5eefc;
+  resize: vertical;
+  font-family: inherit;
+  background: #fff;
+  box-sizing: border-box;
+}
+.snippet-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.6rem;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.counts {
+  color: var(--muted);
+  font-weight: 600;
+}
+.snippet-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.btn-secondary {
+  background: #fff;
+  border: 1px solid #d0e6ff;
+  color: var(--primary-dark);
+  padding: 6px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.btn-secondary:hover {
+  background: #f1fbff;
+}
+
+/* Reset task button styling */
+.btn-secondary.reset-task {
+  background: #fff2f2;
+  border: 1px solid #ffcdd2;
+  color: #c62828;
+}
+
+.btn-secondary.reset-task:hover {
+  background: #ffebee;
+  border-color: #ef9a9a;
+}
+
+/* AI hint */
+.ai-hint {
+  margin-top: 0.8rem;
+  background: #e9f9f0;
+  border-left: 5px solid var(--success);
+  padding: 8px;
+  border-radius: 8px;
+  color: #145b2b;
+  font-style: italic;
+}
+
+/* Notes card */
+.notes {
+  margin-top: 1rem;
+  padding: 0.8rem;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid #eef6ff;
+}
+.notes-input {
+  width: 100%;
+  min-height: 70px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #e5eefc;
+  resize: vertical;
+  background: #fff;
+  box-sizing: border-box;
+}
+.notes-actions {
+  margin-top: 8px;
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Timer */
+.timer {
+  margin-top: 1rem;
+  padding: 0.8rem;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid #eef6ff;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.timer-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+#timer-display-1,
+#timer-display-2,
+#timer-display-3,
+#timer-display-4,
+#timer-display-5 {
+  font-weight: 700;
+  color: var(--primary-dark);
+  font-family: monospace;
+}
+
+/* Floating global timer */
+/* Improved floating timer for perfect alignment and draggable */
+.floating-timer {
+  position: fixed;
+  top: var(--timer-top-offset, 64px);
+  right: 32px;
+  min-width: 220px;
+  max-width: 320px;
+  z-index: 1200;
+  padding: 16px 18px 16px 18px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #fff, #f7faff 90%);
+  box-shadow: 0 8px 32px rgba(20, 30, 60, 0.13);
+  border: 1.5px solid #e6f0ff;
+  cursor: move;
+  user-select: none;
+}
+.floating-timer .timer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+.floating-timer .timer-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+#global-timer-display {
+  font-family: monospace;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--primary-dark);
+}
+.timer-minimize {
+  cursor: pointer;
+}
+.floating-timer.minimized {
+  padding: 8px 10px;
+  min-width: auto;
+  max-width: 240px;
+  right: 12px !important;
+  left: auto !important;
+  top: var(--timer-top-offset-min, 64px) !important;
+}
+.floating-timer.minimized .timer-body,
+.floating-timer.minimized .timer-mode {
+  display: none;
+}
+.floating-timer.minimized #global-timer-label {
+  margin-right: 0;
+}
+.floating-timer.minimized #global-timer-display {
+  font-size: 0.9rem;
+}
+.floating-timer .timer-minimize {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border-radius: 8px;
+}
+
+/* Mobile responsiveness: dock to top center and widen */
+@media (max-width: 600px) {
+  .user-section-header {
+    flex-wrap: wrap;
+  }
+  .user-section-title {
+    flex: 1 1 100%;
+  }
+  .user-section-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  /* Stack checklist header elements and make input take a full row */
+  .tasks-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .tasks-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto; /* input grows; Add button content-sized */
+    gap: 8px;
+  }
+  .new-task-input {
+    width: 100%;
+    padding: 10px 12px;
+  }
+  .btn-small.add-task {
+    white-space: nowrap;
+  }
+
+  /* Chapter header: keep title on its own line, then controls */
+  .chapter-header h3 {
+    flex: 1 1 100%;
+  }
+  .chapter-controls {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+
+  /* Slightly taller small buttons for finger comfort */
+  .btn-small {
+    padding: 8px 10px;
+    font-size: 0.95rem;
+  }
+
+  .floating-timer {
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%);
+    top: var(--timer-top-offset, 64px) !important;
+    width: calc(100vw - 24px);
+    max-width: none;
+    cursor: default;
+  }
+  .floating-timer .timer-body {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .floating-timer #global-timer-display {
+    font-size: 1rem;
+  }
+  .floating-timer.minimized {
+    width: auto;
+    transform: none;
+    right: 12px !important;
+    left: auto !important;
+    top: var(--timer-top-offset-min, 64px) !important;
+  }
+}
+.timer-mode .btn-small {
+  padding: 6px 8px;
+}
+.timer-mode .btn-small.active {
+  background: #eaf4ff;
+}
+
+/* Add/Remove section controls inside chapter header */
+.chapter-controls .add-section {
+  background: transparent;
+  border: 1px dashed #cfe8ff;
+  color: var(--primary-dark);
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Utilities */
+.hidden {
+  display: none !important;
+}
+
+/* Header container */
+.responsive-header {
+  display: flex;
+  justify-content: center; /* center logo/title */
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: #004494;
+  color: #fff;
+  position: relative; /* allows absolute positioning of left group */
+  font-size: 10px;
+}
+
+/* Left group: sidebar + theme toggle */
+.header-actions {
+  position: absolute;
+  left: 1rem; /* always pinned to the left */
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* small gap between buttons */
+}
+
+/* Logo + title centered */
+.logo-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.logo-title img {
+  height: 28px;
+}
+
+/* -----------------------------------
+   Unified button style (header + inside)
+----------------------------------- */
+.sidebar-toggle {
+  background-color: #0b1f5c;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  font-size: 14px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+.sidebar-toggle:hover {
+  background-color: #09204a;
+  transform: scale(1.05);
+}
+
+/* -----------------------------------
+   Sidebar container
+----------------------------------- */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -240px; /* hidden by default */
+  width: 220px; /* fixed width */
+  height: 100vh; /* full height */
+  background-color: #011f4b;
+  transition: left 0.3s ease-in-out;
+  z-index: 1000;
+
+  display: flex;
+  flex-direction: column; /* stack children vertically */
+  align-items: stretch; /* stretch children to sidebar width */
+  padding: 16px;
+  box-sizing: border-box; /* include padding in width */
+}
+.sidebar.show {
+  left: 0;
+}
+
+/* -----------------------------------
+   Sidebar top: toggle + theme buttons
+----------------------------------- */
+.sidebar-top {
+  display: flex;
+  flex-direction: row; /* buttons side by side */
+  gap: 0.5rem;
+  margin-bottom: 20px;
+}
+
+/* -----------------------------------
+   Nav links stacked like a column
+----------------------------------- */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* space between links */
+  width: 100%; /* take full sidebar width */
+}
+
+.sidebar-nav a {
+  display: block;
+  width: 100%; /* fill sidebar width */
+  box-sizing: border-box; /* padding stays inside width */
+  padding: 10px 14px;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+  overflow: hidden; /* prevent text overflow */
+  text-overflow: ellipsis; /* add "..." if text too long */
+  white-space: nowrap; /* keep text on one line */
+}
+
+.sidebar-nav a:hover {
+  background: #1a2f6b;
+}
+
+/* ===========================
+   Header & Footer (WriteWise)
+   Extracted for reuse
+   =========================== */
+
+/* Header */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: var(--card); /* from root vars */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 6px 18px rgba(10, 20, 40, 0.03);
+}
+
+/* inner container used in your HTML: <div class="container header-flex"> */
+.site-header .container.header-flex,
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 18px;
+  box-sizing: border-box;
+}
+
+/* Logo */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 800;
+  color: var(--primary);
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+
+/* optional image inside logo */
+.logo-img {
+  height: 36px;
+  width: auto;
+  display: inline-block;
+}
+
+/* Navigation */
+nav {
+  display: block;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+/* nav items */
+.nav-links li {
+  margin: 0;
+  padding: 0;
+}
+
+/* anchor styles */
+.nav-links li a {
+  display: inline-block;
+  text-decoration: none;
+  color: var(--text);
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: background-color 180ms ease, color 180ms ease, transform 140ms;
+}
+
+/* active / hover */
+.nav-links li a.active,
+.nav-links li a:hover {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 123, 255, 0.06),
+    rgba(0, 68, 148, 0.04)
+  );
+  color: var(--primary-600);
+  transform: translateY(-1px);
+}
+
+/* small CTAs inside nav (if any) */
+.nav-links li .nav-cta {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 22px;
+  box-shadow: 0 8px 22px rgba(0, 123, 255, 0.12);
+}
+
+/* menu toggle (mobile) - visible only on small screens */
+.menu-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: transparent;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Accessibility focus */
+.nav-links li a:focus,
+.menu-toggle:focus {
+  outline: 3px solid rgba(0, 115, 230, 0.12);
+  outline-offset: 2px;
+  box-shadow: 0 6px 18px rgba(0, 115, 230, 0.06);
+}
+
+/* ===========================
+   Responsive behaviour
+   - To open mobile nav add class `.open` on `.site-header`
+   - e.g. document.querySelector('.site-header').classList.toggle('open')
+   =========================== */
+@media (max-width: 900px) {
+  .site-header .container.header-flex {
+    padding: 10px 14px;
+  }
+
+  /* hide nav by default on mobile, show menu button */
+  .nav-links {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 8px;
+    right: 8px;
+    background: var(--card);
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px;
+    gap: 8px;
+    border-radius: 10px;
+    box-shadow: 0 18px 50px rgba(10, 20, 40, 0.08);
+    display: none;
+  }
+
+  .menu-toggle {
+    display: inline-flex;
+  }
+
+  /* when header gets .open -> show nav */
+  .site-header.open .nav-links {
+    display: flex;
+  }
+
+  /* nav anchors become full width */
+  .nav-links li a {
+    display: block;
+    width: 100%;
+    padding: 10px 12px;
+  }
+}
+
+/* ===========================
+   Footer
+   =========================== */
+.site-footer {
+  background: var(--card);
+  border-top: 1px solid rgba(0, 0, 0, 0.04);
+  padding: 18px 0;
+  margin-top: 2rem;
+  box-shadow: 0 -6px 18px rgba(10, 20, 40, 0.02);
+  color: var(--muted);
+}
+
+/* footer inner container */
+.site-footer .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* footer text */
+.site-footer p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+/* footer links if you put any */
+.site-footer a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 700;
+  margin-left: 12px;
+}
+.site-footer a:hover {
+  text-decoration: underline;
+}
+
+/* ===========================
+   Dark mode overrides (if you use body.dark-mode in site)
+   =========================== */
+body.dark-mode .site-header {
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom-color: rgba(255, 255, 255, 0.04);
+  box-shadow: none;
+}
+
+body.dark-mode .nav-links {
+  background: rgba(0, 0, 0, 0.35);
+}
+
+body.dark-mode .nav-links li a {
+  color: var(--text);
+}
+
+body.dark-mode .nav-links li a.active,
+body.dark-mode .nav-links li a:hover {
+  background: linear-gradient(
+    90deg,
+    rgba(62, 160, 255, 0.08),
+    rgba(45, 134, 230, 0.06)
+  );
+  color: var(--primary);
+}
+
+body.dark-mode .site-footer {
+  background: var(--card);
+  border-top-color: rgba(255, 255, 255, 0.03);
+  color: var(--muted);
+}
+
+/* Apply dark mode styling */
+.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+/* Header */
+.dark-mode header {
+  background-color: #003570;
+}
+
+.dark-mode nav a {
+  color: #ffffff;
+}
+
+.dark-mode nav a.active,
+.dark-mode nav a:hover {
+  background-color: #001f40;
+}
+
+/* Main Content */
+.dark-mode .chapter-guide-container,
+.dark-mode .chapter-section {
+  background: #222;
+  color: #e0e0e0;
+}
+
+/* Tabs */
+.dark-mode .chapter-tabs {
+  background: #2a2a2a;
+}
+
+.dark-mode .tab-btn {
+  background: #333;
+  color: white;
+}
+
+/* Collapsible Sections */
+.dark-mode .collapsible {
+  background: #252525;
+}
+
+.dark-mode .collapse-toggle {
+  background: #444;
+  color: white;
+}
+
+/* Sample Snippet */
+.dark-mode .sample-snippet textarea {
+  background: #333;
+  color: white;
+  border: 1px solid #555;
+}
+
+/* Warning Card */
+.dark-mode .warning-card {
+  background: #8a2b2b;
+  color: white;
+}
+
+/* Download Section */
+.dark-mode .download-section a {
+  color: #77aaff;
+}
+
+/* Footer */
+.dark-mode footer {
+  background: #333;
+  color: #e0e0e0;
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.btn,
+.btn-secondary {
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+/* Make nav links wrap and center on smaller screens */
+.responsive-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.floating-login:hover {
+  background-color: #003570;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Unified Button Styling */
+.btn {
+  background: #004494;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  background: #003570;
+  transform: scale(1.05);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* Unique Styling for Generate Button */
+#generateButton {
+  background: linear-gradient(135deg, #0056b3, #004494);
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 8px;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#generateButton:hover {
+  background: linear-gradient(135deg, #004494, #003570);
+  box-shadow: 3px 6px 12px rgba(0, 0, 0, 0.3);
+}
+/*ends here*/
+
+/* Mobile: stack vertically */
+@media (max-width: 600px) {
+  .responsive-header {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .logo-title {
+    margin-left: 0;
+    text-align: center; /* center on mobile for balance */
+  }
+  .header-actions {
+    margin-right: 0;
+    justify-content: center;
+  }
+}
+
+/* ==========================================
+   INTERACTIVE CHECKLIST STYLES
+   ========================================== */
+
+.checklist-instruction {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0.5rem 0 1rem 0;
+  font-style: italic;
+}
+
+.interactive-task {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  margin-bottom: 8px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #f8f9fa;
+}
+
+.interactive-task:hover {
+  background: #e3f2fd;
+  border-color: #2196f3;
+  transform: translateX(4px);
+}
+
+.interactive-task.active {
+  background: #e3f2fd; /* light blue */
+  border-color: #2196f3; /* blue border */
+}
+
+.interactive-task.completed {
+  background: #e8f5e8;
+  border-color: #4caf50;
+}
+
+.task-checkbox {
+  font-size: 1.4rem;
+  margin-right: 12px;
+  color: #666;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.interactive-task.completed .task-checkbox {
+  color: #4caf50;
+}
+
+/* Active (clicked) task accents */
+.interactive-task.active .task-checkbox {
+  color: #1976d2; /* blue tick/box when active */
+}
+
+.checklist-label {
+  flex: 1;
+  font-weight: 500;
+  color: #333;
+}
+
+.task-status {
+  font-size: 0.85rem;
+  color: #666;
+  font-style: italic;
+}
+
+.interactive-task.completed .task-status {
+  color: #4caf50;
+  font-weight: 500;
+}
+
+.interactive-task.active .task-status {
+  color: #1976d2; /* blue status when active */
+  font-weight: 500;
+}
+
+/* Task Workspace */
+.task-workspace {
+  margin-top: 20px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+}
+
+.task-section {
+  display: none;
+  animation: fadeIn 0.4s ease;
+}
+
+.task-section.active {
+  display: block;
+}
+
+.task-section h4 {
+  color: #1976d2;
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+  border-bottom: 2px solid #1976d2;
+  padding-bottom: 8px;
+}
+
+.task-guide {
+  background: #ffffff;
+  border-left: 4px solid #1976d2;
+  padding: 16px;
+  margin-bottom: 20px;
+  border-radius: 0 8px 8px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.task-guide h5 {
+  color: #1976d2;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+.task-guide ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.task-guide li {
+  margin-bottom: 8px;
+  color: #444;
+  line-height: 1.4;
+}
+
+.task-input-container {
+  margin-bottom: 15px;
+}
+
+.task-input-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.task-input {
+  width: 100%;
+  min-height: 120px;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 1rem;
+  resize: vertical;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.task-input:focus {
+  outline: none;
+  border-color: #1976d2;
+  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+}
+
+.task-validation {
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  display: none;
+}
+
+.task-validation.success {
+  background: #e8f5e8;
+  color: #2e7d32;
+  border: 1px solid #4caf50;
+  display: block;
+}
+
+.task-validation.warning {
+  background: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffc107;
+  display: block;
+}
+
+.task-progress {
+  margin-top: 15px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.task-progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #e0e0e0;
+  border-radius: 4px;
+  margin-top: 8px;
+  overflow: hidden;
+}
+
+.task-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #1976d2, #4caf50);
+  width: 0%;
+  transition: width 0.5s ease;
+}
+
+.task-actions {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.task-close-btn {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.3s ease;
+}
+
+.task-close-btn:hover {
+  background: #5a6268;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .interactive-task {
+    padding: 10px;
+  }
+
+  .task-workspace {
+    margin: 15px 0;
+    padding: 15px;
+  }
+
+  .task-input {
+    min-height: 100px;
+  }
+
+  .task-actions {
+    flex-direction: column;
+  }
+}
+
+/* Dark mode support */
+[data-theme="dark"] .interactive-task {
+  background: #2a2a2a;
+  color: #e0e0e0;
+}
+.dark-mode .interactive-task {
+  background: #2a2a2a;
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .interactive-task:hover {
+  background: #333;
+  border-color: #3a4f73;
+}
+.dark-mode .interactive-task:hover {
+  background: #333;
+  border-color: #3a4f73;
+}
+
+/* Match active to hover in dark mode */
+[data-theme="dark"] .interactive-task.active {
+  background: #333; /* same as hover */
+  border-color: #3a4f73; /* subtle border so active stands out */
+}
+[data-theme="dark"] .interactive-task.active .task-checkbox {
+  color: #8ab4f8; /* bluish accent for dark background */
+}
+[data-theme="dark"] .interactive-task.active .task-status {
+  color: #8ab4f8;
+  font-weight: 500;
+}
+.dark-mode .interactive-task.active {
+  background: #333;
+  border-color: #3a4f73;
+}
+.dark-mode .interactive-task.active .task-checkbox {
+  color: #8ab4f8;
+}
+.dark-mode .interactive-task.active .task-status {
+  color: #8ab4f8;
+  font-weight: 500;
+}
+[data-theme="dark"] .interactive-task.active .task-checkbox {
+  color: #8ab4f8; /* bluish accent for dark background */
+}
+[data-theme="dark"] .interactive-task.active .task-status {
+  color: #8ab4f8;
+  font-weight: 500;
+}
+
+/* Completed state in dark mode */
+[data-theme="dark"] .interactive-task.completed {
+  background: #1f2b1f; /* dark greenish background */
+  border-color: #2e7d32;
+}
+[data-theme="dark"] .interactive-task.completed .task-checkbox {
+  color: #66bb6a;
+}
+[data-theme="dark"] .interactive-task.completed .task-status {
+  color: #66bb6a;
+}
+.dark-mode .interactive-task.completed {
+  background: #1f2b1f;
+  border-color: #2e7d32;
+}
+.dark-mode .interactive-task.completed .task-checkbox {
+  color: #66bb6a;
+}
+.dark-mode .interactive-task.completed .task-status {
+  color: #66bb6a;
+}
+[data-theme="dark"] .interactive-task.completed .task-checkbox {
+  color: #66bb6a;
+}
+[data-theme="dark"] .interactive-task.completed .task-status {
+  color: #66bb6a;
+}
+
+/* Checklist instruction text */
+[data-theme="dark"] .checklist-instruction {
+  color: #9aa4b2;
+}
+[data-theme="dark"] .task-checkbox {
+  color: #bbb;
+}
+[data-theme="dark"] .checklist-label {
+  color: #e0e6f2;
+}
+[data-theme="dark"] .checklist-label:hover {
+  background: #2f3b4f;
+  color: #cfe1ff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+[data-theme="dark"] .tasks-list li {
+  /* ensure separators render well in dark */
+  border-bottom-color: #3a3a3a;
+}
+.dark-mode .checklist-instruction {
+  color: #9aa4b2;
+}
+.dark-mode .task-checkbox {
+  color: #bbb;
+}
+.dark-mode .checklist-label {
+  color: #e0e6f2;
+}
+.dark-mode .checklist-label:hover {
+  background: #2f3b4f;
+  color: #cfe1ff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+.dark-mode .tasks-list li {
+  border-bottom-color: #3a3a3a;
+}
+[data-theme="dark"] .task-status {
+  color: #9aa4b2;
+}
+
+/* Tasks card and list separators */
+[data-theme="dark"] .tasks {
+  background: #1f1f1f;
+  border-color: #333;
+}
+[data-theme="dark"] .task-workspace {
+  background: #1f1f1f;
+  border-color: #333;
+}
+.dark-mode .tasks {
+  background: #1f1f1f;
+  border-color: #333;
+}
+.dark-mode .task-workspace {
+  background: #1f1f1f;
+  border-color: #333;
+}
+
+/* Chapter container blending in dark mode (reduces brightness around checklist) */
+.dark-mode .chapter-section {
+  background: #171717;
+  border-color: #2a2a2a;
+}
+[data-theme="dark"] .chapter-section {
+  background: #171717;
+  border-color: #2a2a2a;
+}
+[data-theme="dark"] .tasks-list li {
+  border-bottom-color: #3a3a3a;
+}
+
+/* Workspace and guide */
+[data-theme="dark"] .task-workspace {
+  background: #1f1f1f;
+  border-color: #333;
+}
+[data-theme="dark"] .task-section h4 {
+  color: #8ab4f8;
+  border-bottom-color: #3a4f73;
+}
+[data-theme="dark"] .task-guide {
+  background: #262626;
+  border-left-color: #3a7bd5; /* blue accent */
+  color: #d3dae4;
+}
+[data-theme="dark"] .task-guide h5 {
+  color: #8ab4f8;
+}
+[data-theme="dark"] .task-guide li {
+  color: #c7cfdb;
+}
+.dark-mode .task-section h4 {
+  color: #8ab4f8;
+  border-bottom-color: #3a4f73;
+}
+.dark-mode .task-guide {
+  background: #262626;
+  border-left-color: #3a7bd5;
+  color: #d3dae4;
+}
+.dark-mode .task-guide h5 {
+  color: #8ab4f8;
+}
+.dark-mode .task-guide li {
+  color: #c7cfdb;
+}
+
+/* Inputs */
+[data-theme="dark"] .task-input-label {
+  color: #e0e6f2;
+}
+[data-theme="dark"] .task-input {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+  color: #e0e0e0;
+}
+[data-theme="dark"] .task-input:focus {
+  border-color: #3a7bd5;
+  box-shadow: 0 0 0 3px rgba(58, 123, 213, 0.2);
+}
+[data-theme="dark"] .task-input::placeholder {
+  color: #9aa4b2;
+}
+.dark-mode .task-input-label {
+  color: #e0e6f2;
+}
+.dark-mode .task-input {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+  color: #e0e0e0;
+}
+.dark-mode .task-input:focus {
+  border-color: #3a7bd5;
+  box-shadow: 0 0 0 3px rgba(58, 123, 213, 0.2);
+}
+.dark-mode .task-input::placeholder {
+  color: #9aa4b2;
+}
+
+/* Validation messages */
+[data-theme="dark"] .task-validation.success {
+  background: #1f2b1f;
+  color: #81c784;
+  border-color: #2e7d32;
+}
+[data-theme="dark"] .task-validation.warning {
+  background: #3a2f1a;
+  color: #ffd666;
+  border-color: #b58900;
+}
+.dark-mode .task-validation.success {
+  background: #1f2b1f;
+  color: #81c784;
+  border-color: #2e7d32;
+}
+.dark-mode .task-validation.warning {
+  background: #3a2f1a;
+  color: #ffd666;
+  border-color: #b58900;
+}
+
+/* Progress */
+[data-theme="dark"] .task-progress {
+  color: #b0bac5;
+}
+[data-theme="dark"] .task-progress-bar {
+  background: #333;
+}
+[data-theme="dark"] .task-progress-fill {
+  background: linear-gradient(90deg, #3a7bd5, #4caf50);
+}
+.dark-mode .task-progress {
+  color: #b0bac5;
+}
+.dark-mode .task-progress-bar {
+  background: #333;
+}
+.dark-mode .task-progress-fill {
+  background: linear-gradient(90deg, #3a7bd5, #4caf50);
+}
+
+/* Buttons inside task actions */
+[data-theme="dark"] .btn-secondary {
+  background: #2a2a2a;
+  border-color: #3a4f73;
+  color: #cfe1ff;
+}
+[data-theme="dark"] .btn-secondary:hover {
+  background: #2f3b4f;
+}
+[data-theme="dark"] .task-close-btn {
+  background: #495057;
+}
+[data-theme="dark"] .task-close-btn:hover {
+  background: #3d4349;
+}
+[data-theme="dark"] .btn-secondary.reset-task {
+  background: #3b2626;
+  border-color: #8a3b3b;
+  color: #ffb3b3;
+}
+[data-theme="dark"] .btn-secondary.reset-task:hover {
+  background: #472a2a;
+  border-color: #b25656;
+}
+.dark-mode .btn-secondary {
+  background: #2a2a2a;
+  border-color: #3a4f73;
+  color: #cfe1ff;
+}
+.dark-mode .btn-secondary:hover {
+  background: #2f3b4f;
+}
+.dark-mode .task-close-btn {
+  background: #495057;
+}
+.dark-mode .task-close-btn:hover {
+  background: #3d4349;
+}
+.dark-mode .btn-secondary.reset-task {
+  background: #3b2626;
+  border-color: #8a3b3b;
+  color: #ffb3b3;
+}
+.dark-mode .btn-secondary.reset-task:hover {
+  background: #472a2a;
+  border-color: #b25656;
+}
+
+/* Dark mode variant of the red Reset Task button */
+[data-theme="dark"] .btn-secondary.reset-task {
+  background: #3b2626; /* deep muted red to blend with dark */
+  border-color: #8a3b3b;
+  color: #ffb3b3;
+}
+[data-theme="dark"] .btn-secondary.reset-task:hover {
+  background: #472a2a;
+  border-color: #b25656;
+}
+
+[data-theme="dark"] .task-workspace {
+  background: #2a2a2a;
+  border-color: #444;
+}
+
+[data-theme="dark"] .task-guide {
+  background: #333;
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .task-input {
+  background: #333;
+  color: #e0e0e0;
+  border-color: #555;
+}
+
+[data-theme="dark"] .task-input:focus {
+  border-color: #1976d2;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

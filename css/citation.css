@@ -1,0 +1,896 @@
+/* --- Animations and Visual Enhancements --- */
+.fade-in {
+  animation: fadeInCitation 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes fadeInCitation {
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.slide-in-citation {
+  animation: slideInCitation 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes slideInCitation {
+  from {
+    opacity: 0;
+    transform: translateX(40px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+.glow-citation {
+  box-shadow: 0 0 12px 2px #1976d2cc, 0 0 0 2px #fff inset;
+  transition: box-shadow 0.3s;
+}
+.glow-citation:focus {
+  box-shadow: 0 0 24px 6px #1976d2cc, 0 0 0 2px #fff inset;
+}
+
+.pulse-citation {
+  animation: pulseCitation 0.7s;
+}
+@keyframes pulseCitation {
+  0% {
+    box-shadow: 0 0 0 0 #1976d2cc;
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(25, 118, 210, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(25, 118, 210, 0);
+  }
+}
+
+.tada-citation {
+  /* Disabled previous 'tada' animation for calmer UI */
+  animation: none !important;
+}
+@keyframes tadaCitation {
+  0% {
+    transform: scale(1);
+  }
+  10%,
+  20% {
+    transform: scale(0.95) rotate(-2deg);
+  }
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: scale(1.05) rotate(2deg);
+  }
+  40%,
+  60%,
+  80% {
+    transform: scale(1.05) rotate(-2deg);
+  }
+  100% {
+    transform: scale(1) rotate(0);
+  }
+}
+
+/* Calmer Export Buttons (pill shape, no jitter) */
+/* Softer (lighter) palette for UI-friendly buttons */
+#export-options button {
+  animation: fadeInCitation 0.55s ease;
+  background: linear-gradient(135deg, #4d9bfa, #1f6fcc);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  padding: 0.6rem 1.15rem;
+  font-size: 0.9rem;
+  border-radius: 999px; /* pill */
+  cursor: pointer;
+  box-shadow: 0 3px 12px rgba(25, 118, 210, 0.22);
+  letter-spacing: 0.3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: background 0.4s ease, box-shadow 0.45s ease, transform 0.35s ease;
+}
+#export-options button:hover {
+  background: linear-gradient(135deg, #62a8ff, #2b7dd9);
+  box-shadow: 0 6px 18px rgba(25, 118, 210, 0.34);
+  transform: translateY(-2px);
+}
+#export-options button:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 10px rgba(25, 118, 210, 0.26);
+}
+
+/* Animated Citation Output */
+#citation-results .citation-output {
+  animation: slideInCitation 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  border-left: 4px solid #1976d2;
+  background: linear-gradient(90deg, #f7fbff 80%, #e3f2fd 100%);
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.07);
+  transition: background 0.3s, border-left 0.3s, box-shadow 0.3s;
+}
+#citation-results .citation-output:hover {
+  background: #e3f2fd;
+  border-left: 4px solid #004494;
+  box-shadow: 0 4px 18px rgba(25, 118, 210, 0.1);
+}
+
+/* Animated Form Focus */
+#citation-form input:focus,
+#citation-form select:focus,
+#citation-form textarea:focus {
+  outline: none;
+  border-color: #1976d2;
+  background: #e3f2fd;
+  box-shadow: 0 0 8px #1976d2a0, 0 0 0 2px #fff inset;
+  animation: pulseCitation 0.7s;
+}
+
+/* Animated Live Preview */
+#live-preview {
+  animation: fadeInCitation 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid #cce0ff;
+  background: #f0f6ff;
+  border-radius: 8px;
+  padding: 1em 1.2em;
+  margin-bottom: 1em;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.07);
+  transition: box-shadow 0.3s, background 0.3s;
+}
+#live-preview:focus-within {
+  box-shadow: 0 0 16px 4px #1976d2cc;
+  background: #e3f2fd;
+}
+
+/* Animated Tooltip */
+.tooltip[title]:hover::after {
+  animation: fadeInCitation 0.3s;
+}
+
+/* Generate button uses same calm pill style */
+button[type="submit"] {
+  animation: fadeInCitation 0.55s ease;
+  background: linear-gradient(135deg, #4d9bfa, #1f6fcc);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  padding: 0.7rem 1.35rem;
+  font-size: 0.95rem;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 3px 12px rgba(25, 118, 210, 0.22);
+  letter-spacing: 0.3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: background 0.4s ease, box-shadow 0.45s ease, transform 0.35s ease;
+}
+button[type="submit"]:hover {
+  background: linear-gradient(135deg, #62a8ff, #2b7dd9);
+  box-shadow: 0 6px 18px rgba(25, 118, 210, 0.34);
+  transform: translateY(-2px);
+}
+button[type="submit"]:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 10px rgba(25, 118, 210, 0.26);
+}
+
+#citation-form,
+#citation-results,
+#live-preview,
+#export-options {
+  transition: box-shadow 0.3s, background 0.3s;
+}
+#citation-form:hover,
+#citation-results:hover {
+  box-shadow: 0 4px 18px rgba(25, 118, 210, 0.1);
+  background: #f5faff;
+}
+
+#citation-results .citation-output {
+  transition: background 0.3s, border-left 0.3s;
+  background: #f7fbff;
+  border-left: 4px solid #1976d2;
+}
+#citation-results .citation-output:hover {
+  background: #e3f2fd;
+  border-left: 4px solid #004494;
+}
+
+#live-preview {
+  border: 1px solid #cce0ff;
+  background: #f0f6ff;
+  border-radius: 8px;
+  padding: 1em 1.2em;
+  margin-bottom: 1em;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.07);
+}
+
+/* Style switcher + File input (Choose File) */
+#style-switcher,
+#batch-upload {
+  box-shadow: 0 1px 4px #e3f2fd;
+  transition: box-shadow 0.3s ease, background 0.4s ease, color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+/* Enhanced file input styling */
+#batch-upload {
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 0.55rem 0.9rem; /* allow internal button */
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #144060;
+  background: #f4f9ff;
+  border: 1px solid #d3e4f6;
+  border-radius: 14px;
+  cursor: pointer;
+  max-width: 100%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) inset, 0 2px 5px rgba(0, 0, 0, 0.06);
+  transition: background 0.35s ease, border-color 0.35s ease,
+    box-shadow 0.4s ease;
+}
+#batch-upload:hover {
+  background: #eef5fd;
+  border-color: #b5d5f1;
+}
+#batch-upload:focus {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+  border-color: #4d9bfa;
+  box-shadow: 0 0 0 3px rgba(77, 155, 250, 0.45),
+    0 3px 10px rgba(77, 155, 250, 0.25);
+}
+#batch-upload:active {
+  background: #e2eef9;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12) inset;
+}
+/* Inner button (Chrome/Edge/Safari) */
+#batch-upload::file-selector-button {
+  margin-right: 0.75rem;
+  padding: 0.55rem 1rem;
+  border: none;
+  background: #2b6fb5;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.4px;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: background 0.35s ease, box-shadow 0.4s ease, transform 0.35s ease;
+}
+#batch-upload::file-selector-button:hover {
+  background: #25619e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+}
+#batch-upload::file-selector-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+/* Add an icon using a pseudo-element */
+#batch-upload::file-selector-button::before {
+  content: "\1F4C2"; /* folder icon */
+  font-size: 0.95rem;
+  line-height: 1;
+  display: inline-block;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.2));
+}
+/* Firefox (no ::file-selector-button) - fallback: use a label if needed */
+@supports (-moz-appearance: none) {
+  #batch-upload {
+    padding: 0.75rem 1rem;
+  }
+}
+/* Dark mode adjustments */
+body.dark-mode #batch-upload {
+  background: #1d2f44;
+  border-color: #2d4864;
+  color: #d4e6f7;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) inset, 0 2px 5px rgba(0, 0, 0, 0.45);
+}
+body.dark-mode #batch-upload:hover {
+  background: #23384f;
+  border-color: #3d5f83;
+}
+body.dark-mode #batch-upload:focus {
+  border-color: #4d9bfa;
+}
+body.dark-mode #batch-upload::file-selector-button {
+  background: #2b6fb5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+body.dark-mode #batch-upload::file-selector-button:hover {
+  background: #25619e;
+}
+#style-switcher:focus,
+#batch-upload:focus {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.45),
+    0 4px 12px rgba(25, 118, 210, 0.25);
+}
+#batch-upload:active {
+  box-shadow: 0 3px 10px rgba(25, 118, 210, 0.26);
+}
+
+/* Dark mode variant for file input */
+body.dark-mode #batch-upload {
+  background: linear-gradient(135deg, #2b5a85, #183c59);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.55);
+  color: #fff;
+}
+body.dark-mode #batch-upload:hover {
+  background: linear-gradient(135deg, #336897, #1d4968);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.65);
+}
+body.dark-mode #batch-upload:focus {
+  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.55), 0 4px 14px rgba(0, 0, 0, 0.65);
+}
+
+#export-options {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 1.5em;
+}
+/* Remove ripple scale effect; keep structure for future enhancements */
+#export-options button {
+  position: relative;
+  overflow: hidden;
+}
+#export-options button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.15),
+    rgba(255, 255, 255, 0) 70%
+  );
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  border-radius: inherit;
+}
+#export-options button:hover::after {
+  opacity: 1;
+}
+#export-options button:active::after {
+  opacity: 0.4;
+  transition: opacity 0.15s;
+}
+
+/* Dark mode variant */
+body.dark-mode #export-options button {
+  background: linear-gradient(135deg, #2b5a85, #183c59);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.55);
+}
+body.dark-mode #export-options button:hover {
+  background: linear-gradient(135deg, #336897, #1d4968);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.65);
+}
+
+/* Tooltip animation */
+.tooltip {
+  position: relative;
+}
+.tooltip[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  left: 50%;
+  bottom: 120%;
+  transform: translateX(-50%);
+  background: #1976d2;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  white-space: nowrap;
+  font-size: 0.95em;
+  opacity: 0.95;
+  pointer-events: none;
+  z-index: 10;
+  animation: fadeIn 0.3s;
+}
+
+/* Subtle hover for form fields */
+#citation-form input:focus,
+#citation-form select:focus,
+#citation-form textarea:focus {
+  outline: none;
+  border-color: #1976d2;
+  background: #e3f2fd;
+  box-shadow: 0 0 8px #1976d2a0;
+}
+
+/* Responsive tweaks for preview and export */
+@media (max-width: 600px) {
+  #live-preview,
+  #citation-results,
+  #citation-form {
+    padding: 1em 0.5em;
+  }
+  #export-options {
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+  }
+}
+/* Base styles from the prompt */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f4f4f4;
+  transition: background 0.3s ease, color 0.3s ease; /* transition from dark mode */
+}
+
+header {
+  background-color: #0056b3;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  background-color: #004494;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+nav a.active,
+nav a:hover {
+  background-color: #003570;
+}
+
+main {
+  padding: 1.5rem;
+  background: white;
+  margin: 1rem auto;
+  max-width: 700px; /* Increased max-width slightly */
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  margin-top: 1.5rem; /* Added margin top */
+  background-color: #ddd;
+  color: #555; /* Darker footer text */
+}
+
+/* Header container */
+.responsive-header {
+  display: flex;
+  justify-content: center; /* center logo/title */
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: #004494;
+  color: #fff;
+  position: relative; /* allows absolute positioning of left group */
+  font-size: 10px;
+}
+
+/* Left group: sidebar + theme toggle */
+.header-actions {
+  position: absolute;
+  left: 1rem; /* always pinned to the left */
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* small gap between buttons */
+}
+
+/* Logo + title centered */
+.logo-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.logo-title img {
+  height: 28px;
+}
+
+/* -----------------------------------
+   Unified button style (header + inside)
+----------------------------------- */
+.sidebar-toggle {
+  background-color: #0b1f5c;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  font-size: 14px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+.sidebar-toggle:hover {
+  background-color: #09204a;
+  transform: scale(1.05);
+}
+
+/* -----------------------------------
+   Sidebar container
+----------------------------------- */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -240px; /* hidden by default */
+  width: 220px; /* fixed width */
+  height: 100vh; /* full height */
+  background-color: #011f4b;
+  transition: left 0.3s ease-in-out;
+  z-index: 1000;
+
+  display: flex;
+  flex-direction: column; /* stack children vertically */
+  align-items: stretch; /* stretch children to sidebar width */
+  padding: 16px;
+  box-sizing: border-box; /* include padding in width */
+}
+.sidebar.show {
+  left: 0;
+}
+
+/* -----------------------------------
+   Sidebar top: toggle + theme buttons
+----------------------------------- */
+.sidebar-top {
+  display: flex;
+  flex-direction: row; /* buttons side by side */
+  gap: 0.5rem;
+  margin-bottom: 20px;
+}
+
+/* -----------------------------------
+   Nav links stacked like a column
+----------------------------------- */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* space between links */
+  width: 100%; /* take full sidebar width */
+}
+
+.sidebar-nav a {
+  display: block;
+  width: 100%; /* fill sidebar width */
+  box-sizing: border-box; /* padding stays inside width */
+  padding: 10px 14px;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+  overflow: hidden; /* prevent text overflow */
+  text-overflow: ellipsis; /* add "..." if text too long */
+  white-space: nowrap; /* keep text on one line */
+}
+
+.sidebar-nav a:hover {
+  background: #1a2f6b;
+}
+
+/* Unified Button Styling */
+.btn {
+  background: #004494;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  background: #003570;
+  transform: scale(1.05);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* #theme - Apply to Entire Body */
+body.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+body.dark-mode header {
+  background-color: #003570;
+}
+
+body.dark-mode nav a.active,
+body.dark-mode nav a:hover {
+  background-color: #001f40;
+}
+
+body.dark-mode main {
+  background: #222;
+  color: #e0e0e0;
+}
+
+body.dark-mode footer {
+  background: #333;
+  color: #e0e0e0;
+}
+
+body.dark-mode .thesis-card {
+  background: #2a2a2a;
+  border-left: 4px solid #0056b3;
+  color: #ffffff;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  nav {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  main {
+    margin: 0.5rem;
+    padding: 1rem;
+  }
+}
+
+/* --- New Styles for Citation Generator --- */
+
+h2,
+h3 {
+  color: #0056b3; /* Match header color */
+  margin-bottom: 1rem;
+}
+
+/* Form Styling */
+#citation-form {
+  margin-top: 1.5rem;
+  border: 1px solid #eee;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background-color: #fdfdfd; /* Slightly off-white */
+}
+
+.form-group {
+  margin-bottom: 1rem; /* Space between form fields */
+}
+
+.form-group label {
+  display: block; /* Label on its own line */
+  margin-bottom: 0.3rem;
+  font-weight: bold;
+  color: #555;
+}
+
+/* Style inputs and select */
+input[type="text"],
+input[type="number"],
+input[type="url"],
+select {
+  /* Added select for future use */
+  width: 100%; /* Full width */
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Include padding and border in element's total width/height */
+  font-size: 1rem;
+}
+
+input:focus,
+select:focus {
+  border-color: #0056b3;
+  outline: none; /* Remove default outline */
+  box-shadow: 0 0 0 2px rgba(0, 86, 179, 0.2); /* Subtle focus indicator */
+}
+
+.form-group small {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.85em;
+  color: #777;
+}
+
+/* Remove older rectangular button styling (replaced by pill style above) */
+
+/* Results Area Styling */
+#citation-results {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+#citation-results h3 {
+  margin-top: 0; /* Remove default top margin */
+}
+
+#citation-results div {
+  margin-bottom: 1rem;
+  padding: 0.8rem;
+  background-color: #fff;
+  border-left: 4px solid #0056b3; /* Accent line */
+  border-radius: 4px;
+}
+
+#citation-results strong {
+  color: #333;
+  margin-right: 0.5em;
+}
+
+/* Style for italicized text in citations */
+em,
+.italic {
+  font-style: italic;
+}
+
+/* Dark Mode - Apply to Entire Body */
+body.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+body.dark-mode header {
+  background-color: #003570;
+}
+
+body.dark-mode nav a.active,
+body.dark-mode nav a:hover {
+  background-color: #001f40;
+}
+
+body.dark-mode main {
+  background: #222;
+  color: #e0e0e0;
+}
+
+body.dark-mode footer {
+  background: #333;
+  color: #e0e0e0;
+}
+
+body.dark-mode .thesis-card {
+  background: #2a2a2a;
+  border-left: 4px solid #0056b3;
+  color: #ffffff;
+}
+
+/* Apply dark mode only to the form and citation results */
+.dark-mode #citation-form,
+.dark-mode #citation-results {
+  background-color: #222;
+  color: white;
+  padding: 16px;
+  border-radius: 6px;
+}
+
+/* Ensure all text inside form and citation results turns white */
+.dark-mode #citation-form label,
+.dark-mode #citation-form input,
+.dark-mode #citation-form small,
+.dark-mode #citation-results h3,
+.dark-mode #citation-results strong,
+.dark-mode #citation-results span {
+  color: white !important;
+}
+
+/* Form inputs */
+.dark-mode #citation-form input {
+  background: #333;
+  border: 1px solid #555;
+  padding: 8px;
+}
+
+/* Citation result boxes */
+.dark-mode #citation-results div {
+  background: #2a2a2a;
+  padding: 12px;
+  border-radius: 6px;
+  border-left: 4px solid #0056b3;
+}
+
+/* Button styling */
+.dark-mode #citation-form button {
+  background: #004494;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.dark-mode #citation-form button:hover {
+  background: #003570;
+}
+
+/* Styled Input Field */
+input#topicInput {
+  width: 100%;
+  padding: 12px 2px;
+  font-size: 16px;
+  border: 2px solid #004494;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Focus Effect */
+input#topicInput:focus {
+  border-color: #007bff;
+  box-shadow: 3px 6px 12px rgba(0, 123, 255, 0.3);
+}
+
+/* Dark Mode Styling */
+body.dark-mode input#topicInput {
+  background: #222;
+  color: #e0e0e0;
+  border-color: #0056b3;
+}
+
+body.dark-mode input#topicInput:focus {
+  border-color: #007bff;
+  box-shadow: 3px 6px 12px rgba(0, 123, 255, 0.5);
+}
+
+/* Unified Button Styling */
+.btn {
+  background: #004494;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  background: #003570;
+  transform: scale(1.05);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* Unique Styling for Generate Button */
+#generateButton {
+  background: linear-gradient(135deg, #0056b3, #004494);
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 8px;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#generateButton:hover {
+  background: linear-gradient(135deg, #004494, #003570);
+  box-shadow: 3px 6px 12px rgba(0, 0, 0, 0.3);
+}

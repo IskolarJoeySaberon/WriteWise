@@ -1,0 +1,733 @@
+/* --- Tutorials Page Fade-in Animation --- */
+.fade-in-tutorials {
+  animation: fadeInTutorials 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes fadeInTutorials {
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f4f4f4;
+  transition: background 0.3s ease, color 0.3s ease; /* transition from dark mode */
+}
+
+header {
+  background-color: #0056b3;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  background-color: #004494;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+}
+
+nav a.active,
+nav a:hover {
+  background-color: #003570;
+}
+
+main {
+  padding: 1.5rem;
+  background: white;
+  margin: 1rem auto;
+  max-width: 700px;
+  border-radius: 10px;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: #ddd;
+}
+
+/* Tutorial Section Styles */
+.tutorial-section {
+  margin-bottom: 1.5rem;
+}
+
+.tutorial-item {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Added gap for spacing between video and info */
+}
+
+.video-container {
+  margin-bottom: 1rem;
+  position: relative;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+}
+.video-container:has(iframe),
+.video-container:has(video) {
+  aspect-ratio: 16 / 9;
+}
+.video-container iframe,
+.video-container video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.tutorial-info h4 {
+  color: #28a745; /* A motivating green color for the heading */
+  margin-bottom: 0.75rem;
+  font-weight: bold;
+}
+.tutorial-info h5 {
+  font-size: 1.2em; /* Slightly larger font size */
+  font-weight: bold; /* Make the text bold */
+  margin-top: 1.5em; /* Add some space above the headings */
+  margin-bottom: 0.5em; /* Add some space below the headings */
+  color: #007bff; /* You can also change the color if you like */
+}
+
+.tutorial-info .key-steps-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.tutorial-info .key-steps-list li {
+  background-color: #e9ecef; /* Light gray background for better readability */
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  border-radius: 8px;
+  border-left: 5px solid #007bff; /* A primary blue to highlight each step */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle shadow for depth */
+}
+
+.tutorial-info .key-steps-list li strong {
+  color: #333; /* Darker text for emphasis */
+}
+
+.tutorial-info .key-steps-list li::before {
+  content: "✨ "; /* A sparkling emoji to add visual interest */
+  margin-right: 0.5rem;
+}
+
+/* Button Styles */
+.tutorial-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.tutorial-buttons button {
+  padding: 0.75rem 1.5rem; /* Slightly larger buttons */
+  border: none;
+  background-color: #007bff; /* Consistent primary blue */
+  color: white;
+  border-radius: 8px; /* More rounded buttons */
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-weight: bold; /* Make button text stand out */
+}
+
+.tutorial-buttons button:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
+
+.tutorial-buttons button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Header container */
+.responsive-header {
+  display: flex;
+  justify-content: center; /* center logo/title */
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: #004494;
+  color: #fff;
+  position: relative; /* allows absolute positioning of left group */
+  font-size: 10px;
+}
+
+/* Left group: sidebar + theme toggle */
+.header-actions {
+  position: absolute;
+  left: 1rem; /* always pinned to the left */
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* small gap between buttons */
+}
+
+/* Logo + title centered */
+.logo-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.logo-title img {
+  height: 28px;
+}
+
+/* -----------------------------------
+   Unified button style (header + inside)
+----------------------------------- */
+.sidebar-toggle {
+  background-color: #0b1f5c;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  font-size: 14px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+.sidebar-toggle:hover {
+  background-color: #09204a;
+  transform: scale(1.05);
+}
+
+/* -----------------------------------
+   Sidebar container
+----------------------------------- */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -240px; /* hidden by default */
+  width: 220px; /* fixed width */
+  height: 100vh; /* full height */
+  background-color: #011f4b;
+  transition: left 0.3s ease-in-out;
+  z-index: 1000;
+
+  display: flex;
+  flex-direction: column; /* stack children vertically */
+  align-items: stretch; /* stretch children to sidebar width */
+  padding: 16px;
+  box-sizing: border-box; /* include padding in width */
+}
+.sidebar.show {
+  left: 0;
+}
+
+/* -----------------------------------
+   Sidebar top: toggle + theme buttons
+----------------------------------- */
+.sidebar-top {
+  display: flex;
+  flex-direction: row; /* buttons side by side */
+  gap: 0.5rem;
+  margin-bottom: 20px;
+}
+
+/* -----------------------------------
+   Nav links stacked like a column
+----------------------------------- */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* space between links */
+  width: 100%; /* take full sidebar width */
+}
+
+.sidebar-nav a {
+  display: block;
+  width: 100%; /* fill sidebar width */
+  box-sizing: border-box; /* padding stays inside width */
+  padding: 10px 14px;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+  overflow: hidden; /* prevent text overflow */
+  text-overflow: ellipsis; /* add "..." if text too long */
+  white-space: nowrap; /* keep text on one line */
+}
+
+.sidebar-nav a:hover {
+  background: #1a2f6b;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  nav {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/* #theme - Apply to Entire Body */
+body.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+body.dark-mode header {
+  background-color: #003570;
+}
+
+body.dark-mode nav a.active,
+body.dark-mode nav a:hover {
+  background-color: #001f40;
+}
+
+body.dark-mode main {
+  background: #222;
+  color: #e0e0e0;
+}
+
+body.dark-mode footer {
+  background: #333;
+  color: #e0e0e0;
+}
+/* Ensure all lists change in dark mode */
+.dark-mode ul li,
+.dark-mode ol li {
+  background: #252525 !important;
+  color: white !important;
+  padding: 8px;
+  border-radius: 5px;
+  margin-bottom: 6px;
+  border-left: 3px solid #0056b3;
+}
+
+/* Ensure strong text remains visible */
+.dark-mode strong {
+  color: #ffcc00 !important; /* Bright yellow for better contrast */
+  font-weight: bold;
+}
+
+/* Fix marker color */
+.dark-mode li::marker {
+  color: #77aaff !important;
+}
+/* Enhance bullet points */
+.dark-mode li::marker {
+  color: #77aaff; /* Soft blue marker for better contrast */
+}
+
+/* Specific lists */
+.dark-mode ol.key-steps-list li,
+.dark-mode ul li {
+  border-left: 3px solid #0056b3; /* Highlight list items */
+  padding-left: 10px;
+}
+
+/* Enhance bullet points */
+.dark-mode li::marker {
+  color: #77aaff; /* Soft blue marker for better contrast */
+}
+
+/* Specific lists */
+.dark-mode ol.key-steps-list li,
+.dark-mode ul li {
+  border-left: 3px solid #0056b3; /* Highlight list items */
+  padding-left: 10px;
+}
+
+/* Unique Styling for Generate Button */
+#generateButton {
+  background: linear-gradient(135deg, #0056b3, #004494);
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 8px;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#generateButton:hover {
+  background: linear-gradient(135deg, #004494, #003570);
+  box-shadow: 3px 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Enhanced UI visuals */
+.enhanced-tutorials {
+  margin-top: 1.25rem;
+}
+.module-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+.btn-reset-module {
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(255, 107, 107, 0.14);
+}
+.btn-reset-module:hover {
+  background: #ff4c4c;
+}
+
+/* Modal for reset confirmation */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99998;
+}
+.modal[aria-hidden="false"] {
+  display: block;
+}
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+.modal-content {
+  position: relative;
+  width: 520px;
+  max-width: 92%;
+  margin: 10vh auto;
+  background: #fff;
+  padding: 18px;
+  border-radius: 10px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+}
+.modal-content h3 {
+  margin-top: 0;
+}
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 12px;
+}
+.reset-list {
+  margin: 8px 0 0 16px;
+  color: #333;
+}
+.modules-tabs {
+  display: flex;
+  gap: 0.5rem;
+}
+.module-tab {
+  padding: 8px 12px;
+  background: #eef4ff;
+  border: 1px solid #cfe0ff;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.module-tab.active {
+  background: #004494;
+  color: white;
+  box-shadow: 0 6px 18px rgba(0, 70, 180, 0.18);
+  transform: translateY(-1px);
+}
+
+.module-progress {
+  flex: 1 1 320px;
+  min-width: 240px;
+}
+.progress-label {
+  font-size: 0.9rem;
+  color: #333;
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.progress-label.small {
+  font-size: 0.85rem;
+  color: #555;
+}
+.progress-track {
+  width: 100%;
+  background: #e9eef8;
+  border-radius: 999px;
+  height: 14px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4facfe, #00f2fe);
+  width: 0;
+  transition: width 500ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding-left: 8px;
+}
+
+/* bottom progress bar specific tweaks to make it stand out a bit */
+.module-progress-bottom {
+  margin-top: 12px;
+}
+.module-progress-bottom .progress-track {
+  height: 16px;
+}
+.module-progress-bottom .progress-fill {
+  font-size: 0.95rem;
+}
+
+/* reduce label duplication visually when two bars are present */
+.module-progress .progress-label {
+  margin-bottom: 4px;
+}
+.module-progress-bottom .progress-label {
+  margin-bottom: 6px;
+}
+
+/* Hide the duplicate top label to avoid visual duplication; bottom bar is primary */
+#progressLabel {
+  display: none;
+}
+
+/* Make the top progress-fill not show text so only bottom shows a percent */
+#moduleProgress {
+  color: transparent;
+}
+#moduleProgressBottom {
+  color: #ffffff;
+}
+
+.badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(90deg, #fff6e6, #fff2cc);
+  border: 1px solid #ffd27a;
+  padding: 6px 10px;
+  margin-right: 6px;
+  border-radius: 20px;
+  font-weight: bold;
+  color: #6b3e00;
+  transform-origin: center;
+  opacity: 0;
+  transform: scale(0.85) translateY(6px);
+  transition: transform 300ms ease, opacity 300ms ease;
+}
+.badge.revealed {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.tutorials-wrapper.enhanced {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+.lesson-list {
+  background: #fff;
+  border: 1px solid #eef4ff;
+  padding: 12px;
+  border-radius: 8px;
+  height: 60vh;
+  overflow: auto;
+  box-shadow: 0 6px 18px rgba(33, 66, 99, 0.04);
+}
+.lesson-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
+  padding: 8px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+.lesson-item:hover {
+  background: #f2fbff;
+  transform: translateX(2px);
+}
+.lesson-item .title {
+  font-weight: 600;
+}
+.lesson-item .meta {
+  font-size: 0.85rem;
+  color: #666;
+}
+.lesson-item.completed {
+  background: #eef9f0;
+  border-left: 4px solid #28a745;
+}
+.lesson-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.btn.reset {
+  background: #fff;
+  color: #004494;
+  border: 1px solid #cfe0ff;
+  padding: 8px 10px;
+  border-radius: 8px;
+  box-shadow: none;
+}
+.btn.reset:hover {
+  background: #f6f9ff;
+}
+
+.lesson-content {
+  background: white;
+  border-radius: 8px;
+  padding: 18px;
+  min-height: 60vh;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0 6px 20px rgba(34, 60, 80, 0.04);
+}
+
+.quiz .q {
+  padding: 10px;
+  border-radius: 6px;
+  background: #fbfbff;
+  margin-bottom: 10px;
+}
+.quiz .options li {
+  margin-bottom: 6px;
+}
+.feedback {
+  font-weight: 700;
+  margin-top: 8px;
+}
+.exercise {
+  margin-top: 1rem;
+  background: #fff8f0;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+/* Make quiz option buttons larger and easier to tap */
+.quiz .options button {
+  padding: 10px 12px;
+  width: 100%;
+  text-align: left;
+  border-radius: 6px;
+}
+
+/* Focus styles for accessibility */
+.btn:focus,
+.module-tab:focus,
+.lesson-item:focus,
+.quiz .options button:focus {
+  outline: 3px solid rgba(0, 123, 255, 0.18);
+  outline-offset: 3px;
+}
+
+/* Toast notification styles */
+#toast .toast {
+  background: rgba(17, 24, 39, 0.95);
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-top: 8px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  max-width: 320px;
+}
+#toast .toast.success {
+  background: linear-gradient(90deg, #28a745, #20c997);
+}
+#toast .toast.info {
+  background: linear-gradient(90deg, #4facfe, #00f2fe);
+}
+#toast .toast.warn {
+  background: linear-gradient(90deg, #ffb703, #fb8500);
+}
+#toast .toast {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 220ms ease, opacity 220ms ease;
+}
+#toast .toast .toast-action {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 700;
+}
+#toast .toast .toast-action:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+/* toast progress */
+.toast-progress-wrap {
+  flex: 1 1 auto;
+  display: block;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-left: 8px;
+}
+.toast-progress {
+  height: 100%;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.26);
+  transition: width 200ms linear;
+}
+
+/* modal close button in header (optional) */
+.modal-content .modal-close {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* Retry button styling */
+.btn.retry {
+  background: #ffd27a;
+  color: #6b3e00;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-left: 8px;
+}
+
+/* Comfortable spacing for lesson content */
+.lesson-content h3 {
+  margin-top: 0;
+}
+.lesson-content {
+  padding: 22px;
+  line-height: 1.55;
+}
+
+@media (max-width: 900px) {
+  .tutorials-wrapper.enhanced {
+    grid-template-columns: 1fr;
+  }
+  .lesson-list {
+    height: auto;
+  }
+}

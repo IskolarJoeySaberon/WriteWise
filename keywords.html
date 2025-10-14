@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Research Suggestion Tool</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/keyword.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header class="responsive-header" id="mainHeader">
+      <!-- Left group: sidebar + theme toggle -->
+      <div class="header-actions">
+        <button id="toggleSidebarHeader" class="sidebar-toggle">☰</button>
+        <button id="themeToggleHeader" class="sidebar-toggle">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+
+      <!-- Center group: logo + title -->
+      <div class="logo-title">
+        <img
+          src="images/logo-index.png"
+          alt="WriteWise Logo"
+          class="logo-img"
+        />
+        <h1>Keyword Suggestions</h1>
+      </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top">
+        <button id="toggleSidebarInside" class="sidebar-toggle">☰</button>
+        <button id="themeToggleInside" class="sidebar-toggle">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+      <nav class="sidebar-nav">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="learning.html#lessons">Learning</a>
+        <a class="nav-link" href="chapter-guide.html">Chapter Guide</a>
+        <a class="nav-link" href="grammar.html">Grammar</a>
+        <a class="nav-link" href="plagiarism.html">Plagiarism</a>
+        <a class="nav-link" href="keywords.html">Keywords</a>
+        <a class="nav-link" href="citations.html">Citations</a>
+        <a class="nav-link" href="contact.html">Contact</a>
+      </nav>
+    </aside>
+
+    <main class="page-main">
+      <h2>Enter Your Research Topic</h2>
+      <input type="text" id="topicInput" placeholder="Enter topic..." />
+
+      <!--<button id="generateButton" class="btn" onclick="generateKeywords()">
+        Generate
+      </button>-->
+
+      <h3>Suggested Keywords:</h3>
+      <ul id="keywordList"></ul>
+
+      <h3>Related Research Areas:</h3>
+      <ul id="relatedAreas"></ul>
+
+      <h3>Scope Delimiters:</h3>
+      <ul id="scopeDelimiters"></ul>
+
+      <h3>Thesis Title Samples:</h3>
+      <div id="thesisContainer"></div>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 WriteWise</p>
+    </footer>
+
+    <script src="js/site-utils.js"></script>
+    <script src="js/keyword.js"></script>
+    <script defer src="js/responsive-embeds.js"></script>
+    <script defer src="js/header-mobile.js"></script>
+  </body>
+</html>

@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapter Guide</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/chapter-guide.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <script defer src="js/site-utils.js"></script>
+    <script defer src="js/chapter-guide.js"></script>
+  </head>
+  <body>
+    <header class="responsive-header" id="mainHeader">
+      <!-- Left group: sidebar + theme toggle -->
+      <div class="header-actions">
+        <button id="toggleSidebarHeader" class="sidebar-toggle">☰</button>
+        <button id="themeToggleHeader" class="sidebar-toggle">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+
+      <!-- Center group: logo + title -->
+      <div class="logo-title">
+        <img
+          src="images/logo-index.png"
+          alt="WriteWise Logo"
+          class="logo-img"
+        />
+        <h1>Chapter Guide</h1>
+      </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top">
+        <button id="toggleSidebarInside" class="sidebar-toggle">☰</button>
+        <button id="themeToggleInside" class="sidebar-toggle">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+      <nav class="sidebar-nav">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="learning.html#lessons">Learning</a>
+        <a class="nav-link" href="chapter-guide.html">Chapter Guide</a>
+        <a class="nav-link" href="grammar.html">Grammar</a>
+        <a class="nav-link" href="plagiarism.html">Plagiarism</a>
+        <a class="nav-link" href="keywords.html">Keywords</a>
+        <a class="nav-link" href="citations.html">Citations</a>
+        <a class="nav-link" href="contact.html">Contact</a>
+      </nav>
+    </aside>
+    <!-- Main -->
+    <main class="chapter-guide-container container" id="chapterGuideApp">
+      <h2>📘 Thesis Chapter Breakdown</h2>
+      <p class="intro">
+        Use this interactive guide to draft each chapter, track progress, save
+        drafts, and export your work. All changes are saved locally in your
+        browser.
+      </p>
+
+      <!-- Top Controls -->
+      <div class="top-controls">
+        <div class="overall-progress card">
+          <label>Overall Progress</label>
+          <div
+            class="progress-bar overall"
+            role="progressbar"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+          >
+            <span class="fill" id="overall-progress-fill"></span>
+            <span class="progress-text" id="overall-progress-text">0%</span>
+          </div>
+        </div>
+
+        <div class="batch-actions card">
+          <button id="exportAllBtn" class="btn-action">
+            ⬇️ Export All Chapters
+          </button>
+          <button id="exportCitationsBtn" class="btn-action">
+            📚 Export Citations
+          </button>
+          <button id="resetAllBtn" class="btn-action warn">
+            ♻️ Reset All Progress
+          </button>
+        </div>
+      </div>
+
+      <!-- Chapter Guide Modal Popup -->
+      <div
+        id="chapterGuideModal"
+        class="chapter-guide-modal"
+        style="display: none"
+      >
+        <div class="modal-content">
+          <button class="close-modal" id="closeGuideModal" title="Close">
+            &times;
+          </button>
+          <h2 id="guideModalTitle">Chapter Guide</h2>
+          <div id="guideModalSteps">
+            <!-- Steps will be injected here -->
+          </div>
+        </div>
+      </div>
+      <!-- Floating Global Timer (moved from individual chapters) -->
+      <div id="global-timer" class="floating-timer card">
+        <div class="timer-header">
+          <strong id="global-timer-label">Elapsed</strong>
+          <div class="timer-mode">
+            <button id="modeElapsed" class="btn-small active">Elapsed</button>
+            <button id="modeCountdown" class="btn-small">Countdown</button>
+          </div>
+          <button
+            id="timerMinimizeToggle"
+            class="btn-small timer-minimize"
+            title="Minimize timer"
+            aria-label="Minimize timer"
+          >
+            –
+          </button>
+        </div>
+        <div class="timer-body">
+          <span id="global-timer-display">00:00:00</span>
+          <div class="timer-controls">
+            <button id="global-start" class="btn-small">Start</button>
+            <button id="global-pause" class="btn-small">Pause</button>
+            <button id="global-reset" class="btn-small">Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="chapter-tabs" role="tablist" aria-label="Chapter navigation">
+        <button
+          class="tab-btn active"
+          data-target="chapter1"
+          role="tab"
+          aria-selected="true"
+        >
+          Chapter 1
+        </button>
+        <button
+          class="tab-btn"
+          data-target="chapter2"
+          role="tab"
+          aria-selected="false"
+        >
+          Chapter 2
+        </button>
+        <button
+          class="tab-btn"
+          data-target="chapter3"
+          role="tab"
+          aria-selected="false"
+        >
+          Chapter 3
+        </button>
+        <button
+          class="tab-btn"
+          data-target="chapter4"
+          role="tab"
+          aria-selected="false"
+        >
+          Chapter 4
+        </button>
+        <button
+          class="tab-btn"
+          data-target="chapter5"
+          role="tab"
+          aria-selected="false"
+        >
+          Chapter 5
+        </button>
+      </div>
+
+      <!-- Chapters content -->
+      <!-- For each chapter we keep the original structure and expand with more interactive blocks -->
+      <!-- Chapter 1 -->
+      <div class="tab-content" id="chapter1" role="tabpanel">
+        <section class="chapter-section ch1">
+          <header class="chapter-header">
+            <h3>Chapter 1: Introduction</h3>
+            <div class="chapter-controls">
+              <button class="btn-small export-chapter" data-chapter="1">
+                Export Chapter
+              </button>
+              <button class="btn-small print-chapter" data-chapter="1">
+                Print
+              </button>
+            </div>
+          </header>
+
+          <p>
+            <strong>Purpose:</strong> To introduce the research topic and set
+            context.
+          </p>
+
+          <!-- Progress Box -->
+          <div class="progress-box">
+            <label>Progress:</label>
+            <div class="progress-bar"><span id="progress1-fill"></span></div>
+            <small id="progress1-text">0% Completed</small>
+          </div>
+
+          <!-- Interactive Tasks -->
+          <div class="tasks card">
+            <div class="tasks-header">
+              <strong>Interactive Checklist</strong>
+              <p class="checklist-instruction">
+                Click on any task below to get step-by-step guidance and
+                complete it!
+              </p>
+            </div>
+            <ul class="tasks-list" id="tasks-list-1">
+              <li
+                class="interactive-task"
+                data-task="background-study"
+                data-chapter="1"
+              >
+                <span class="task-checkbox">☐</span>
+                <span class="checklist-label">Background of the Study</span>
+                <span class="task-status">Click to start</span>
+              </li>
+              <li
+                class="interactive-task"
+                data-task="problem-statement"
+                data-chapter="1"
+              >
+                <span class="task-checkbox">☐</span>
+                <span class="checklist-label">Statement of the Problem</span>
+                <span class="task-status">Click to start</span>
+              </li>
+              <li
+                class="interactive-task"
+                data-task="significance-study"
+                data-chapter="1"
+              >
+                <span class="task-checkbox">☐</span>
+                <span class="checklist-label">Significance of the Study</span>
+                <span class="task-status">Click to start</span>
+              </li>
+              <li
+                class="interactive-task"
+                data-task="scope-delimitations"
+                data-chapter="1"
+              >
+                <span class="task-checkbox">☐</span>
+                <span class="checklist-label">Scope & Delimitations</span>
+                <span class="task-status">Click to start</span>
+              </li>
+              <li
+                class="interactive-task"
+                data-task="definition-terms"
+                data-chapter="1"
+              >
+                <span class="task-checkbox">☐</span>
+                <span class="checklist-label">Definition of Terms</span>
+                <span class="task-status">Click to start</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Task Workspace -->
+          <div
+            class="task-workspace"
+            id="task-workspace-1"
+            style="display: none"
+          >
+            <!-- Dynamic task sections will be created here -->
+          </div>
+
+          <!-- Notes -->
+          <div class="notes card">
+            <label for="notes-1"><strong>Notes / Comments</strong></label>
+            <textarea
+              id="notes-1"
+              class="notes-input"
+              rows="4"
+              placeholder="Write private notes for this chapter..."
+            ></textarea>
+            <div class="notes-actions">
+              <button class="btn-secondary save-notes" data-chapter="1">
+                Save Note
+              </button>
+              <button class="btn-secondary clear-notes" data-chapter="1">
+                Clear Note
+              </button>
+            </div>
+          </div>
+
+          <!-- Citations for this chapter -->
+          <div class="citations card">
+            <label for="citation-input-1"><strong>Citations</strong></label>
+            <div
+              style="
+                display: flex;
+                gap: 8px;
+                margin-top: 6px;
+                align-items: center;
+              "
+            >
+              <input
+                type="text"
+                id="citation-input-1"
+                class="citation-input"
+                data-chapter="1"
+                placeholder="Add citation (APA, MLA, or BibTeX)"
+                style="flex: 1"
+              />
+              <button class="btn-small add-citation" data-chapter="1">
+                Add
+              </button>
+            </div>
+            <ul
+              class="citation-list"
+              id="citation-list-1"
+              style="margin-top: 8px"
+            ></ul>
+            <div class="citation-actions" style="margin-top: 8px">
+              <button
+                class="btn-small export-chapter-citations"
+                data-chapter="1"
+              >
+                Export Chapter Citations
+              </button>
+            </div>
+          </div>
+
+          <!-- Per-chapter timer removed; use global floating timer -->
+        </section>
+      </div>
+
+      <!-- Chapter 2 -->
+      <div class="tab-content hidden" id="chapter2" role="tabpanel">
+        <section class="chapter-section ch2">
+          <header class="chapter-header">
+            <h3>Chapter 2: Review of Related Literature</h3>
+            <div class="chapter-controls">
+              <button class="btn-small export-chapter" data-chapter="2">
+                Export Chapter
+              </button>
+              <button class="btn-small print-chapter" data-chapter="2">
+                Print
+              </button>
+            </div>
+          </header>
+
+          <p>
+            <strong>Purpose:</strong> Present past studies and theories related
+            to your topic.
+          </p>
+
+          <div class="progress-box">
+            <label>Progress:</label>
+            <div class="progress-bar"><span id="progress2-fill"></span></div>
+            <small id="progress2-text">0% Completed</small>
+          </div>
+
+          <!-- Interactive Tasks -->
+          <div class="tasks card">
+            <div class="tasks-header">
+              <strong>Interactive Checklist</strong>
+              <p class="checklist-instruction">
+                Click on any task below to get step-by-step guidance and
+                complete it!
+              </p>
+            </div>
+            <ul class="tasks-list" id="tasks-list-2">
+              <li
+                class="interactive-task"
+                data-task="theoretical-framework"
+                data-chapter="2"
+              >
+                <span class="task-checkbox">☐</span>
+                <span class="checklist-label">Theoretical Framework</span>
+                <span class="task-status">Click to start</span>
+              </li>
+              <li
+                class="interactive-task"
+                data-task="conceptual-framework"
+                data-chapter="2"
+              >
+                <span class="task-checkbox">☐</span>
+                <span class="checklist-label">Conceptual Framework</span>
+                <span class="task-status">Click to start</span>
+              </li>
+              <li
+                class="interactive-task"
+                data-task="related-literature"
+                data-chapter="2"
+              >
+                <span class="task-checkbox">☐</span>
+                <span class="checklist-label">Related Literature</span>
+                <span class="task-status">Click to start</span>
+              </li>
+              <li
+                class="interactive-task"
+                data-task="related-studies"
+                data-chapter="2"
+              >
+                <span class="task-checkbox">☐</span>
+                <span class="checklist-label">Related Studies</span>
+                <span class="task-status">Click to start</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Task Workspace -->
+          <div
+            class="task-workspace"
+            id="task-workspace-2"
+            style="display: none"
+          >
+            <!-- Dynamic task sections will be created here -->
+          </div>
+
+          <div class="notes card">
+            <label for="notes-2"><strong>Notes / Comments</strong></label>
+            <textarea
+              id="notes-2"
+              class="notes-input"
+              rows="4"
+              placeholder="Write private notes for this chapter..."
+            ></textarea>
+            <div class="notes-actions">
+              <button class="btn-secondary save-notes" data-chapter="2">
+                Save Note
+              </button>
+              <button class="btn-secondary clear-notes" data-chapter="2">
+                Clear Note
+              </button>
+            </div>
+          </div>
+
+          <!-- Citations for this chapter -->
+          <div class="citations card">
+            <label for="citation-input-2"><strong>Citations</strong></label>
+            <div
+              style="
+                display: flex;
+                gap: 8px;
+                margin-top: 6px;
+                align-items: center;
+              "
+            >
+              <input
+                type="text"
+                id="citation-input-2"
+                class="citation-input"
+                data-chapter="2"
+                placeholder="Add citation (APA, MLA, or BibTeX)"
+                style="flex: 1"
+              />
+              <button class="btn-small add-citation" data-chapter="2">
+                Add
+              </button>
+            </div>
+            <ul
+              class="citation-list"
+              id="citation-list-2"
+              style="margin-top: 8px"
+            ></ul>
+            <div class="citation-actions" style="margin-top: 8px">
+              <button
+                class="btn-small export-chapter-citations"
+                data-chapter="2"
+              >
+                Export Chapter Citations
+              </button>
+            </div>
+          </div>
+
+          <!-- Per-chapter timer removed; use global floating timer -->
+        </section>
+      </div>
+
+      <!-- Chapter 3 -->
+      <div class="tab-content hidden" id="chapter3" role="tabpanel">
+        <section class="chapter-section ch3">
+          <header class="chapter-header">
+            <h3>Chapter 3: Methodology</h3>
+            <div class="chapter-controls">
+              <button class="btn-small export-chapter" data-chapter="3">
+                Export Chapter
+              </button>
+              <button class="btn-small print-chapter" data-chapter="3">
+                Print
+              </button>
+            </div>
+          </header>
+
+          <p>
+            <strong>Purpose:</strong> Describe methods and procedures for data
+            collection and analysis.
+          </p>
+
+          <div class="progress-box">
+            <label>Progress:</label>
+            <div class="progress-bar"><span id="progress3-fill"></span></div>
+            <small id="progress3-text">0% Completed</small>
+          </div>
+
+          <!-- Interactive Tasks -->
+          <div class="tasks card">
+            <div class="tasks-header">
+              <strong>Interactive Checklist</strong>
+              <p class="checklist-instruction">
+                Click on any task below to get step-by-step guidance and
+                complete it!
+              </p>
+            </div>
+            <ul class="tasks-list" id="tasks-list-3">
+              <li
+                class="interactive-task"
+                data-task="research-design"
+                data-chapter="3"
+              >
+                <span class="task-checkbox">☐</span>
+                <span class="checklist-label">Research Design</span>
+                <span class="task-status">Click to start</span>
+              </li>
+              <li
+                class="interactive-task"
+                data-task="sampling-method"
+                data-chapter="3"
+              >
+                <span class="task-checkbox">☐</span>
+                <span class="checklist-label">Sampling Method</span>
+                <span class="task-status">Click to start</span>
+              </li>
+              <li
+                class="interactive-task"
+                data-task="research-instrument"
+                data-chapter="3"
+              >
+                <span class="task-checkbox">☐</span>
+                <span class="checklist-label">Research Instrument</span>
+                <span class="task-status">Click to start</span>
+              </li>
+              <li
+                class="interactive-task"
+                data-task="data-gathering-procedure"
+                data-chapter="3"
+              >
+                <span class="task-checkbox">☐</span>
+                <span class="checklist-label">Data Gathering Procedure</span>
+                <span class="task-status">Click to start</span>
+              </li>
+              <li
+                class="interactive-task"
+                data-task="data-analysis"
+                data-chapter="3"
+              >
+                <span class="task-checkbox">☐</span>
+                <span class="checklist-label">Data Analysis</span>
+                <span class="task-status">Click to start</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Task Workspace -->
+          <div
+            class="task-workspace"
+            id="task-workspace-3"
+            style="display: none"
+          >
+            <!-- Dynamic task sections will be created here -->
+          </div>
+
+          <div class="notes card">
+            <label for="notes-3"><strong>Notes / Comments</strong></label>
+            <textarea
+              id="notes-3"
+              class="notes-input"
+              rows="4"
+              placeholder="Write private notes for this chapter..."
+            ></textarea>
+            <div class="notes-actions">
+              <button class="btn-secondary save-notes" data-chapter="3">
+                Save Note
+              </button>
+              <button class="btn-secondary clear-notes" data-chapter="3">
+                Clear Note
+              </button>
+            </div>
+          </div>
+
+          <!-- Citations for this chapter -->
+          <div class="citations card">
+            <label for="citation-input-3"><strong>Citations</strong></label>
+            <div
+              style="
+                display: flex;
+                gap: 8px;
+                margin-top: 6px;
+                align-items: center;
+              "
+            >
+              <input
+                type="text"
+                id="citation-input-3"
+                class="citation-input"
+                data-chapter="3"
+                placeholder="Add citation (APA, MLA, or BibTeX)"
+                style="flex: 1"
+              />
+              <button class="btn-small add-citation" data-chapter="3">
+                Add
+              </button>
+            </div>
+            <ul
+              class="citation-list"
+              id="citation-list-3"
+              style="margin-top: 8px"
+            ></ul>
+            <div class="citation-actions" style="margin-top: 8px">
+              <button
+                class="btn-small export-chapter-citations"
+                data-chapter="3"
+              >
+                Export Chapter Citations
+              </button>
+            </div>
+          </div>
+
+          <!-- Per-chapter timer removed; use global floating timer -->
+        </section>
+      </div>
+
+      <!-- Chapter 4 -->
+      <div class="tab-content hidden" id="chapter4" role="tabpanel">
+        <section class="chapter-section ch4">
+          <header class="chapter-header">
+            <h3>Chapter 4: Results and Discussion</h3>
+            <div class="chapter-controls">
+              <button class="btn-small export-chapter" data-chapter="4">
+                Export Chapter
+              </button>
+              <button class="btn-small print-chapter" data-chapter="4">
+                Print
+              </button>
+            </div>
+          </header>
+
+          <p>
+            <strong>Purpose:</strong> Present findings and interpret their
+            meaning.
+          </p>
+
+          <div class="progress-box">
+            <label>Progress:</label>
+            <div class="progress-bar"><span id="progress4-fill"></span></div>
+            <small id="progress4-text">0% Completed</small>
+          </div>
+
+          <!-- Interactive Tasks -->
+          <div class="tasks card">
+            <div class="tasks-header">
+              <strong>Interactive Checklist</strong>
+              <p class="checklist-instruction">
+                Click on any task below to get step-by-step guidance and
+                complete it!
+              </p>
+            </div>
+            <ul class="tasks-list" id="tasks-list-4">
+              <li
+                class="interactive-task"
+                data-task="presentation-of-results"
+                data-chapter="4"
+              >
+                <span class="task-checkbox">☐</span>
+                <span class="checklist-label">Presentation of Results</span>
+                <span class="task-status">Click to start</span>
+              </li>
+              <li
+                class="interactive-task"
+                data-task="interpretation-of-data"
+                data-chapter="4"
+              >
+                <span class="task-checkbox">☐</span>
+                <span class="checklist-label">Interpretation of Data</span>
+                <span class="task-status">Click to start</span>
+              </li>
+              <li
+                class="interactive-task"
+                data-task="link-to-literature"
+                data-chapter="4"
+              >
+                <span class="task-checkbox">☐</span>
+                <span class="checklist-label">Link to Literature</span>
+                <span class="task-status">Click to start</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Task Workspace -->
+          <div
+            class="task-workspace"
+            id="task-workspace-4"
+            style="display: none"
+          >
+            <!-- Dynamic task sections will be created here -->
+          </div>
+
+          <div class="notes card">
+            <label for="notes-4"><strong>Notes / Comments</strong></label>
+            <textarea
+              id="notes-4"
+              class="notes-input"
+              rows="4"
+              placeholder="Write private notes for this chapter..."
+            ></textarea>
+            <div class="notes-actions">
+              <button class="btn-secondary save-notes" data-chapter="4">
+                Save Note
+              </button>
+              <button class="btn-secondary clear-notes" data-chapter="4">
+                Clear Note
+              </button>
+            </div>
+          </div>
+
+          <!-- Citations for this chapter -->
+          <div class="citations card">
+            <label for="citation-input-4"><strong>Citations</strong></label>
+            <div
+              style="
+                display: flex;
+                gap: 8px;
+                margin-top: 6px;
+                align-items: center;
+              "
+            >
+              <input
+                type="text"
+                id="citation-input-4"
+                class="citation-input"
+                data-chapter="4"
+                placeholder="Add citation (APA, MLA, or BibTeX)"
+                style="flex: 1"
+              />
+              <button class="btn-small add-citation" data-chapter="4">
+                Add
+              </button>
+            </div>
+            <ul
+              class="citation-list"
+              id="citation-list-4"
+              style="margin-top: 8px"
+            ></ul>
+            <div class="citation-actions" style="margin-top: 8px">
+              <button
+                class="btn-small export-chapter-citations"
+                data-chapter="4"
+              >
+                Export Chapter Citations
+              </button>
+            </div>
+          </div>
+
+          <!-- Per-chapter timer removed; use global floating timer -->
+        </section>
+      </div>
+
+      <!-- Chapter 5 -->
+      <div class="tab-content hidden" id="chapter5" role="tabpanel">
+        <section class="chapter-section ch5">
+          <header class="chapter-header">
+            <h3>Chapter 5: Summary, Conclusion, and Recommendations</h3>
+            <div class="chapter-controls">
+              <button class="btn-small export-chapter" data-chapter="5">
+                Export Chapter
+              </button>
+              <button class="btn-small print-chapter" data-chapter="5">
+                Print
+              </button>
+            </div>
+          </header>
+
+          <p>
+            <strong>Purpose:</strong> Wrap up the study and present conclusions
+            and recommendations.
+          </p>
+
+          <div class="progress-box">
+            <label>Progress:</label>
+            <div class="progress-bar"><span id="progress5-fill"></span></div>
+            <small id="progress5-text">0% Completed</small>
+          </div>
+
+          <!-- Interactive Tasks -->
+          <div class="tasks card">
+            <div class="tasks-header">
+              <strong>Interactive Checklist</strong>
+              <p class="checklist-instruction">
+                Click on any task below to get step-by-step guidance and
+                complete it!
+              </p>
+            </div>
+            <ul class="tasks-list" id="tasks-list-5">
+              <li
+                class="interactive-task"
+                data-task="summary-of-findings"
+                data-chapter="5"
+              >
+                <span class="task-checkbox">☐</span>
+                <span class="checklist-label">Summary of Findings</span>
+                <span class="task-status">Click to start</span>
+              </li>
+              <li
+                class="interactive-task"
+                data-task="conclusion"
+                data-chapter="5"
+              >
+                <span class="task-checkbox">☐</span>
+                <span class="checklist-label">Conclusion</span>
+                <span class="task-status">Click to start</span>
+              </li>
+              <li
+                class="interactive-task"
+                data-task="recommendations"
+                data-chapter="5"
+              >
+                <span class="task-checkbox">☐</span>
+                <span class="checklist-label">Recommendations</span>
+                <span class="task-status">Click to start</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Task Workspace -->
+          <div
+            class="task-workspace"
+            id="task-workspace-5"
+            style="display: none"
+          >
+            <!-- Dynamic task sections will be created here -->
+          </div>
+
+          <div class="notes card">
+            <label for="notes-5"><strong>Notes / Comments</strong></label>
+            <textarea
+              id="notes-5"
+              class="notes-input"
+              rows="4"
+              placeholder="Write private notes for this chapter..."
+            ></textarea>
+            <div class="notes-actions">
+              <button class="btn-secondary save-notes" data-chapter="5">
+                Save Note
+              </button>
+              <button class="btn-secondary clear-notes" data-chapter="5">
+                Clear Note
+              </button>
+            </div>
+          </div>
+
+          <!-- Citations for this chapter -->
+          <div class="citations card">
+            <label for="citation-input-5"><strong>Citations</strong></label>
+            <div
+              style="
+                display: flex;
+                gap: 8px;
+                margin-top: 6px;
+                align-items: center;
+              "
+            >
+              <input
+                type="text"
+                id="citation-input-5"
+                class="citation-input"
+                data-chapter="5"
+                placeholder="Add citation (APA, MLA, or BibTeX)"
+                style="flex: 1"
+              />
+              <button class="btn-small add-citation" data-chapter="5">
+                Add
+              </button>
+            </div>
+            <ul
+              class="citation-list"
+              id="citation-list-5"
+              style="margin-top: 8px"
+            ></ul>
+            <div class="citation-actions" style="margin-top: 8px">
+              <button
+                class="btn-small export-chapter-citations"
+                data-chapter="5"
+              >
+                Export Chapter Citations
+              </button>
+            </div>
+          </div>
+
+          <!-- Per-chapter timer removed; use global floating timer -->
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 WriteWise</p>
+    </footer>
+
+    <script defer src="js/responsive-embeds.js"></script>
+    <script defer src="js/header-mobile.js"></script>
+  </body>
+</html>

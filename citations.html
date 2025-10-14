@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <script defer src="js/site-utils.js"></script>
+    <title>Citation Generator</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/citation.css" />
+  </head>
+  <body>
+    <header class="responsive-header" id="mainHeader">
+      <!-- Left group: sidebar + theme toggle -->
+      <div class="header-actions">
+        <button id="toggleSidebarHeader" class="sidebar-toggle">☰</button>
+        <button id="themeToggleHeader" class="sidebar-toggle">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+
+      <!-- Center group: logo + title -->
+      <div class="logo-title">
+        <img
+          src="images/logo-index.png"
+          alt="WriteWise Logo"
+          class="logo-img"
+        />
+        <h1>Citation Styles</h1>
+      </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top">
+        <button id="toggleSidebarInside" class="sidebar-toggle">☰</button>
+        <button id="themeToggleInside" class="sidebar-toggle">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+      <nav class="sidebar-nav">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="learning.html#lessons">Learning</a>
+        <a class="nav-link" href="chapter-guide.html">Chapter Guide</a>
+        <a class="nav-link" href="grammar.html">Grammar</a>
+        <a class="nav-link" href="plagiarism.html">Plagiarism</a>
+        <a class="nav-link" href="keywords.html">Keywords</a>
+        <a class="nav-link" href="citations.html">Citations</a>
+        <a class="nav-link" href="contact.html">Contact</a>
+      </nav>
+    </aside>
+
+    <main class="page-main">
+      <h2 class="fade-in">Citation Generator</h2>
+      <p class="fade-in" style="animation-delay: 0.1s">
+        Enter the details of your source below to generate citations. Switch
+        style, upload a batch, and export your results.
+      </p>
+
+      <!-- Style Switcher -->
+      <div
+        class="form-group fade-in"
+        style="margin-bottom: 1.5em; animation-delay: 0.15s"
+      >
+        <label for="style-switcher"><strong>Preview Style:</strong></label>
+        <select id="style-switcher" class="glow-citation">
+          <option value="apa">APA</option>
+          <option value="mla">MLA</option>
+          <option value="chicago">Chicago</option>
+        </select>
+      </div>
+
+      <!-- Batch Upload -->
+      <div
+        class="form-group fade-in"
+        style="margin-bottom: 1.5em; animation-delay: 0.2s"
+      >
+        <label for="batch-upload"
+          ><strong>Batch Upload (CSV/JSON):</strong></label
+        >
+        <input
+          type="file"
+          id="batch-upload"
+          accept=".csv,.json"
+          class="glow-citation"
+        />
+        <small
+          >Upload a file with multiple references to generate citations in
+          bulk.</small
+        >
+      </div>
+
+      <form id="citation-form" class="slide-in-citation">
+        <div class="form-group fade-in" style="animation-delay: 0.25s">
+          <label for="author"
+            >Author(s):
+            <span class="tooltip" title="e.g., Smith, John A.; Lee, Jane"
+              >&#9432;</span
+            >
+          </label>
+          <input
+            type="text"
+            id="author"
+            name="author"
+            placeholder="e.g., Smith, John A.; Lee, Jane"
+          />
+          <small
+            >Use format: Last Name, First Initial(s). Separate multiple authors
+            with semicolons (;).</small
+          >
+        </div>
+
+        <div class="form-group fade-in" style="animation-delay: 0.3s">
+          <label for="year"
+            >Publication Year:
+            <span class="tooltip" title="e.g., 2023">&#9432;</span>
+          </label>
+          <input type="number" id="year" name="year" placeholder="e.g., 2023" />
+        </div>
+
+        <div class="form-group fade-in" style="animation-delay: 0.35s">
+          <label for="title"
+            >Title:
+            <span class="tooltip" title="e.g., The Principles of Citation"
+              >&#9432;</span
+            >
+          </label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            placeholder="e.g., The Principles of Citation"
+          />
+          <small>Title of the book, article, or specific web page.</small>
+        </div>
+
+        <div class="form-group fade-in" style="animation-delay: 0.4s">
+          <label for="publisher-source"
+            >Publisher / Journal / Website Name:
+            <span
+              class="tooltip"
+              title="e.g., Academic Press or The Example Times"
+              >&#9432;</span
+            >
+          </label>
+          <input
+            type="text"
+            id="publisher-source"
+            name="publisher-source"
+            placeholder="e.g., Academic Press or The Example Times"
+          />
+          <small
+            >Publisher for books, Journal Name for articles, Main Website Name
+            for web pages.</small
+          >
+        </div>
+
+        <div class="form-group fade-in" style="animation-delay: 0.45s">
+          <label for="url"
+            >URL (if applicable):
+            <span class="tooltip" title="e.g., https://www.example.com/page"
+              >&#9432;</span
+            >
+          </label>
+          <input
+            type="url"
+            id="url"
+            name="url"
+            placeholder="e.g., https://www.example.com/page"
+          />
+        </div>
+
+        <button type="submit" class="tada-citation">Generate Citations</button>
+      </form>
+
+      <div id="citation-results" class="fade-in" style="animation-delay: 0.5s">
+        <h3>Generated Citations:</h3>
+        <div id="apa-output" class="citation-output slide-in-citation">
+          <strong>APA:</strong> <span>Waiting for input...</span>
+        </div>
+        <div id="mla-output" class="citation-output slide-in-citation">
+          <strong>MLA:</strong> <span>Waiting for input...</span>
+        </div>
+        <div id="chicago-output" class="citation-output slide-in-citation">
+          <strong>Chicago (Bibliography):</strong>
+          <span>Waiting for input...</span>
+        </div>
+        <!-- Live Preview Area -->
+        <div
+          id="live-preview"
+          class="fade-in"
+          style="margin-top: 1.5em; animation-delay: 0.55s"
+        >
+          <strong>Live Preview:</strong>
+          <div id="preview-content" style="margin-top: 0.5em">
+            Waiting for input...
+          </div>
+        </div>
+        <!-- Export Options -->
+        <div
+          id="export-options"
+          class="fade-in"
+          style="margin-top: 1.5em; animation-delay: 0.6s"
+        >
+          <strong>Export:</strong>
+          <button id="copy-citation" type="button" class="tada-citation">
+            Copy
+          </button>
+          <button id="download-docx" type="button" class="tada-citation">
+            Download DOCX
+          </button>
+          <button id="download-bibtex" type="button" class="tada-citation">
+            Download BibTeX
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>© 2025 WriteWise</p>
+    </footer>
+
+    <script src="js/citation.js"></script>
+    <script defer src="js/responsive-embeds.js"></script>
+    <script defer src="js/header-mobile.js"></script>
+  </body>
+</html>

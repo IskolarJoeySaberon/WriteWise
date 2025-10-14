@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Interactive Hero + Dashboard + Search</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      :root {
+        --bg: #0b0b0f;
+        --text: #fff;
+        --muted: #ffffffb3;
+        --accent: #6366f1;
+      }
+      body {
+        margin: 0;
+        font-family: system-ui, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.5;
+      }
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+      }
+
+      /* HERO */
+      .hero {
+        position: relative;
+        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        overflow: hidden;
+        background: linear-gradient(135deg, #4f46e5, #9333ea);
+        color: #fff;
+        padding: 2rem;
+      }
+      .hero h1 {
+        font-size: clamp(2rem, 6vw, 4rem);
+        font-weight: 700;
+      }
+      .hero p {
+        max-width: 600px;
+        margin-top: 1rem;
+        color: #ffffffcc;
+      }
+
+      /* Dashboard */
+      .dashboard {
+        max-width: 1000px;
+        margin: 3rem auto;
+        padding: 0 1rem;
+      }
+      .dashboard h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+      .cards {
+        display: grid;
+        gap: 1.5rem;
+        grid-template-columns: 1fr;
+      }
+      @media (min-width: 768px) {
+        .cards {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      .card {
+        background: #fff;
+        color: #111;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      }
+      .progress-bar {
+        background: #e5e7eb;
+        border-radius: 999px;
+        height: 10px;
+        overflow: hidden;
+        margin-top: 1rem;
+      }
+      .progress-fill {
+        background: var(--accent);
+        height: 100%;
+        width: 0%;
+        border-radius: 999px;
+      }
+
+      /* Quick Search */
+      .search {
+        max-width: 600px;
+        margin: 3rem auto;
+        text-align: center;
+        padding: 0 1rem;
+      }
+      .search input {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HERO -->
+    <section class="hero">
+      <h1>Learn Smarter. Move Faster.</h1>
+      <p>
+        Interactive animations, personalized dashboards, and instant search to
+        kickstart your journey.
+      </p>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section class="dashboard">
+      <h2>Your Dashboard</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>Progress</h3>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <p id="progressText">0% completed</p>
+        </div>
+        <div class="card">
+          <h3>Recent Activity</h3>
+          <ul>
+            <li>Chapter 5: Functions</li>
+            <li>Chapter 6: Loops</li>
+            <li>Chapter 7: Objects</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEARCH -->
+    <section class="search">
+      <h2>Quick Start</h2>
+      <input type="text" placeholder="Type a topic to begin..." />
+    </section>
+
+    <!-- GSAP -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script>
+      // Animate hero entrance
+      gsap.from(".hero h1", {
+        y: 40,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+      });
+      gsap.from(".hero p", {
+        y: 20,
+        opacity: 0,
+        duration: 1,
+        delay: 0.3,
+        ease: "power3.out",
+      });
+
+      // Animate progress bar
+      const progress = 65; // Example %
+      gsap.to("#progressFill", {
+        width: progress + "%",
+        duration: 1.2,
+        ease: "power2.out",
+      });
+      document.getElementById("progressText").textContent =
+        progress + "% completed";
+
+      // Parallax effect on hero
+      const hero = document.querySelector(".hero");
+      hero.addEventListener("mousemove", (e) => {
+        const { innerWidth, innerHeight } = window;
+        const x = (e.clientX / innerWidth - 0.5) * 20;
+        const y = (e.clientY / innerHeight - 0.5) * 20;
+        gsap.to(".hero h1", { x, y, duration: 0.4, ease: "power2.out" });
+        gsap.to(".hero p", { x: -x, y: -y, duration: 0.4, ease: "power2.out" });
+      });
+    </script>
+      <script defer src="js/site-utils.js"></script>
+    <script defer src="js/responsive-embeds.js"></script>
+    <script defer src="js/header-mobile.js"></script>
+  </body>
+</html>

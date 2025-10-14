@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plagiarism Check | WriteWise</title>
+  <!-- Global styles & fonts -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/plagiarism.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <script defer src="js/site-utils.js"></script>
+  <!-- Scripts -->
+  <script defer src="js/main.js"></script>
+  <script defer src="js/plagiarism.js"></script>
+</head>
+
+<body>
+  <header class="responsive-header" id="mainHeader">
+      <!-- Left group: sidebar + theme toggle -->
+      <div class="header-actions">
+        <button id="toggleSidebarHeader" class="sidebar-toggle">☰</button>
+        <button id="themeToggleHeader" class="sidebar-toggle">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+
+      <!-- Center group: page title -->
+      <div class="logo-title">
+        <img src="images/logo-index.png" alt="WriteWise Logo" class="logo-img" />
+        <h1>Plagiarism Checker</h1>
+      </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top">
+        <button id="toggleSidebarInside" class="sidebar-toggle">☰</button>
+        <button id="themeToggleInside" class="sidebar-toggle">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+      <nav class="sidebar-nav">
+        <a class="nav-link" href="index.html">Home</a>
+  <a class="nav-link" href="learning.html#lessons">Learning</a>
+        <a class="nav-link" href="chapter-guide.html">Chapter Guide</a>
+        <a class="nav-link" href="grammar.html">Grammar</a>
+        <a class="nav-link" href="plagiarism.html">Plagiarism</a>
+        <a class="nav-link" href="keywords.html">Keywords</a>
+        <a class="nav-link" href="citations.html">Citations</a>
+        <a class="nav-link" href="contact.html">Contact</a>
+      </nav>
+    </aside>
+
+  <!-- Main -->
+  <main class="container plagiarism-page">
+    <p>Paste your work and a reference/source to check for similarity. You can also upload a <b>.txt</b> file as your reference.</p>
+
+
+<div class="input-section">
+  <div class="input-box card">
+    <label for="studentText"></i> ✍️ Your Work</label>
+    <textarea id="studentText" rows="8" placeholder="Paste your own text here..."></textarea>
+  </div>
+
+  <div class="input-box card">
+    <label for="referenceText"></i> 📖 Reference / Source</label>
+    <textarea id="referenceText" rows="8" placeholder="Paste reference or source text here..."></textarea>
+  </div>
+
+  <div class="upload-box card">
+    <label for="fileUpload"></i> 📂 Or Upload Reference (.txt file)</label>
+    <input type="file" id="fileUpload" accept=".txt">
+  </div>
+</div>
+
+<button id="checkBtn" class="btn fancy-btn">🔎 Check Similarity</button>
+
+<div id="results" class="results-section hidden">
+  <h3>Results</h3>
+  <p id="similarityScore"><strong>Overall Similarity Score:</strong> 0%</p>
+  
+  <!-- Progress bar -->
+  <div class="progress-container">
+    <div id="progressBar" class="progress-bar"></div>
+  </div>
+
+  <div id="highlightedText"></div>
+</div>
+
+
+    <div id="results" class="results-section hidden">
+      <h3>Results</h3>
+      <p id="similarityScore"><strong>Overall Similarity Score:</strong> 0%</p>
+      <div id="highlightedText"></div>
+    </div>
+
+    <div class="info-box">
+      <h3>🎯 What It Can Do</h3>
+      <ul>
+        <li>Detects direct copy-paste (verbatim plagiarism).</li>
+        <li>Highlights sentences with overlapping words from the reference.</li>
+        <li>Displays a clear similarity percentage.</li>
+        <li>Works offline — lightweight and private for students.</li>
+      </ul>
+    </div>
+  </main>
+
+
+<!-- Floating Help Button -->
+<div class="help-widget">
+  <button id="helpBtn" class="help-button">💬 Help</button>
+  <div id="helpPanel" class="help-panel hidden">
+    <div class="help-header">
+      <h4>Need Help?</h4>
+      <button id="closeHelp" class="close-btn">&times;</button>
+    </div>
+    <div class="help-body">
+      <p>Here are some quick options:</p>
+      <ul>
+        <li><a href="chapter-guide.html">📘 Chapter Guide</a></li>
+        <li><a href="grammar.html">✍️ Grammar Support</a></li>
+        <li><a href="plagiarism.html">🔎 Plagiarism Check</a></li>
+        <li><a href="contact.html">📩 Contact Us</a></li>
+      </ul>
+      <form class="help-form">
+        <label for="helpMsg">Ask a quick question:</label>
+        <textarea id="helpMsg" rows="3" placeholder="Type your message..."></textarea>
+        <button type="submit" class="btn small-btn">Send</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Footer -->
+  <footer id="footer">
+    <p>&copy; 2025 WriteWise. All rights reserved.</p>
+  </footer>
+</body>
+<script defer src="js/responsive-embeds.js"></script>
+</html>

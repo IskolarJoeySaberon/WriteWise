@@ -1,0 +1,1870 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WriteWise - Learning</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/lessons.css" />
+    <link rel="stylesheet" href="css/tutorials.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <script defer src="js/site-utils.js"></script>
+    <script defer src="js/main.js"></script>
+    <script defer src="js/lessons.js"></script>
+    <script defer src="js/tutorials.js"></script>
+  </head>
+  <body>
+    <header class="responsive-header" id="mainHeader">
+      <div class="header-actions">
+        <button id="toggleSidebarHeader" class="sidebar-toggle">☰</button>
+        <button id="themeToggleHeader" class="sidebar-toggle">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+      <div class="logo-title">
+        <img
+          src="images/logo-index.png"
+          alt="WriteWise Logo"
+          class="logo-img"
+        />
+        <h1>Learning &amp; Tutorials</h1>
+      </div>
+    </header>
+    <script>
+      // Minimal tab switching for Lessons/Tutorials (sidebar/theme handled by site-utils.js)
+      document.addEventListener("DOMContentLoaded", function () {
+        const lessonsBtn = document.getElementById("tabLessonsBtn");
+        const tutorialsBtn = document.getElementById("tabTutorialsBtn");
+        const lessonsPanel = document.getElementById("tabLessons");
+        const tutorialsPanel = document.getElementById("tabTutorials");
+        if (!lessonsBtn || !tutorialsBtn || !lessonsPanel || !tutorialsPanel)
+          return;
+
+        function showPanel(panelName, syncHash = true) {
+          const isLessons = panelName !== "tutorials";
+          lessonsBtn.classList.toggle("active", isLessons);
+          tutorialsBtn.classList.toggle("active", !isLessons);
+          lessonsPanel.style.display = isLessons ? "" : "none";
+          tutorialsPanel.style.display = !isLessons ? "" : "none";
+          if (syncHash) {
+            try {
+              history.replaceState(
+                null,
+                "",
+                "#" + (isLessons ? "lessons" : "tutorials")
+              );
+            } catch (e) {
+              location.hash = isLessons ? "lessons" : "tutorials";
+            }
+          }
+        }
+
+        lessonsBtn.addEventListener("click", () => showPanel("lessons"));
+        tutorialsBtn.addEventListener("click", () => showPanel("tutorials"));
+
+        const initialHash = (location.hash || "").replace("#", "");
+        showPanel(initialHash === "tutorials" ? "tutorials" : "lessons", false);
+        window.addEventListener("hashchange", () => {
+          const h = (location.hash || "").replace("#", "");
+          showPanel(h === "tutorials" ? "tutorials" : "lessons", false);
+        });
+      });
+    </script>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top">
+        <button id="toggleSidebarInside" class="sidebar-toggle">☰</button>
+        <button id="themeToggleInside" class="sidebar-toggle">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+      <nav class="sidebar-nav">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="learning.html#lessons">Learning</a>
+        <a class="nav-link" href="chapter-guide.html">Chapter Guide</a>
+        <a class="nav-link" href="grammar.html">Grammar</a>
+        <a class="nav-link" href="plagiarism.html">Plagiarism</a>
+        <a class="nav-link" href="keywords.html">Keywords</a>
+        <a class="nav-link" href="citations.html">Citations</a>
+        <a class="nav-link" href="contact.html">Contact</a>
+      </nav>
+    </aside>
+
+    <main class="learning-main">
+      <div class="learning-controls">
+        <button id="tabLessonsBtn" class="tab-btn active">Lessons</button>
+        <button id="tabTutorialsBtn" class="tab-btn">Tutorials</button>
+      </div>
+
+      <!-- LESSONS full content (imported from provided lessons.html) -->
+      <div id="tabLessons" class="learning-tab-panel">
+        <main class="fade-in-lessons">
+          <h2>Academic Writing Concepts</h2>
+          <p>Understand ethics, sampling methods, research design, etc.</p>
+          <!-- Lesson Completion Tracker (Gamification) -->
+          <section id="lesson-tracker" class="gamification-section">
+            <div class="tracker-controls">
+              <h3>Lesson Completion Tracker</h3>
+              <button
+                id="resetLessonsBtn"
+                class="btn btn-reset-module"
+                title="Reset all lesson activities"
+              >
+                Reset Lessons
+              </button>
+            </div>
+            <div class="tracker-bar">
+              <div
+                class="tracker-progress"
+                id="tracker-progress"
+                style="width: 0%"
+              ></div>
+              <span class="tracker-label" id="tracker-label">0% Complete</span>
+            </div>
+            <p class="tracker-help">
+              Complete lessons to earn badges and unlock new activities. Reset
+              clears answers and progress so you can try again.
+            </p>
+          </section>
+
+          <div class="chapter" id="chapter1">
+            <h3 class="chapter-title">Chapter 1: Introduction to Research</h3>
+            <div class="lessons-container">
+              <div class="lesson-card">
+                <h3 class="lesson-title">Lesson 1.1: What is Research?</h3>
+                <p class="lesson-description">
+                  An overview of the research process.
+                </p>
+                <!-- Interactive Infographic -->
+                <div class="infographic">
+                  <!-- image + hotspots preserved -->
+                  <img
+                    src="images/guided.png"
+                    alt="Infographic: What is Research?"
+                    style="max-width: 100%"
+                  />
+                  <div class="infographic-hotspots">
+                    <button
+                      type="button"
+                      class="hotspot"
+                      style="top: 18%; left: 28%"
+                      data-info="Formulate Question"
+                    >
+                      1
+                    </button>
+                    <button
+                      type="button"
+                      class="hotspot"
+                      style="top: 22%; left: 68%"
+                      data-info="Review Literature"
+                    >
+                      2
+                    </button>
+                    <button
+                      type="button"
+                      class="hotspot"
+                      style="top: 62%; left: 50%"
+                      data-info="Collect Data"
+                    >
+                      3
+                    </button>
+                    <button
+                      type="button"
+                      class="hotspot"
+                      style="top: 72%; left: 32%"
+                      data-info="Analyze Results"
+                    >
+                      4
+                    </button>
+                    <button
+                      type="button"
+                      class="hotspot"
+                      style="top: 72%; left: 68%"
+                      data-info="Draw Conclusions"
+                    >
+                      5
+                    </button>
+                  </div>
+                  <div id="hotspot-info" class="fade-in"></div>
+                </div>
+                <!-- Mini-Activity: Drag-and-Drop (Unique: Research Steps) -->
+                <div class="mini-activity">
+                  <h4>Mini Activity: Drag-and-Drop</h4>
+                  <p>Arrange the steps of the research process in order.</p>
+                  <ul id="research-steps" class="drag-list">
+                    <li class="drag-item" draggable="true">Analyze Results</li>
+                    <li class="drag-item" draggable="true">
+                      Formulate Question
+                    </li>
+                    <li class="drag-item" draggable="true">Draw Conclusions</li>
+                    <li class="drag-item" draggable="true">Collect Data</li>
+                    <li class="drag-item" draggable="true">
+                      Review Literature
+                    </li>
+                  </ul>
+                  <button class="check-order-btn">Check Order</button>
+                  <div class="orderResult"></div>
+                </div>
+                <div class="lesson-status">Not Completed</div>
+                <div class="lesson-actions">
+                  <a href="#" class="lesson-button view-button">View</a>
+                </div>
+                <!-- Key Takeaways Box -->
+                <div class="key-takeaways">
+                  <h4>Key Takeaways</h4>
+                  <ul>
+                    <li>Research is a systematic process.</li>
+                    <li>It involves asking questions and finding answers.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="lesson-card">
+                <h3 class="lesson-title">Lesson 1.2: Types of Research</h3>
+                <p class="lesson-description">
+                  Exploring different categories of research.
+                </p>
+                <!-- Mini-Activity: Fill-in-the-Blank (Unique: Types of Research) -->
+                <div class="mini-activity">
+                  <h4>Mini Activity: Fill-in-the-Blank</h4>
+                  <p>
+                    Fill in the missing word:
+                    <input type="text" id="fillBlank1" size="10" /> research
+                    uses numbers and statistics. <br />
+                    <input type="text" id="fillBlank1b" size="10" /> research
+                    uses words and meanings.
+                  </p>
+                  <button id="checkFillBlank1">Check</button>
+                  <span id="fillBlank1Result"></span>
+                </div>
+                <div class="lesson-status">Not Completed</div>
+                <div class="lesson-actions">
+                  <a href="#" class="lesson-button view-button">View</a>
+                </div>
+                <!-- Key Takeaways Box -->
+                <div class="key-takeaways">
+                  <h4>Key Takeaways</h4>
+                  <ul>
+                    <li>
+                      There are many types of research: qualitative,
+                      quantitative, etc.
+                    </li>
+                    <li>Each type serves a different purpose.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="chapter-navigation single-button-right">
+              <a id="nextChapter1">Next Chapter</a>
+            </div>
+          </div>
+
+          <div class="chapter" id="chapter2">
+            <h3 class="chapter-title">Chapter 2: Research Ethics</h3>
+            <div class="lessons-container">
+              <div class="lesson-card">
+                <h3 class="lesson-title">Lesson 2.1: Ethical Principles</h3>
+                <p class="lesson-description">
+                  Fundamental ethical considerations in research.
+                </p>
+                <!-- Interactive Infographic -->
+                <div class="infographic">
+                  <img
+                    src="images/accessible.png"
+                    alt="Infographic: Ethical Principles"
+                    style="max-width: 100%"
+                  />
+                  <div class="infographic-hotspots">
+                    <button
+                      type="button"
+                      class="hotspot"
+                      style="top: 30%; left: 20%"
+                      data-info="Respect: Treating participants fairly"
+                    >
+                      1
+                    </button>
+                    <button
+                      type="button"
+                      class="hotspot"
+                      style="top: 60%; left: 60%"
+                      data-info="Integrity: Being honest in research"
+                    >
+                      2
+                    </button>
+                    <button
+                      type="button"
+                      class="hotspot"
+                      style="top: 80%; left: 80%"
+                      data-info="Responsibility: Protecting participants"
+                    >
+                      3
+                    </button>
+                  </div>
+                  <div class="hotspot-info-2-1 fade-in"></div>
+                </div>
+                <!-- Mini-Activity: Matching (Unique: Ethics) -->
+                <div class="mini-activity">
+                  <h4>Mini Activity: Matching</h4>
+                  <p>Match each ethical principle to its definition:</p>
+                  <div class="matching-row">
+                    <span>Respect</span>
+                    <select id="match-ethics-1">
+                      <option value="">Select...</option>
+                      <option value="A">A. Treating participants fairly</option>
+                      <option value="B">B. Being honest in research</option>
+                      <option value="C">C. Protecting participants</option>
+                    </select>
+                  </div>
+                  <div class="matching-row">
+                    <span>Integrity</span>
+                    <select id="match-ethics-2">
+                      <option value="">Select...</option>
+                      <option value="A">A. Treating participants fairly</option>
+                      <option value="B">B. Being honest in research</option>
+                      <option value="C">C. Protecting participants</option>
+                    </select>
+                  </div>
+                  <div class="matching-row">
+                    <span>Responsibility</span>
+                    <select id="match-ethics-3">
+                      <option value="">Select...</option>
+                      <option value="A">A. Treating participants fairly</option>
+                      <option value="B">B. Being honest in research</option>
+                      <option value="C">C. Protecting participants</option>
+                    </select>
+                  </div>
+                  <button class="check-matching-ethics">Check Answers</button>
+                  <div class="matchingResultEthics"></div>
+                </div>
+                <div class="lesson-status">Not Completed</div>
+                <div class="lesson-actions">
+                  <a href="#" class="lesson-button view-button">View</a>
+                </div>
+                <!-- Key Takeaways Box -->
+                <div class="key-takeaways">
+                  <h4>Key Takeaways</h4>
+                  <ul>
+                    <li>Ethics are essential in research.</li>
+                    <li>
+                      Respect, integrity, and responsibility are key values.
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="lesson-card">
+                <h3 class="lesson-title">Lesson 2.2: Informed Consent</h3>
+                <p class="lesson-description">
+                  The importance of informed consent.
+                </p>
+                <!-- Interactive Infographic -->
+                <div class="infographic">
+                  <img
+                    src="images/smart.png"
+                    alt="Infographic: Informed Consent"
+                    style="max-width: 100%"
+                  />
+                  <div class="infographic-hotspots">
+                    <button
+                      type="button"
+                      class="hotspot"
+                      style="top: 40%; left: 30%"
+                      data-info="Informed: Participants know what will happen"
+                    >
+                      1
+                    </button>
+                    <button
+                      type="button"
+                      class="hotspot"
+                      style="top: 70%; left: 70%"
+                      data-info="Consent: Participants agree to take part"
+                    >
+                      2
+                    </button>
+                  </div>
+                  <div class="hotspot-info-2-2 fade-in"></div>
+                </div>
+                <!-- Mini-Activity: Fill-in-the-Blank (Unique: Informed Consent) -->
+                <div class="mini-activity">
+                  <h4>Mini Activity: Fill-in-the-Blank</h4>
+                  <p>
+                    Complete: Informed consent means participants
+                    <input type="text" id="fillBlank2" size="10" /> to take part
+                    and <input type="text" id="fillBlank2b" size="10" /> the
+                    study details.
+                  </p>
+                  <button id="checkFillBlank2">Check</button>
+                  <span id="fillBlank2Result" aria-live="polite"></span>
+                </div>
+                <div class="lesson-status">Not Completed</div>
+                <div class="lesson-actions">
+                  <a href="#" class="lesson-button view-button">View</a>
+                </div>
+                <!-- Key Takeaways Box -->
+                <div class="key-takeaways">
+                  <h4>Key Takeaways</h4>
+                  <ul>
+                    <li>Informed consent protects participants.</li>
+                    <li>It ensures transparency and respect.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="chapter-navigation double-button">
+              <a id="prevChapter2">Previous Chapter</a>
+              <a id="nextChapter2">Next Chapter</a>
+            </div>
+          </div>
+
+          <!-- Chapters 3, 4, 5 (kept intact from provided file) -->
+          <div class="chapter" id="chapter3">
+            <h3 class="chapter-title">Chapter 3: Sampling Methods</h3>
+            <div class="lessons-container">
+              <div class="lesson-card">
+                <h3 class="lesson-title">Lesson 3.1: Basic Sampling</h3>
+                <p class="lesson-description">
+                  Introduction to sampling concepts.
+                </p>
+                <div class="infographic">
+                  <img
+                    src="images/lamp.png"
+                    alt="Infographic: Basic Sampling"
+                    style="max-width: 100%"
+                  />
+                  <div class="infographic-hotspots">
+                    <button
+                      type="button"
+                      class="hotspot"
+                      style="top: 30%; left: 20%"
+                      data-info="Random: Everyone has a chance"
+                    >
+                      1
+                    </button>
+                    <button
+                      type="button"
+                      class="hotspot"
+                      style="top: 60%; left: 60%"
+                      data-info="Convenience: Easiest to reach"
+                    >
+                      2
+                    </button>
+                    <button
+                      type="button"
+                      class="hotspot"
+                      style="top: 80%; left: 80%"
+                      data-info="Stratified: Groups by characteristics"
+                    >
+                      3
+                    </button>
+                    <button
+                      type="button"
+                      class="hotspot"
+                      style="top: 50%; left: 40%"
+                      data-info="Cluster: Divided into groups, then sampled"
+                    >
+                      4
+                    </button>
+                  </div>
+                  <div class="hotspot-info-3-1 fade-in"></div>
+                </div>
+                <div class="mini-activity">
+                  <h4>Mini Activity: Drag-and-Drop</h4>
+                  <p>Sort sampling types by their characteristics.</p>
+                  <ul class="drag-list" id="sampling-types-3-1">
+                    <li class="drag-item" draggable="true">Random</li>
+                    <li class="drag-item" draggable="true">Systematic</li>
+                    <li class="drag-item" draggable="true">Stratified</li>
+                    <li class="drag-item" draggable="true">Cluster</li>
+                  </ul>
+                  <button class="check-sampling" data-activity="3-1">
+                    Check Order
+                  </button>
+                  <div class="samplingResult-3-1"></div>
+                </div>
+              </div>
+              <div class="lesson-card">
+                <h3 class="lesson-title">Lesson 3.2: Probability Sampling</h3>
+                <p class="lesson-description">
+                  Different types of probability sampling.
+                </p>
+                <div class="infographic">
+                  <img
+                    src="images/fLOWCHART-660x395.png"
+                    alt="Infographic: Probability Sampling"
+                    style="max-width: 100%"
+                  />
+                  <div class="infographic-hotspots">
+                    <button
+                      type="button"
+                      class="hotspot"
+                      style="top: 40%; left: 30%"
+                      data-info="Simple Random: Equal chance for all"
+                    >
+                      1
+                    </button>
+                    <button
+                      type="button"
+                      class="hotspot"
+                      style="top: 70%; left: 70%"
+                      data-info="Systematic: Every nth person"
+                    >
+                      2
+                    </button>
+                  </div>
+                  <div class="hotspot-info-3-2 fade-in"></div>
+                </div>
+                <div class="mini-activity">
+                  <h4>Mini Activity: Fill-in-the-Blank</h4>
+                  <p>
+                    Probability sampling uses
+                    <input id="fillBlank3" size="10" /> selection and
+                    <input id="fillBlank3b" size="10" /> chance for all.
+                  </p>
+                  <button id="checkFillBlank3">Check</button>
+                  <span id="fillBlank3Result" aria-live="polite"></span>
+                </div>
+              </div>
+            </div>
+            <div class="chapter-navigation double-button">
+              <a id="prevChapter3">Previous Chapter</a
+              ><a id="nextChapter3">Next Chapter</a>
+            </div>
+          </div>
+
+          <div class="chapter" id="chapter4">
+            <h3 class="chapter-title">Chapter 4: Research Design</h3>
+            <div class="lessons-container">
+              <div class="lesson-card">
+                <h3 class="lesson-title">Lesson 4.1: Experimental Design</h3>
+                <p class="lesson-description">
+                  Designing experimental research studies.
+                </p>
+                <div class="infographic">
+                  <img
+                    src="images/index-back.jpg"
+                    alt="Infographic: Experimental Design"
+                    style="max-width: 100%"
+                  />
+                  <div class="infographic-hotspots">
+                    <button
+                      type="button"
+                      class="hotspot"
+                      style="top: 30%; left: 20%"
+                      data-info="Hypothesis: What you want to test"
+                    >
+                      1
+                    </button>
+                    <button
+                      type="button"
+                      class="hotspot"
+                      style="top: 45%; left: 40%"
+                      data-info="Variables: What you change or measure"
+                    >
+                      2
+                    </button>
+                    <button
+                      type="button"
+                      class="hotspot"
+                      style="top: 60%; left: 60%"
+                      data-info="Experiment: The test itself"
+                    >
+                      3
+                    </button>
+                    <button
+                      type="button"
+                      class="hotspot"
+                      style="top: 80%; left: 80%"
+                      data-info="Analysis: Interpreting results"
+                    >
+                      4
+                    </button>
+                  </div>
+                  <div class="hotspot-info-4-1 fade-in"></div>
+                </div>
+                <div class="mini-activity">
+                  <h4>Mini Activity: Drag-and-Drop</h4>
+                  <p>Arrange the steps of experimental design in order.</p>
+                  <ul class="drag-list" id="exp-design-4-1">
+                    <li class="drag-item" draggable="true">Hypothesis</li>
+                    <li class="drag-item" draggable="true">Variables</li>
+                    <li class="drag-item" draggable="true">Experiment</li>
+                    <li class="drag-item" draggable="true">Analysis</li>
+                  </ul>
+                  <button class="check-exp-design" data-activity="4-1">
+                    Check Order
+                  </button>
+                  <div class="expDesignResult-4-1"></div>
+                </div>
+              </div>
+              <div class="lesson-card">
+                <h3 class="lesson-title">Lesson 4.2: Survey Design</h3>
+                <p class="lesson-description">
+                  Creating effective surveys for research.
+                </p>
+                <div class="infographic">
+                  <img
+                    src="images/logo-index.png"
+                    alt="Infographic: Survey Design"
+                    style="max-width: 100%"
+                  />
+                  <div class="infographic-hotspots">
+                    <button
+                      type="button"
+                      class="hotspot"
+                      style="top: 40%; left: 30%"
+                      data-info="Questionnaire: List of questions"
+                    >
+                      1
+                    </button>
+                    <button
+                      type="button"
+                      class="hotspot"
+                      style="top: 70%; left: 70%"
+                      data-info="Response: Answers from participants"
+                    >
+                      2
+                    </button>
+                  </div>
+                  <div class="hotspot-info-4-2 fade-in"></div>
+                </div>
+                <!-- Mini-Activity: Fill-in-the-Blank (restored from lessons.html) -->
+                <div class="mini-activity">
+                  <h4>Mini Activity: Fill-in-the-Blank</h4>
+                  <p>
+                    Survey design should avoid
+                    <input type="text" id="fillBlank4" size="10" /> questions
+                    and use
+                    <input type="text" id="fillBlank4b" size="10" /> wording.
+                  </p>
+                  <button id="checkFillBlank4">Check</button>
+                  <span id="fillBlank4Result"></span>
+                </div>
+              </div>
+            </div>
+            <div class="chapter-navigation double-button">
+              <a id="prevChapter4">Previous Chapter</a
+              ><a id="nextChapter4">Next Chapter</a>
+            </div>
+          </div>
+
+          <div class="chapter" id="chapter5">
+            <h3 class="chapter-title">Chapter 5: Data Analysis</h3>
+            <div class="lessons-container">
+              <div class="lesson-card">
+                <h3 class="lesson-title">Lesson 5.1: Descriptive Statistics</h3>
+                <p class="lesson-description">
+                  Understanding descriptive statistical methods.
+                </p>
+                <div class="infographic">
+                  <img
+                    src="images/fLOWCHART-660x395 (1).png"
+                    alt="Infographic: Descriptive Statistics"
+                    style="max-width: 100%"
+                  />
+                  <div class="infographic-hotspots">
+                    <button
+                      type="button"
+                      class="hotspot"
+                      style="top: 30%; left: 20%"
+                      data-info="Mean: Average value"
+                    >
+                      1
+                    </button>
+                    <button
+                      type="button"
+                      class="hotspot"
+                      style="top: 60%; left: 60%"
+                      data-info="Median: Middle value"
+                    >
+                      2
+                    </button>
+                    <button
+                      type="button"
+                      class="hotspot"
+                      style="top: 80%; left: 80%"
+                      data-info="Mode: Most frequent value"
+                    >
+                      3
+                    </button>
+                  </div>
+                  <div class="hotspot-info-5-1 fade-in"></div>
+                </div>
+                <div class="mini-activity">
+                  <h4>Mini Activity: Matching</h4>
+                  <p>Match each term to its definition:</p>
+                  <div class="matching-row">
+                    <span>Mean</span>
+                    <select id="match-stat-1">
+                      <option value="">Select...</option>
+                      <option value="A">A. Middle value</option>
+                      <option value="B">B. Most frequent value</option>
+                      <option value="C">C. Average value</option>
+                    </select>
+                  </div>
+                  <div class="matching-row">
+                    <span>Median</span>
+                    <select id="match-stat-2">
+                      <option value="">Select...</option>
+                      <option value="A">A. Middle value</option>
+                      <option value="B">B. Most frequent value</option>
+                      <option value="C">C. Average value</option>
+                    </select>
+                  </div>
+                  <div class="matching-row">
+                    <span>Mode</span>
+                    <select id="match-stat-3">
+                      <option value="">Select...</option>
+                      <option value="A">A. Middle value</option>
+                      <option value="B">B. Most frequent value</option>
+                      <option value="C">C. Average value</option>
+                    </select>
+                  </div>
+                  <button class="check-matching-stat">Check Answers</button>
+                  <div class="matchingResultStat"></div>
+                </div>
+              </div>
+              <div class="lesson-card">
+                <h3 class="lesson-title">Lesson 5.2: Inferential Statistics</h3>
+                <p class="lesson-description">
+                  Introduction to inferential statistics.
+                </p>
+                <!-- Infographic (restored from lessons.html) -->
+                <div class="infographic">
+                  <img
+                    src="images/accessible.png"
+                    alt="Infographic: Inferential Statistics"
+                    style="max-width: 100%"
+                  />
+                  <div class="infographic-hotspots">
+                    <button
+                      type="button"
+                      class="hotspot"
+                      style="top: 40%; left: 30%"
+                      data-info="Sample: Small group studied"
+                    >
+                      1
+                    </button>
+                    <button
+                      type="button"
+                      class="hotspot"
+                      style="top: 70%; left: 70%"
+                      data-info="Population: Whole group"
+                    >
+                      2
+                    </button>
+                  </div>
+                  <div class="hotspot-info-5-2 fade-in"></div>
+                </div>
+                <div class="mini-activity">
+                  <h4>Mini Activity: Fill-in-the-Blank</h4>
+                  <p>
+                    Inferential statistics help you make
+                    <input id="fillBlank5" size="10" /> about populations and
+                    <input id="fillBlank5b" size="10" /> from samples.
+                  </p>
+                  <button id="checkFillBlank5">Check</button>
+                  <span id="fillBlank5Result" aria-live="polite"></span>
+                </div>
+              </div>
+            </div>
+            <div class="chapter-navigation single-button-left">
+              <a id="prevChapter5">Previous Chapter</a>
+            </div>
+          </div>
+
+          <div class="chapter-navigation main-navigation">
+            <a id="prevChapter">Previous Chapter</a>
+            <a id="nextChapter">Next Chapter</a>
+          </div>
+        </main>
+      </div>
+
+      <!-- TUTORIALS full content (copied from tutorials.html) -->
+      <div id="tabTutorials" class="learning-tab-panel" style="display: none">
+        <div class="tutorials-main tutorials-page fade-in-tutorials">
+          <h2>Thesis Writing Tutorials</h2>
+          <p>
+            Step-by-step video and written guides to help you through your
+            thesis or capstone project.
+          </p>
+
+          <!-- Enhanced module UI -->
+          <div id="enhancedTutorials" class="enhanced-tutorials">
+            <div class="module-controls">
+              <div
+                class="modules-tabs"
+                role="tablist"
+                aria-label="Tutorial modules"
+              >
+                <button class="module-tab active" data-module="beginner">
+                  Beginner
+                </button>
+                <button class="module-tab" data-module="intermediate">
+                  Intermediate
+                </button>
+                <button class="module-tab" data-module="advanced">
+                  Advanced
+                </button>
+              </div>
+              <div class="module-progress">
+                <div class="progress-label small" id="progressLabel">
+                  Module progress
+                </div>
+                <div
+                  class="progress-track"
+                  role="progressbar"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow="0"
+                  id="moduleProgressTrack"
+                >
+                  <div
+                    class="progress-fill"
+                    id="moduleProgress"
+                    style="width: 0%"
+                  ></div>
+                </div>
+              </div>
+              <div id="badges" class="badges" aria-live="polite"></div>
+              <button id="resumeBtn" class="btn">
+                Resume where you left off
+              </button>
+              <button
+                id="resetModuleBtn"
+                class="btn btn-reset-module"
+                title="Reset all quizzes in current module"
+              >
+                Reset module
+              </button>
+            </div>
+
+            <div class="tutorials-wrapper enhanced">
+              <aside
+                class="lesson-list"
+                id="lessonList"
+                aria-label="Lessons list"
+              ></aside>
+              <section
+                class="lesson-content"
+                id="lessonContent"
+                aria-live="polite"
+              >
+                <p>
+                  Select a lesson from the left to begin. Each lesson includes a
+                  short quiz and an interactive exercise. Progress is saved
+                  locally.
+                </p>
+              </section>
+            </div>
+          </div>
+
+          <!-- Duplicate progress bar placed below the displayed lesson content for better visibility -->
+          <div
+            class="module-progress-bottom"
+            aria-hidden="false"
+            style="margin-top: 12px"
+          >
+            <div class="progress-label small">Module progress</div>
+            <div
+              class="progress-track"
+              role="progressbar"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="0"
+              id="moduleProgressTrackBottom"
+            >
+              <div
+                class="progress-fill"
+                id="moduleProgressBottom"
+                style="width: 0%"
+              ></div>
+            </div>
+          </div>
+
+          <!-- Tutorial chapters (restored with richer content) -->
+          <div class="tutorials-wrapper">
+            <section class="tutorial-section" id="chapter-1">
+              <h3>
+                Chapter 1: Laying the Foundation - The Problem and Its
+                Background
+              </h3>
+              <div class="tutorial-item">
+                <div class="video-container">
+                  <iframe
+                    width="100%"
+                    height="315"
+                    src="https://www.youtube.com/embed/AKKyeOJkv-c?si=xhKyXKEKtCwKDXkC"
+                    title="Chapter 1 Tutorial"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                  ></iframe>
+                  <p>
+                    This video provides a step-by-step guide on how to write an
+                    effective introduction for a research paper, covering key
+                    elements such as the importance of the topic, a brief
+                    literature review, identifying the research gap, and stating
+                    the aim of the study.
+                  </p>
+                </div>
+                <div class="tutorial-info">
+                  <h4>Embark on these crucial first steps:</h4>
+
+                  <h5>1.1 Introduction</h5>
+                  <p>
+                    This section introduces the research study and highlights
+                    its importance. It aims to create reader interest by
+                    providing initial context about the problem being
+                    investigated. [ Briefly introduce the general area of your
+                    study and its relevance. You can mention any legal or other
+                    bases if applicable. Aim for a concise paragraph that sets
+                    the stage for the problem. ]
+                  </p>
+
+                  <h5>1.2 Statement of the Problem</h5>
+                  <p>
+                    This study focuses on the following key question: [ State
+                    your main research question in an interrogatory form, using
+                    action words like Examine, Analyze, Determine, Assess,
+                    Evaluate, Find out ].
+                  </p>
+                  <p>
+                    Specifically, this research seeks to answer the following
+                    sub-problems:
+                  </p>
+                  <ol class="key-steps-list">
+                    <li>
+                      [ State your first specific research question using guide
+                      words like How, Will, What, Is there? ]
+                    </li>
+                    <li>[ State your second specific research question. ]</li>
+                    <li>[ Add more specific research questions as needed. ]</li>
+                  </ol>
+
+                  <h5>1.3 Significance of the Study</h5>
+                  <p>
+                    This research holds significant value for [ Identify the key
+                    beneficiaries of your study, such as researchers, service
+                    providers, administrators, teachers, students, policymakers,
+                    etc. ]. The findings of this study may contribute to [
+                    Explain the potential benefits, such as providing solutions
+                    to existing problems, improving unsatisfactory conditions,
+                    or adding to the existing body of knowledge ]. Ultimately,
+                    this research aims to [ State the broader impact or
+                    implications of your study ].
+                  </p>
+
+                  <h5>1.4 Scope and Delimitation of the Study</h5>
+                  <p>
+                    This study will focus on [ Define the scope in terms of the
+                    subjects, samples, and location of your research ]. The
+                    timeframe for this study will be [ Specify the time period
+                    of your research ]. The following limitations were
+                    identified for this study: [ Mention any factors beyond your
+                    control that might affect the research ].
+                  </p>
+
+                  <h5>1.5 Definition of Terms</h5>
+                  <p>
+                    For clarity and understanding throughout this study, the
+                    following key terms are defined as follows:
+                  </p>
+                  <ul>
+                    <li>
+                      <strong>[ Key Term 1 ]:</strong> [ Provide a clear and
+                      concise definition of the term as used in your study (can
+                      be lexical/conceptual or operational). ]
+                    </li>
+                    <li>
+                      <strong>[ Key Term 2 ]:</strong> [ Provide a definition
+                      for the second key term. ]
+                    </li>
+                    <li>
+                      [ Add definitions for other relevant key terms in
+                      alphabetical order. ]
+                    </li>
+                  </ul>
+
+                  <div class="tutorial-buttons">
+                    <button disabled class="prev-chapter" data-chapter="1">
+                      Previous Chapter
+                    </button>
+                    <button class="next-chapter" data-chapter="1">
+                      Next Chapter
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section
+              class="tutorial-section"
+              id="chapter-2"
+              style="display: none"
+            >
+              <h3>
+                Chapter 2: Weaving the Tapestry of Knowledge - The Literature
+                Review
+              </h3>
+              <div class="tutorial-item">
+                <div class="video-container">
+                  <iframe
+                    width="100%"
+                    height="315"
+                    src="https://www.youtube.com/embed/zIYC6zG265E?si=yqMa_vKbTnO5l9EO"
+                    title="Chapter 2 Tutorial"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen
+                  ></iframe>
+                  <p>
+                    This video provides guidance on conducting a comprehensive
+                    literature review, including strategies for finding local
+                    and foreign sources, critical evaluation, and synthesis of
+                    information.
+                  </p>
+                </div>
+                <div class="tutorial-info">
+                  <h4>
+                    Navigate the world of existing research with these steps:
+                  </h4>
+
+                  <h5>Finding Local Related Literature</h5>
+                  <p>
+                    Explore these avenues to discover relevant local research
+                    and studies:
+                  </p>
+                  <ol class="key-steps-list">
+                    <li>
+                      <strong>Philippine Databases:</strong> PhilJSTOR and other
+                      local databases available via your institution’s library
+                      portal.
+                    </li>
+                    <li>
+                      <strong>University Institutional Repositories:</strong>
+                      Online repositories of Philippine universities such as the
+                      UP Diliman Repository and Ateneo de Manila eScholar.
+                    </li>
+                    <li>
+                      <strong>Government Publications:</strong> Reports and
+                      publications from the Philippine Statistics Authority and
+                      the Department of Science and Technology.
+                    </li>
+                    <li>
+                      <strong>Local Conferences and Journals:</strong>
+                      Proceedings and journals from local professional
+                      organizations in your discipline.
+                    </li>
+                    <li>
+                      <strong>Networking with Local Experts:</strong> Engage
+                      with local researchers and academics for leads on relevant
+                      studies.
+                    </li>
+                  </ol>
+
+                  <h5>Finding Foreign Related Literature</h5>
+                  <p>
+                    Expand your search to international sources using these:
+                  </p>
+                  <ol class="key-steps-list">
+                    <li>
+                      <strong>Global Databases:</strong> Scopus, Web of Science,
+                      JSTOR, Google Scholar.
+                    </li>
+                    <li>
+                      <strong>University Libraries Worldwide:</strong> Online
+                      catalogs and repositories such as Harvard Library and the
+                      Oxford Research Archive.
+                    </li>
+                    <li>
+                      <strong>International Journals and Publications:</strong>
+                      Major publishers and journals (e.g., Elsevier, Springer)
+                      relevant to your field.
+                    </li>
+                    <li>
+                      <strong>Professional Organizations:</strong> Resources
+                      from organizations like IEEE and APA.
+                    </li>
+                    <li>
+                      <strong>Citation Chasing:</strong> Follow references in
+                      key studies to discover related research.
+                    </li>
+                  </ol>
+
+                  <p>
+                    Remember to critically evaluate and synthesize information
+                    from both local and foreign sources to build a strong
+                    foundation for your research.
+                  </p>
+
+                  <div class="tutorial-buttons">
+                    <button class="prev-chapter" data-chapter="2">
+                      Previous Chapter
+                    </button>
+                    <button class="next-chapter" data-chapter="2">
+                      Next Chapter
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section
+              class="tutorial-section"
+              id="chapter-3"
+              style="display: none"
+            >
+              <h3>Chapter 3: Charting Your Course - The Methodology Roadmap</h3>
+              <div class="tutorial-item">
+                <div class="video-container">
+                  <iframe
+                    width="100%"
+                    height="315"
+                    src="https://www.youtube.com/embed/yplWZs3dqNQ?si=93zEi7OctNPp1q7I"
+                    title="Chapter 3 Tutorial"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen
+                  ></iframe>
+                  <p>
+                    This video guides you through designing your research
+                    methodology, including selecting instruments, identifying
+                    respondents, outlining the procedure, and planning data
+                    analysis.
+                  </p>
+                </div>
+                <div class="tutorial-info">
+                  <h4>
+                    Design your research strategy with these essential steps:
+                  </h4>
+
+                  <h5>3.1 Introduction to Methodology</h5>
+                  <p>
+                    Outline the methodological approach employed in your study:
+                    purpose, brief overview of the issue, location/context of
+                    data collection, population and sample, and data collection
+                    methods.
+                  </p>
+
+                  <h5>3.2 Research Instruments</h5>
+                  <p>
+                    This section details the instruments used to gather data:
+                  </p>
+                  <ul>
+                    <li>
+                      <strong>[ Questionnaire ]:</strong> Number and type of
+                      questions (open/closed), specific features, and any pilot
+                      testing conducted.
+                    </li>
+                    <li>
+                      <strong>[ Interview Guide ]:</strong> Interview structure
+                      (e.g., semi-structured), key themes explored.
+                    </li>
+                    <li>
+                      <strong>[ Observation Guide / Checklist ]:</strong> What
+                      was observed, the setting, and how observations were
+                      recorded.
+                    </li>
+                    <li>
+                      <strong>[ Secondary Data ]:</strong> Sources (datasets,
+                      reports) and how they were utilized.
+                    </li>
+                  </ul>
+
+                  <h5>3.3 Respondents of the Study</h5>
+                  <p>
+                    Clearly explain who your respondents are, including key
+                    characteristics. Describe your sampling method (e.g., simple
+                    random, stratified, convenience, purposive), justify the
+                    choice, and state the sample size if applicable.
+                  </p>
+
+                  <h5>3.4 Research Procedure</h5>
+                  <p>The data collection process typically involves:</p>
+                  <ol>
+                    <li>
+                      <strong>Pilot Study (if applicable):</strong> Who
+                      participated and changes made after the pilot.
+                    </li>
+                    <li>
+                      <strong>Data Collection:</strong> Step-by-step
+                      distribution/collection or recruitment/interview process;
+                      observation schedule and recording methods.
+                    </li>
+                    <li>
+                      <strong>Data Organization:</strong> How collected data was
+                      prepared for analysis.
+                    </li>
+                  </ol>
+
+                  <h5>3.5 Data Analysis</h5>
+                  <p>Techniques you will use:</p>
+                  <ul>
+                    <li>
+                      <strong>Quantitative:</strong> Descriptive (mean, SD) and
+                      inferential (t-test, ANOVA, regression); tools like SPSS
+                      or Excel.
+                    </li>
+                    <li>
+                      <strong>Qualitative:</strong> Thematic or content
+                      analysis; tools like NVivo if used.
+                    </li>
+                    <li>
+                      <strong>Validity & Reliability:</strong> How you ensured
+                      accuracy and consistency of data and analyses.
+                    </li>
+                  </ul>
+
+                  <p>
+                    These methodological steps provide a clear framework for how
+                    the research will be conducted and findings derived.
+                  </p>
+
+                  <div class="tutorial-buttons">
+                    <button class="prev-chapter" data-chapter="3">
+                      Previous Chapter
+                    </button>
+                    <button class="next-chapter" data-chapter="3">
+                      Next Chapter
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section
+              class="tutorial-section"
+              id="chapter-4"
+              style="display: none"
+            >
+              <h3>
+                Chapter 4: Unveiling the Discoveries - Presenting Your Results
+              </h3>
+              <div class="tutorial-item">
+                <div class="video-container">
+                  <iframe
+                    width="100%"
+                    height="315"
+                    src="YOUR_CHAPTER_4_VIDEO_URL"
+                    title="Chapter 4 Tutorial"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+                <div class="tutorial-info">
+                  <h4>
+                    Showcase your findings with clarity and precision through
+                    these steps:
+                  </h4>
+                  <ol class="key-steps-list">
+                    <li>
+                      <strong>Present with Impact:</strong> Clearly and
+                      concisely display your key findings. What are the most
+                      important takeaways from your data?
+                    </li>
+                    <li>
+                      <strong>Visualize Your Data:</strong> Use tables, figures,
+                      and graphs effectively to illustrate your results.
+                    </li>
+                    <li>
+                      <strong>Summarize the Basics:</strong> Report descriptive
+                      statistics to provide an overview of your data (if
+                      applicable).
+                    </li>
+                    <li>
+                      <strong>Test Your Hypotheses:</strong> Present the results
+                      of your inferential tests and explain what they mean for
+                      your research questions.
+                    </li>
+                    <li>
+                      <strong>Interpret Significance and Limitations:</strong>
+                      Explain the relevance of your results and any limitations
+                      that may affect interpretation.
+                    </li>
+                  </ol>
+                  <p>
+                    Ready to reveal the heart of your research—your findings?
+                  </p>
+                  <div class="tutorial-buttons">
+                    <button class="prev-chapter" data-chapter="4">
+                      Previous Chapter
+                    </button>
+                    <button class="next-chapter" data-chapter="4">
+                      Next Chapter
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section
+              class="tutorial-section"
+              id="chapter-5"
+              style="display: none"
+            >
+              <h3>
+                Chapter 5: Making Sense of It All - Discussion, Conclusion, and
+                Recommendations
+              </h3>
+              <div class="tutorial-item">
+                <div class="video-container">
+                  <iframe
+                    width="100%"
+                    height="315"
+                    src="YOUR_CHAPTER_5_VIDEO_URL"
+                    title="Chapter 5 Tutorial"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+                <div class="tutorial-info">
+                  <h4>
+                    Bring your research to a meaningful close with these crucial
+                    steps:
+                  </h4>
+                  <ol class="key-steps-list">
+                    <li>
+                      <strong>Summarize Key Findings:</strong> Synthesize your
+                      main results and what they indicate.
+                    </li>
+                    <li>
+                      <strong>Discuss Implications:</strong> Explain what the
+                      results mean for theory, practice, or policy.
+                    </li>
+                    <li>
+                      <strong>Acknowledge Limitations:</strong> Be transparent
+                      about constraints and potential biases.
+                    </li>
+                    <li>
+                      <strong>Draw Conclusions:</strong> State the overall
+                      conclusions supported by your results.
+                    </li>
+                    <li>
+                      <strong>Make Recommendations:</strong> Offer actionable
+                      suggestions for stakeholders or future research.
+                    </li>
+                  </ol>
+                  <p>
+                    Ready to synthesize your hard work and leave a lasting
+                    impression?
+                  </p>
+                  <div class="tutorial-buttons">
+                    <button class="prev-chapter" data-chapter="5">
+                      Previous Chapter
+                    </button>
+                    <button disabled class="next-chapter" data-chapter="5">
+                      Next Chapter
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <!-- Toast notifications (used by tutorials.js) -->
+          <div
+            id="toast"
+            aria-live="polite"
+            aria-atomic="true"
+            style="position: fixed; right: 18px; bottom: 18px; z-index: 99999"
+          ></div>
+
+          <!-- Reset confirmation modal (used by tutorials.js) -->
+          <div id="resetModal" class="modal" aria-hidden="true">
+            <div class="modal-overlay"></div>
+            <div
+              class="modal-content"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="resetModalTitle"
+            >
+              <button
+                class="modal-close"
+                id="resetModalClose"
+                aria-label="Close"
+              >
+                ×
+              </button>
+              <h3 id="resetModalTitle">Reset module progress?</h3>
+              <p id="resetModalBody">
+                This will clear saved quiz answers and completion for all
+                lessons in the currently selected module. You can undo this
+                action from the toast that appears immediately after.
+              </p>
+              <ul id="resetModalList" class="reset-list"></ul>
+              <div class="modal-actions">
+                <button id="resetCancel" class="btn">Cancel</button>
+                <button id="resetConfirm" class="btn btn-reset-module">
+                  Reset module
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Primary navigation is the sidebar; duplicate CTAs removed to avoid confusion -->
+    </main>
+
+    <footer style="text-align: center; padding: 1.2rem 0">
+      <p>&copy; 2025 WriteWise</p>
+    </footer>
+
+    <!-- Lessons Reset Modal -->
+    <div id="lessonsResetModal" class="modal" aria-hidden="true">
+      <div class="modal-overlay"></div>
+      <div
+        class="modal-content"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="lessonsResetTitle"
+      >
+        <button class="modal-close" id="lessonsResetClose" aria-label="Close">
+          ×
+        </button>
+        <h3 id="lessonsResetTitle">Reset all lessons?</h3>
+        <p>
+          Select which lessons to reset. This clears answers, selections, and
+          progress so you can try again.
+        </p>
+        <div
+          style="
+            margin: 6px 0 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+          "
+        >
+          <label style="display: flex; align-items: center; gap: 6px">
+            <input type="checkbox" id="lessonsSelectAll" checked />
+            <span>Select all</span>
+          </label>
+        </div>
+        <ul
+          id="lessonsResetList"
+          class="reset-list"
+          style="
+            list-style: none;
+            padding-left: 0;
+            max-height: 38vh;
+            overflow: auto;
+          "
+        ></ul>
+        <div class="modal-actions">
+          <button id="lessonsResetCancel" class="btn">Cancel</button>
+          <button id="lessonsResetConfirm" class="btn btn-reset-module">
+            Reset selected
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lessons toast container -->
+    <div
+      id="toastLessons"
+      aria-live="polite"
+      aria-atomic="true"
+      style="position: fixed; right: 18px; bottom: 70px; z-index: 99998"
+    ></div>
+
+    <!-- Include original lesson/tutorial scripts to preserve behavior (deferred in head) -->
+
+    <!-- Fallback handlers for mini-activities (drag/drop, hotspots, simple checks) -->
+    <script>
+      (function lessonsFallback() {
+        // Defer fallback to end of current tick to give primary scripts a chance to bind
+        setTimeout(() => {
+          try {
+            console.log("Fallback: initializing mini-activity handlers");
+
+            // Hotspots: only bind if not already bound by primary script
+            document
+              .querySelectorAll(".infographic .hotspot")
+              .forEach((btn) => {
+                if (btn.dataset.bound === "1") return; // already handled
+                btn.addEventListener("click", () => {
+                  const text =
+                    btn.getAttribute("data-info") || btn.textContent || "";
+                  // Prefer a context-specific info container within the same infographic
+                  const container = btn.closest(".infographic");
+                  let info = null;
+                  if (container) {
+                    info = container.querySelector(
+                      '[id^="hotspot-info"], .hotspot-info, .fade-in'
+                    );
+                  }
+                  // Fallback to global hotspot-info if present
+                  if (!info) info = document.getElementById("hotspot-info");
+                  if (!info) return;
+                  const current = (info.textContent || "").trim();
+                  if (current === text.trim()) {
+                    info.textContent = "";
+                    info.style.display = "none";
+                  } else {
+                    info.textContent = text;
+                    info.style.display = "block";
+                  }
+                });
+              });
+
+            // Simple drag-and-drop reorder for .drag-list
+            document.querySelectorAll(".drag-list").forEach((list) => {
+              let dragSrc = null;
+              function attach() {
+                list.querySelectorAll(".drag-item").forEach((item) => {
+                  item.setAttribute("draggable", "true");
+                  item.ondragstart = (e) => {
+                    dragSrc = item;
+                    setTimeout(() => item.classList.add("dragging"), 0);
+                  };
+                  item.ondragend = (e) => {
+                    item.classList.remove("dragging");
+                  };
+                  item.ondragover = (e) => {
+                    e.preventDefault();
+                  };
+                  item.ondrop = (e) => {
+                    e.preventDefault();
+                    if (dragSrc && dragSrc !== item) {
+                      list.insertBefore(dragSrc, item.nextSibling);
+                      attach();
+                    }
+                  };
+                });
+              }
+              attach();
+            });
+
+            function ensureOrderModal() {
+              let modal = document.getElementById("orderModal");
+              if (modal) return modal;
+              const frag = document.createElement("div");
+              frag.innerHTML = `\n            <div id="orderModal" class="order-modal" aria-hidden="true" role="dialog" aria-modal="true">\n              <div class="order-modal-backdrop" data-close-order></div>\n              <div class="order-modal-dialog" role="document">\n                <div class="order-modal-header">\n                  <h3 id="orderModalTitle">Current Order</h3>\n                  <button class="order-modal-close" type="button" aria-label="Close" data-close-order>&times;</button>\n                </div>\n                <div class="order-modal-body">\n                  <p id="orderModalIntro">Here is the sequence you arranged:</p>\n                  <ol id="orderModalList" class="order-sequence-list"></ol>\n                </div>\n                <div class="order-modal-footer">\n                  <button class="order-modal-close-btn" type="button" data-close-order>Close</button>\n                </div>\n              </div>\n            </div>`;
+              document.body.appendChild(frag.firstElementChild);
+              return document.getElementById("orderModal");
+            }
+            function openOrderModal(items, triggerBtn) {
+              const modal = ensureOrderModal();
+              const listEl = modal.querySelector("#orderModalList");
+              listEl.innerHTML = "";
+              items.forEach((txt) => {
+                const li = document.createElement("li");
+                li.textContent = txt;
+                listEl.appendChild(li);
+              });
+              modal.dataset.returnFocus = triggerBtn ? triggerBtn.id || "" : "";
+              modal.setAttribute("aria-hidden", "false");
+              // focus first focusable
+              const focusEl = modal.querySelector(".order-modal-close");
+              if (focusEl) focusEl.focus();
+              document.addEventListener("keydown", escHandler);
+            }
+            function closeOrderModal() {
+              const modal = document.getElementById("orderModal");
+              if (!modal) return;
+              modal.setAttribute("aria-hidden", "true");
+              document.removeEventListener("keydown", escHandler);
+              const id = modal.dataset.returnFocus;
+              if (id) {
+                const btn = document.getElementById(id);
+                if (btn) btn.focus();
+              }
+            }
+            function escHandler(e) {
+              if (e.key === "Escape") closeOrderModal();
+            }
+            document.addEventListener("click", (e) => {
+              if (e.target.matches("[data-close-order]")) {
+                closeOrderModal();
+              }
+            });
+
+            function attachOrderHandler(selector) {
+              document.querySelectorAll(selector).forEach((btn) => {
+                // give an id if missing for focus restore
+                if (!btn.id)
+                  btn.id = "checkBtn-" + Math.random().toString(36).slice(2, 8);
+                btn.addEventListener("click", () => {
+                  const card = btn.closest(".lesson-card");
+                  const list = card ? card.querySelector(".drag-list") : null;
+                  if (!list) {
+                    return;
+                  }
+                  const items = Array.from(list.querySelectorAll(".drag-item"))
+                    .map((i) => i.textContent.trim())
+                    .filter(Boolean);
+                  if (items.length === 0) {
+                    return;
+                  }
+                  openOrderModal(items, btn);
+                });
+              });
+            }
+            attachOrderHandler(".check-order-btn");
+            attachOrderHandler(".check-sampling");
+            attachOrderHandler(".check-exp-design");
+
+            // Fill-in-the-blank simple checks (checkFillBlankX)
+            document
+              .querySelectorAll('[id^="checkFillBlank"]')
+              .forEach((btn) => {
+                btn.addEventListener("click", () => {
+                  const id = btn.id.replace("checkFillBlank", "");
+                  const in1 = document.getElementById("fillBlank" + id);
+                  const in2 = document.getElementById("fillBlank" + id + "b");
+                  const result = document.getElementById(
+                    "fillBlank" + id + "Result"
+                  );
+                  let ok = false;
+                  if (in1 && in1.value.trim()) ok = true;
+                  if (in2 && in2.value.trim()) ok = ok && true;
+                  if (result) {
+                    result.textContent = ok
+                      ? "Checked — answers submitted."
+                      : "Please fill the blanks.";
+                    result.className = ok ? "success" : "error";
+                  } else {
+                    alert(
+                      ok
+                        ? "Checked — answers submitted."
+                        : "Please fill the blanks."
+                    );
+                  }
+                });
+              });
+          } catch (err) {
+            console.warn("lessonsFallback error", err);
+          }
+        }, 0);
+      })();
+    </script>
+    <!-- Image fallback: replace broken images with a local placeholder -->
+    <script>
+      (function imageFallbackHandler() {
+        try {
+          function replaceBroken(img) {
+            try {
+              if (!img) return;
+              if (img.dataset._fallbackApplied) return;
+              img.addEventListener("error", function onerr() {
+                img.removeEventListener("error", onerr);
+                img.dataset._fallbackApplied = "1";
+                // Keep original src for debugging
+                img.dataset.originalSrc = img.dataset.originalSrc || img.src;
+                img.src = "images/lamp.png";
+                img.classList.add("img-fallback");
+                console.warn(
+                  "Image fallback applied for",
+                  img.dataset.originalSrc || img.src,
+                  "->",
+                  img.src
+                );
+              });
+              // If already loaded but broken
+              if (img.complete && img.naturalWidth === 0) {
+                img.dispatchEvent(new Event("error"));
+              }
+            } catch (e) {
+              console.warn("replaceBroken error", e);
+            }
+          }
+          document.querySelectorAll("img").forEach(replaceBroken);
+          // Monitor for dynamically added images
+          const obs = new MutationObserver((muts) => {
+            muts.forEach((m) => {
+              m.addedNodes &&
+                m.addedNodes.forEach((n) => {
+                  if (n && n.tagName === "IMG") replaceBroken(n);
+                  if (n && n.querySelectorAll)
+                    n.querySelectorAll("img").forEach(replaceBroken);
+                });
+            });
+          });
+          obs.observe(document.body, { childList: true, subtree: true });
+        } catch (err) {
+          console.warn("imageFallbackHandler", err);
+        }
+      })();
+    </script>
+    <!-- Tutorials simple prev/next navigation (for inline tutorial sections) -->
+    <script>
+      (function tutorialsPrevNext() {
+        try {
+          const sections = Array.from(
+            document.querySelectorAll("#tabTutorials .tutorial-section")
+          );
+          if (!sections.length) return;
+          let currentIdx = sections.findIndex(
+            (s) => s.style.display !== "none"
+          );
+          if (currentIdx < 0) currentIdx = 0;
+          function show(idx) {
+            sections.forEach((s, i) => {
+              s.style.display = i === idx ? "block" : "none";
+            });
+            document
+              .querySelectorAll("#tabTutorials .prev-chapter")
+              .forEach((btn) => {
+                const ch = parseInt(
+                  btn.getAttribute("data-chapter") || "1",
+                  10
+                );
+                btn.disabled = idx === 0;
+              });
+            document
+              .querySelectorAll("#tabTutorials .next-chapter")
+              .forEach((btn) => {
+                const ch = parseInt(
+                  btn.getAttribute("data-chapter") || String(idx + 1),
+                  10
+                );
+                btn.disabled = idx >= sections.length - 1;
+              });
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }
+          document
+            .querySelectorAll("#tabTutorials .prev-chapter")
+            .forEach((btn) => {
+              btn.addEventListener("click", () => {
+                if (currentIdx > 0) {
+                  currentIdx--;
+                  show(currentIdx);
+                }
+              });
+            });
+          document
+            .querySelectorAll("#tabTutorials .next-chapter")
+            .forEach((btn) => {
+              btn.addEventListener("click", () => {
+                if (currentIdx < sections.length - 1) {
+                  currentIdx++;
+                  show(currentIdx);
+                }
+              });
+            });
+          // initialize
+          show(currentIdx);
+        } catch (e) {
+          /* ignore */
+        }
+      })();
+    </script>
+    <!-- Lessons Reset Modal wiring -->
+    <script>
+      (function lessonsResetModalWiring() {
+        try {
+          const btn = document.getElementById("resetLessonsBtn");
+          const modal = document.getElementById("lessonsResetModal");
+          if (!btn || !modal) return;
+          const list = document.getElementById("lessonsResetList");
+          const selectAll = document.getElementById("lessonsSelectAll");
+          const closeBtn = document.getElementById("lessonsResetClose");
+          const cancelBtn = document.getElementById("lessonsResetCancel");
+          const confirmBtn = document.getElementById("lessonsResetConfirm");
+          function open() {
+            // populate current lesson titles
+            list.innerHTML = "";
+            const titles = Array.from(
+              document.querySelectorAll(
+                "#tabLessons .lesson-card .lesson-title"
+              )
+            );
+            titles.forEach((t) => {
+              const li = document.createElement("li");
+              const label = document.createElement("label");
+              label.style.display = "flex";
+              label.style.alignItems = "center";
+              label.style.gap = "8px";
+              const cb = document.createElement("input");
+              cb.type = "checkbox";
+              cb.className = "lesson-reset-cb";
+              cb.checked = true;
+              cb.dataset.title = (t.textContent || "").trim();
+              const span = document.createElement("span");
+              span.textContent = (t.textContent || "Lesson").trim();
+              label.appendChild(cb);
+              label.appendChild(span);
+              li.appendChild(label);
+              list.appendChild(li);
+            });
+            if (selectAll) {
+              selectAll.checked = true;
+              selectAll.onchange = () => {
+                list
+                  .querySelectorAll(".lesson-reset-cb")
+                  .forEach((cb) => (cb.checked = !!selectAll.checked));
+              };
+            }
+            modal.setAttribute("aria-hidden", "false");
+            // focus first action
+            setTimeout(() => {
+              (confirmBtn || cancelBtn || closeBtn)?.focus?.();
+            }, 0);
+          }
+          function close() {
+            modal.setAttribute("aria-hidden", "true");
+          }
+          btn.addEventListener("click", open);
+          closeBtn?.addEventListener("click", close);
+          cancelBtn?.addEventListener("click", close);
+          confirmBtn?.addEventListener("click", () => {
+            try {
+              const selected = Array.from(
+                list.querySelectorAll(".lesson-reset-cb")
+              )
+                .filter((cb) => cb.checked)
+                .map((cb) => cb.dataset.title)
+                .filter(Boolean);
+              if (!selected.length) {
+                const toastRoot = document.getElementById("toastLessons");
+                if (toastRoot) {
+                  const t = document.createElement("div");
+                  t.className = "toast warn";
+                  t.textContent = "Please select at least one lesson.";
+                  t.style.background = "#fb8500";
+                  t.style.color = "#fff";
+                  t.style.padding = "10px 12px";
+                  t.style.borderRadius = "8px";
+                  t.style.marginTop = "8px";
+                  toastRoot.appendChild(t);
+                  setTimeout(() => t.remove(), 2000);
+                }
+                return;
+              }
+              if (window.__resetLessonsInteractive)
+                window.__resetLessonsInteractive({ titles: selected });
+              close();
+            } catch (e) {
+              console.warn(e);
+              close();
+            }
+          });
+          modal.addEventListener("click", (e) => {
+            if (
+              e.target === modal ||
+              e.target.classList.contains("modal-overlay")
+            )
+              close();
+          });
+          modal.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") close();
+          });
+        } catch (e) {
+          console.warn("lessonsResetModalWiring", e);
+        }
+      })();
+    </script>
+    <script defer src="js/responsive-embeds.js"></script>
+    <script defer src="js/header-mobile.js"></script>
+  </body>
+</html>

@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact & Support - WriteWise</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/contact.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script defer src="js/site-utils.js"></script>
+  </head>
+  <body>
+    <header class="responsive-header" id="mainHeader">
+      <!-- Left group: sidebar + theme toggle -->
+      <div class="header-actions">
+        <button id="toggleSidebarHeader" class="sidebar-toggle">☰</button>
+        <button id="themeToggleHeader" class="sidebar-toggle">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+
+      <!-- Center group: logo + title -->
+      <div class="logo-title">
+        <img
+          src="images/logo-index.png"
+          alt="WriteWise Logo"
+          class="logo-img"
+        />
+        <h1>Contact & Support</h1>
+      </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top">
+        <button id="toggleSidebarInside" class="sidebar-toggle">☰</button>
+        <button id="themeToggleInside" class="sidebar-toggle">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+      <nav class="sidebar-nav">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="learning.html#lessons">Learning</a>
+        <a class="nav-link" href="chapter-guide.html">Chapter Guide</a>
+        <a class="nav-link" href="grammar.html">Grammar</a>
+        <a class="nav-link" href="plagiarism.html">Plagiarism</a>
+        <a class="nav-link" href="keywords.html">Keywords</a>
+        <a class="nav-link" href="citations.html">Citations</a>
+        <a class="nav-link" href="contact.html">Contact</a>
+      </nav>
+    </aside>
+
+    <main class="page-main">
+      <h2 class="page-main-title fade-in-contact">We're Here to Help You!</h2>
+      <p class="intro-text fade-in-contact" style="animation-delay: 0.1s">
+        Find answers to common questions, chat with our AI, submit a ticket, or
+        book a call. 👋
+      </p>
+
+      <!-- Office Hours and Response Time -->
+      <section
+        id="office-hours"
+        class="content-section fade-in-contact"
+        style="animation-delay: 0.15s"
+      >
+        <h3><span class="icon">⏰</span> Office Hours & Response Time</h3>
+        <ul style="margin-bottom: 0.5em">
+          <li><strong>Mon-Fri:</strong> 9:00 AM – 6:00 PM (GMT+8)</li>
+          <li><strong>Sat:</strong> 10:00 AM – 2:00 PM (GMT+8)</li>
+          <li><strong>Sun/Holidays:</strong> Closed</li>
+        </ul>
+        <p>
+          Typical response time: <strong>within 24 hours</strong> (usually much
+          faster during office hours).
+        </p>
+      </section>
+
+      <!-- Video Call/Google Meet Option -->
+      <section
+        id="video-support"
+        class="content-section fade-in-contact"
+        style="animation-delay: 0.2s"
+      >
+        <h3><span class="icon">🎥</span> Advanced Support: Video Call</h3>
+        <p>
+          Need a face-to-face session? Book a Google Meet with our support team:
+        </p>
+        <a
+          href="https://meet.google.com/new"
+          target="_blank"
+          class="submit-btn-alt"
+          style="margin-bottom: 1em"
+          >Book a Google Meet</a
+        >
+        <p style="font-size: 0.95em; color: #555">
+          (You will be redirected to Google Meet. Please email us your preferred
+          time.)
+        </p>
+      </section>
+
+      <!-- Ticketing System -->
+      <section
+        id="ticketing-system"
+        class="content-section fade-in-contact"
+        style="animation-delay: 0.25s"
+      >
+        <h3><span class="icon">📩</span> Submit a Help Ticket</h3>
+        <form id="ticketForm" class="styled-form">
+          <div class="form-group">
+            <label for="ticketEmail">Your Email:</label>
+            <input
+              type="email"
+              id="ticketEmail"
+              name="ticketEmail"
+              required
+              placeholder="e.g., student@email.com"
+            />
+          </div>
+          <div class="form-group">
+            <label for="ticketSubject">Subject:</label>
+            <input
+              type="text"
+              id="ticketSubject"
+              name="ticketSubject"
+              required
+              placeholder="e.g., Trouble logging in"
+            />
+          </div>
+          <div class="form-group">
+            <label for="ticketMessage">Describe your issue:</label>
+            <textarea
+              id="ticketMessage"
+              name="ticketMessage"
+              rows="4"
+              required
+              placeholder="Please describe your problem or question..."
+            ></textarea>
+          </div>
+          <button type="submit" class="submit-btn tada-contact">
+            Submit Ticket
+          </button>
+          <p class="form-message" id="ticketFormMessage"></p>
+        </form>
+        <div
+          id="ticket-status-container"
+          style="margin-top: 1em; display: none"
+        >
+          <h4>Track Your Ticket</h4>
+          <input
+            type="text"
+            id="ticketIdInput"
+            placeholder="Enter Ticket ID"
+            style="
+              padding: 6px 10px;
+              border-radius: 4px;
+              border: 1px solid #ccc;
+            "
+          />
+          <button
+            id="trackTicketBtn"
+            class="submit-btn-alt tada-contact"
+            style="margin-left: 8px"
+          >
+            Track
+          </button>
+          <div id="ticketStatusResult" style="margin-top: 0.7em"></div>
+        </div>
+      </section>
+
+      <!-- AI Chatbot Support -->
+      <section
+        id="ai-chatbot"
+        class="content-section fade-in-contact"
+        style="animation-delay: 0.3s"
+      >
+        <h3><span class="icon">🤖</span> Chatbot Support (FAQ + AI)</h3>
+        <div
+          id="chatbot-container"
+          style="
+            background: #f8f9fa;
+            padding: 1em 1.2em;
+            border-radius: 8px;
+            max-width: 500px;
+            margin: auto;
+          "
+        >
+          <div
+            id="chatbot-messages"
+            style="min-height: 80px; margin-bottom: 1em"
+          ></div>
+          <form id="chatbotForm" style="display: flex; gap: 8px">
+            <input
+              type="text"
+              id="chatbotInput"
+              placeholder="Ask a question..."
+              style="
+                flex: 1;
+                padding: 8px;
+                border-radius: 4px;
+                border: 1px solid #ccc;
+              "
+              autocomplete="off"
+            />
+            <button type="submit" class="submit-btn-alt tada-contact">
+              Send
+            </button>
+          </form>
+        </div>
+        <p
+          style="
+            font-size: 0.95em;
+            color: #555;
+            text-align: center;
+            margin-top: 0.5em;
+          "
+        >
+          Try asking: "How do I reset my password?" or "How long does support
+          take?"
+        </p>
+      </section>
+
+      <!-- FAQ Section -->
+      <section
+        id="faq"
+        class="content-section fade-in-contact"
+        style="animation-delay: 0.35s"
+      >
+        <h3><span class="icon">❓</span> Frequently Asked Questions</h3>
+        <div class="accordion">
+          <div class="accordion-item slide-in-contact">
+            <button class="accordion-header tada-contact" aria-expanded="false">
+              How do I reset my WriteWise password?
+              <span class="accordion-icon">+</span>
+            </button>
+            <div class="accordion-content">
+              <p>
+                You can easily reset your password by clicking the "Forgot
+                password?" link on the <a href="login.html">login page</a>.
+                We'll send instructions to your registered email address to help
+                you set up a new one.
+              </p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-header tada-contact" aria-expanded="false">
+              What are the available subscription plans?
+              <span class="accordion-icon">+</span>
+            </button>
+            <div class="accordion-content">
+              <p>
+                WriteWise offers several subscription plans to suit different
+                needs. For details, please visit our (notional)
+                <a href="#">Pricing Page</a> or contact us.
+              </p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-header tada-contact" aria-expanded="false">
+              How does WriteWise improve my writing?
+              <span class="accordion-icon">+</span>
+            </button>
+            <div class="accordion-content">
+              <p>
+                WriteWise offers AI suggestions, chapter guides, progress
+                tracking, and more to make your writing smoother and productive!
+              </p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-header tada-contact" aria-expanded="false">
+              Is my data secure?
+              <span class="accordion-icon">+</span>
+            </button>
+            <div class="accordion-content">
+              <p>
+                Yes, your data is encrypted and we follow strict privacy
+                protocols. See our (notional) <a href="#">Privacy Policy</a>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Form Section -->
+      <section
+        id="contact-form-section"
+        class="content-section fade-in-contact"
+        style="animation-delay: 0.4s"
+      >
+        <h3><span class="icon">✉️</span> Send Us a Message</h3>
+        <p>
+          Have a specific question or need direct assistance? Fill out the form
+          below. Alternatively, you can email us directly at
+          <a href="mailto:support@writewise.app" class="direct-email-link"
+            >support@writewise.app</a
+          >.
+        </p>
+        <form id="contactForm" class="styled-form">
+          <div class="form-group">
+            <label for="contactName">Your Name:</label>
+            <input
+              type="text"
+              id="contactName"
+              name="contactName"
+              required
+              placeholder="e.g., Jane Doe"
+            />
+          </div>
+          <div class="form-group">
+            <label for="contactEmail">Your Email:</label>
+            <input
+              type="email"
+              id="contactEmail"
+              name="contactEmail"
+              required
+              placeholder="e.g., jane.doe@example.com"
+            />
+          </div>
+          <div class="form-group">
+            <label for="concernCategory">Concern Category:</label>
+            <select id="concernCategory" name="concernCategory" required>
+              <option value="">-- Select a Category --</option>
+              <option value="technical_support">Technical Support 🛠️</option>
+              <option value="billing_inquiry">Billing Inquiry 💳</option>
+              <option value="feature_request">Feature Request ✨</option>
+              <option value="general_feedback">General Feedback 👍</option>
+              <option value="account_issue">Account Issue 👤</option>
+              <option value="other">Other 🤔</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="contactMessage">Your Message:</label>
+            <textarea
+              id="contactMessage"
+              name="contactMessage"
+              rows="6"
+              required
+              placeholder="Tell us how we can help..."
+            ></textarea>
+          </div>
+          <button type="submit" class="submit-btn tada-contact">
+            Send Message <span class="icon-inline">🚀</span>
+          </button>
+          <p class="form-message" id="contactFormMessage"></p>
+        </form>
+      </section>
+
+      <!-- Help Articles/Guides Section -->
+      <section
+        id="help-guides"
+        class="content-section fade-in-contact"
+        style="animation-delay: 0.45s"
+      >
+        <h3><span class="icon">📚</span> Helpful Guides & Articles</h3>
+        <p>
+          Explore our curated list of articles to get the most out of WriteWise.
+        </p>
+        <ul class="link-list">
+          <li><a href="#">Getting Started with WriteWise</a></li>
+          <li><a href="#">Mastering the Chapter Guide</a></li>
+          <li><a href="#">AI Writing Suggestion Tips</a></li>
+          <li><a href="#">Productive Writing Habits</a></li>
+        </ul>
+      </section>
+
+      <!-- Social Media Links Section - UPDATED WITH ICONS -->
+      <section
+        id="social-media"
+        class="content-section fade-in-contact"
+        style="animation-delay: 0.5s"
+      >
+        <h3><span class="icon">🌐</span> Connect With Us</h3>
+        <p>
+          Stay updated by following us on social media. You can find our main
+          Facebook presence at <strong>WriteWise PH</strong>.
+        </p>
+        <div class="social-links">
+          <!-- Facebook -->
+          <a
+            href="#"
+            class="social-link tada-contact"
+            aria-label="WriteWise PH on Facebook"
+          >
+            <i class="fab fa-facebook-f"></i>
+            <span>Facebook</span>
+          </a>
+          <!-- Twitter/X -->
+          <a
+            href="#"
+            class="social-link tada-contact"
+            aria-label="WriteWise on X (formerly Twitter)"
+          >
+            <i class="fab fa-x-twitter"></i>
+            <span>X</span>
+          </a>
+          <!-- LinkedIn -->
+          <a
+            href="#"
+            class="social-link tada-contact"
+            aria-label="WriteWise on LinkedIn"
+          >
+            <i class="fab fa-linkedin-in"></i>
+            <span>LinkedIn</span>
+          </a>
+          <!-- Community Forum -->
+          <a
+            href="#"
+            class="social-link tada-contact"
+            aria-label="WriteWise Community Forum"
+          >
+            <i class="fas fa-users"></i>
+            <!-- Or fas fa-comments -->
+            <span>Community</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- Live Chat Widget Placeholder -->
+      <section
+        id="live-chat"
+        class="content-section fade-in-contact"
+        style="animation-delay: 0.55s"
+      >
+        <h3><span class="icon">💬</span> Live Chat Support</h3>
+        <p>
+          Need immediate assistance? Our team is typically available via live
+          chat during business hours.
+        </p>
+        <div id="live-chat-widget-container">
+          <p><em>[Live chat widget will appear here if integrated]</em></p>
+          <button
+            class="submit-btn-alt tada-contact"
+            onclick="alert('Live Chat not yet integrated.')"
+          >
+            Open Live Chat (Demo)
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>© 2025 WriteWise</p>
+    </footer>
+    <script src="js/contact.js"></script>
+    <script defer src="js/responsive-embeds.js"></script>
+    <script defer src="js/header-mobile.js"></script>
+  </body>
+</html>
