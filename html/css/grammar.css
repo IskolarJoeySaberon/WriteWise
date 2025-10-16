@@ -2,13 +2,13 @@
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  background: #f4f4f4;
+  background: var(--bg);
   transition: background 0.3s ease, color 0.3s ease; /* transition from dark mode */
 }
 
 header {
-  background-color: #0056b3;
-  color: white;
+  background-color: var(--header-bg);
+  color: var(--header-text);
   padding: 1rem;
   text-align: center;
   position: relative;
@@ -37,7 +37,7 @@ nav a:hover {
 
 main {
   padding: 1.5rem;
-  background: white;
+  background: var(--card-bg);
   margin: 1rem auto;
   max-width: 700px;
   border-radius: 10px;
@@ -46,7 +46,7 @@ main {
 footer {
   text-align: center;
   padding: 1rem;
-  background-color: #ddd;
+  background-color: var(--card-bg);
 }
 
 /* Header container */
@@ -55,8 +55,8 @@ footer {
   justify-content: center; /* center logo/title */
   align-items: center;
   padding: 0.5rem 1rem;
-  background: #004494;
-  color: #fff;
+  background: var(--header-bg);
+  color: var(--header-text);
   position: relative; /* allows absolute positioning of left group */
   font-size: 10px;
 }
@@ -112,7 +112,7 @@ footer {
   left: -240px; /* hidden by default */
   width: 220px; /* fixed width */
   height: 100vh; /* full height */
-  background-color: #011f4b;
+  background-color: var(--sidebar-bg, #011f4b);
   transition: left 0.3s ease-in-out;
   z-index: 1000;
 
@@ -243,7 +243,7 @@ body.dark-mode #checklist li {
 .container {
   display: flex;
   gap: 2rem;
-  background: #fff;
+  background: var(--card-bg);
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -253,7 +253,107 @@ body.dark-mode #checklist li {
 .left-panel {
   flex: 1;
   padding: 1.5rem;
-  background: #fefefe;
+  background: var(--card-bg);
+}
+
+/* Actions under editor: Grammar Check + Insert Citation */
+.editor-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  align-items: stretch;
+}
+
+/* Make buttons share space evenly on wider screens */
+.editor-actions .btn {
+  flex: 1 1 0;
+}
+
+/* Optional visual variant for editor copy button */
+/* Copy (secondary, professional slate) */
+#copyEditorBtn {
+  background: #eef2f7;
+  color: #1f2937;
+  border: 1px solid #d1d7e0;
+  border-radius: 9999px; /* oblong/pill style */
+  padding: 10px 18px; /* slightly wider for pill */
+}
+#copyEditorBtn:hover {
+  background: #e6ebf3;
+  border-color: #c7ceda;
+}
+#copyEditorBtn:focus-visible {
+  outline: 2px solid #2563eb; /* clear focus */
+  outline-offset: 2px;
+}
+
+/* Dark mode variant */
+body.dark-mode #copyEditorBtn {
+  background: #2b3240; /* neutral dark */
+  border-color: #3a4150;
+  color: #e5e7eb;
+}
+body.dark-mode #copyEditorBtn:hover {
+  background: #242a37;
+  border-color: #2f3644;
+}
+
+/* Primary action pills: Check Grammar + Insert Citation */
+/* Primary/secondary action pills */
+.editor-actions #checkGrammarBtn {
+  background: var(--card-bg);
+  color: #2563eb; /* outline primary */
+  border: 1px solid #2563eb;
+  border-radius: 9999px;
+  padding: 8px 12px;
+  font-size: 13px;
+  line-height: 1;
+}
+.editor-actions #checkGrammarBtn:hover {
+  background: #e8f0ff;
+  border-color: #1d4ed8;
+}
+.editor-actions #checkGrammarBtn:focus-visible {
+  outline: 2px solid #1d4ed8;
+  outline-offset: 2px;
+}
+
+.editor-actions #insertCitation {
+  background: #eef2f7;
+  color: #1f2937;
+  border: 1px solid #d1d7e0;
+  border-radius: 9999px;
+  padding: 8px 12px;
+  font-size: 13px;
+  line-height: 1;
+}
+.editor-actions #insertCitation:hover {
+  background: #e6ebf3;
+  border-color: #c7ceda;
+}
+.editor-actions #insertCitation:focus-visible {
+  outline: 2px solid #2563eb; /* blue focus for visibility */
+  outline-offset: 2px;
+}
+
+/* Dark mode adjustments for action pills */
+body.dark-mode .editor-actions #checkGrammarBtn {
+  background: transparent;
+  color: #60a5fa;
+  border-color: #3b82f6;
+}
+body.dark-mode .editor-actions #checkGrammarBtn:hover {
+  background: rgba(59, 130, 246, 0.12);
+  border-color: #2563eb;
+}
+body.dark-mode .editor-actions #insertCitation {
+  background: #2b3240;
+  color: #e5e7eb;
+  border-color: #3a4150;
+}
+body.dark-mode .editor-actions #insertCitation:hover {
+  background: #242a37;
+  border-color: #2f3644;
 }
 
 /* Editor (Quill.js container) */
@@ -299,6 +399,11 @@ body.dark-mode input#topicInput:focus {
   margin: 10px !important;
 }
 
+/* Remove extra margin when inside the aligned actions row */
+.editor-actions #checkGrammarBtn {
+  margin: 0 !important;
+}
+
 /* Unified Button Styling */
 .btn {
   background: #004494;
@@ -339,21 +444,46 @@ body.dark-mode input#topicInput:focus {
 .right-panel {
   flex: 1;
   padding: 1.5rem;
-  background: #f8f8f8;
+  background: var(--card-bg);
 }
 
 /* Suggestions Box */
 #suggestions {
   padding: 1rem;
-  background: #fff;
+  background: var(--card-bg);
   border: 1px solid #ddd;
   border-radius: 4px;
   min-height: 150px;
   margin-bottom: 1rem;
 }
 
-.suggestion-btn {
-  margin-right: 8px;
+/* Suggestions: card layout, spacing, and responsive buttons */
+.suggestion-box {
+  padding: 0.75rem 0.9rem;
+  border: 1px solid #e6e6e6;
+  background: var(--card-bg);
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+}
+
+.suggestion-title {
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+  color: #222; /* neutral, not blue */
+}
+.suggestion-title .error {
+  color: #b00020;
+}
+
+.suggestion-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Remove old right-margin in favor of flex gap */
+.suggestion-options .suggestion-btn {
+  margin: 0; /* overrides earlier margin-right */
 }
 
 /* Checklist Styling */
@@ -362,17 +492,51 @@ body.dark-mode input#topicInput:focus {
   padding: 0;
 }
 
+.checklist-note {
+  margin: 0.25rem 0 0.5rem 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
 #checklist li {
   padding: 0.5rem;
   margin-bottom: 0.5rem;
   background: #e9e9e9;
   border-radius: 4px;
   font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 #checklist li.action-required {
   color: inherit; /* uses default text color */
   font-weight: normal;
+}
+
+/* Hide native checkbox (we render a custom indicator like Chapter Guide) */
+#checklist input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Custom indicator: empty box by default, green check when .passed */
+#checklist li::before {
+  content: "☐";
+  display: inline-block;
+  width: 1.2em;
+  text-align: center;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: #9aa0a6;
+}
+#checklist li.passed::before {
+  content: "✔"; /* literal green check */
+  color: #28a745; /* match Chapter Guide success tone */
+  font-weight: 800;
 }
 
 body.dark-mode .container {
@@ -427,43 +591,153 @@ body.dark-mode #detectedIssues p {
 
 /* Dark mode highlights (scoped) */
 body.dark-mode #detectedIssues .error-typo {
-  color: #ff6b6b;
+  color: #ff8787;
 }
 body.dark-mode #detectedIssues .error-clarity {
-  color: #f9c74f;
+  color: #ffd166;
+}
+
+/* Dark mode backgrounds for severity highlights */
+body.dark-mode #detectedIssues span.error-typo {
+  background-color: rgba(255, 80, 80, 0.22);
+  border-bottom: 2px solid rgba(255, 120, 120, 0.8);
+}
+body.dark-mode #detectedIssues span.error-clarity {
+  background-color: rgba(255, 210, 80, 0.2);
+  border-bottom: 2px solid rgba(255, 210, 80, 0.8);
 }
 
 /* Style for Grammar Suggestion Buttons */
 button.suggestion-btn {
-  background: #004494;
-  color: white;
-  padding: 10px 15px;
+  background: #eaf2ff; /* more noticeable soft blue */
+  color: #0b4fd6; /* blue-leaning text to reinforce tone */
+  padding: 8px 12px; /* compact to avoid oversized width */
   font-size: 14px;
   border-radius: 6px;
   cursor: pointer;
-  font-weight: bold;
-  border: none;
-  transition: background 0.3s ease, transform 0.2s ease;
+  font-weight: 600;
+  border: 1px solid #bcd5ff; /* slightly stronger blue border */
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  white-space: nowrap;
+  flex: 0 0 auto; /* do not stretch unless responsive rule applies */
 }
 
 /* Hover & Active Effects */
 button.suggestion-btn:hover {
-  background: #003570;
-  transform: scale(1.05);
+  background: #e0ecff; /* slightly deeper blue tint on hover */
+  border-color: #b1ceff;
+  transform: translateY(-1px);
 }
 
 button.suggestion-btn:active {
   transform: scale(0.98);
 }
 
+button.suggestion-btn:focus-visible {
+  outline: 2px solid #2563eb; /* accessible blue focus */
+  outline-offset: 2px;
+}
+
 /* Dark Mode */
 body.dark-mode button.suggestion-btn {
-  background: #222;
-  color: #e0e0e0;
+  background: #223044; /* slightly more pronounced cool dark blue */
+  border-color: #304765;
+  color: #e5e7eb;
 }
 
 body.dark-mode button.suggestion-btn:hover {
-  background: #333;
+  background: #283856;
+  border-color: #3a5272;
+}
+
+/* Dark mode suggestion cards */
+body.dark-mode .suggestion-box {
+  background: #232323;
+  border-color: #333;
+}
+body.dark-mode .suggestion-title {
+  color: #e0e0e0; /* neutral light text in dark mode */
+}
+body.dark-mode .suggestion-title .error {
+  color: #ff6b6b;
+}
+
+/* Suggestion apply button shares look with suggestion buttons */
+.suggestion-apply {
+  background: #0b6efd;
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+.suggestion-apply:hover {
+  background: #0a58ca;
+}
+
+/* Hidden suggestions start collapsed; JS toggles display */
+.suggestion-hidden {
+  display: none;
+}
+
+/* Show more/less toggle */
+.suggestions-toggle {
+  margin-top: 0.5rem;
+  width: auto; /* don't stretch full width by default */
+  display: inline-flex; /* size to content */
+}
+
+/* When toggle is inside the toolbar, remove extra top margin to align with buttons */
+.suggestions-toolbar .suggestions-toggle {
+  margin-top: 0;
+}
+
+/* Suggestions bottom toolbar (Show more + Apply all) */
+.suggestions-toolbar {
+  display: flex;
+  gap: 8px;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center; /* desktop: side-by-side (adjacent) */
+  align-items: center;
+}
+.suggestions-toolbar .btn {
+  flex: 0 0 auto; /* do not force full width */
+  padding: 8px 12px; /* keep compact on desktop too */
+  font-size: 14px;
+}
+
+/* Ensure toggle and toolbar buttons align and share consistent height */
+.suggestions-toolbar .btn,
+.suggestions-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  min-height: 36px; /* consistent touch target height */
+}
+
+/* Apply all button style */
+.suggestions-apply-all {
+  background: #0b6efd;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+.suggestions-apply-all:hover {
+  background: #0a58ca;
+}
+
+/* Copy button is secondary/neutral */
+.suggestions-copy {
+  background: #eef2f7;
+  color: #1f2937;
+  border: 1px solid #d1d7e0;
+}
+.suggestions-copy:hover {
+  background: #e6ebf3;
+  border-color: #c7ceda;
 }
 
 /* === Summary Box === */
@@ -508,6 +782,12 @@ body.dark-mode .summary-box {
   position: relative; /* so the close button can be absolutely positioned */
 }
 
+/* Avoid title being covered by the close button */
+.modal-content h2 {
+  margin-top: 0;
+  padding-right: 2.25rem;
+}
+
 .modal-content label {
   display: block;
   margin-top: 1rem;
@@ -521,30 +801,48 @@ body.dark-mode .summary-box {
   margin-top: 0.3rem;
   border: 1px solid #ccc;
   border-radius: 4px;
+  box-sizing: border-box; /* prevent overflow due to padding/border */
+  max-width: 100%;
+  display: block;
 }
 
-.modal-content button {
+/* Apply full-width only to form submit button, not the close icon */
+.modal-content button:not(.close) {
   margin-top: 0.5rem;
   width: 100%;
 }
 
-/* Close button */
-.close {
+/* Close button positioned top-right for responsiveness */
+#citationModal .modal-content .close {
   position: absolute;
-  top: 1px; /* closer to the top */
-  left: 13rem; /* snug to the right edge */
-  background: none;
+  top: 6px;
+  right: 6px;
+  left: auto;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
   border: none;
-  font-size: 1.75rem;
+  border-radius: 50%;
+  font-size: 1.2rem;
   font-weight: bold;
   line-height: 1;
   color: #666;
   cursor: pointer;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, background-color 0.2s ease;
+  z-index: 1; /* ensure it sits above content inside modal */
 }
 
-.close:hover {
+#citationModal .modal-content .close:hover {
   color: #000;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+#citationModal .modal-content .close:focus-visible {
+  outline: 2px solid #0d6efd;
+  outline-offset: 2px;
 }
 
 /* Dark mode adjustments */
@@ -617,13 +915,15 @@ body.dark-mode .error-highlight.clarity {
 }
 
 #detectedIssues span.error-typo {
-  background-color: rgba(255, 0, 0, 0.2);
-  border-bottom: 2px dotted red;
+  background-color: rgba(255, 59, 48, 0.18); /* vivid red for serious errors */
+  border-bottom: 2px solid rgba(255, 59, 48, 0.7);
+  color: #b00020;
 }
 
 #detectedIssues span.error-clarity {
-  background-color: rgba(255, 200, 0, 0.2);
-  border-bottom: 2px dotted orange;
+  background-color: rgba(255, 193, 7, 0.18); /* amber for mild errors */
+  border-bottom: 2px solid rgba(255, 193, 7, 0.7);
+  color: #9a6b00;
 }
 
 /* Adjust layout on smaller screens */
@@ -633,3 +933,84 @@ body.dark-mode .error-highlight.clarity {
     gap: 1.5rem;
   }
 }
+
+/* Mobile refinements */
+@media (max-width: 600px) {
+  /* Make action buttons compact and size-to-content */
+  .editor-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .editor-actions .btn {
+    flex: 0 0 auto;
+    width: auto;
+    padding: 10px 14px; /* default compact */
+    font-size: 14px;
+    white-space: nowrap; /* avoid tiny labels stretching */
+  }
+
+  /* Keep primary action pills small on mobile too */
+  .editor-actions #checkGrammarBtn,
+  .editor-actions #insertCitation {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  /* Show more/less toggle should not stretch full width on mobile */
+  .suggestions-toggle {
+    width: auto;
+    display: inline-flex;
+    align-self: flex-start;
+  }
+
+  /* Mobile: place Show more and Apply all side-by-side without hierarchy */
+  .suggestions-toolbar {
+    justify-content: center; /* sit next to each other */
+    align-items: center; /* vertically align buttons */
+  }
+  /* Keep a consistent gap and height between the two controls */
+  .suggestions-toolbar .btn,
+  .suggestions-toggle {
+    min-height: 36px;
+    white-space: nowrap; /* avoid wrapping to separate lines */
+  }
+
+  /* Modal: use more of the viewport and reduce inner padding */
+  .modal-content {
+    max-width: 92vw;
+    margin: 8vh auto;
+    padding: 1rem 1.25rem; /* a bit more side padding so fields don't touch edges */
+    border-radius: 10px;
+  }
+
+  .modal-content label {
+    margin-top: 0.75rem;
+    font-size: 0.95rem;
+  }
+  .modal-content input,
+  .modal-content select {
+    padding: 12px; /* comfortable touch size */
+    font-size: 1rem;
+    box-sizing: border-box; /* ensure no horizontal overflow */
+    max-width: 100%;
+  }
+
+  #citationModal .modal-content .close {
+    top: 4px;
+    right: 4px;
+    width: 32px;
+    height: 32px;
+    font-size: 1.1rem;
+  }
+
+  /* Suggestions: buttons wrap in two columns on small screens */
+  .suggestion-options .suggestion-btn {
+    flex: 0 0 auto; /* size to content */
+    max-width: 100%;
+    text-align: center;
+  }
+}
+
+/* Extra small devices: stack suggestion buttons full-width */
+/* Removed forced full-width on very small screens to keep short labels compact */

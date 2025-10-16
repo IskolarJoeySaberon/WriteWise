@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Prevent theme flash: set dark-mode early before CSS loads -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem("theme");
+          if (saved === "dark") {
+            document.documentElement.classList.add("dark-mode");
+            document.write("<style>html{background:#121212}</style>");
+          } else {
+            document.write("<style>html{background:#f4f4f4}</style>");
+          }
+        } catch (e) {}
+      })();
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
@@ -53,8 +67,8 @@
       </nav>
     </aside>
 
-    <main class="page-main">
-      <h2 class="fade-in">Citation Generator</h2>
+    <main class="page-main page-fade-in">
+      <h2 class="fade-in page-fade-in">Citation Generator</h2>
       <p class="fade-in" style="animation-delay: 0.1s">
         Enter the details of your source below to generate citations. Switch
         style, upload a batch, and export your results.
@@ -62,7 +76,7 @@
 
       <!-- Style Switcher -->
       <div
-        class="form-group fade-in"
+        class="form-group fade-in page-fade-in"
         style="margin-bottom: 1.5em; animation-delay: 0.15s"
       >
         <label for="style-switcher"><strong>Preview Style:</strong></label>
@@ -75,7 +89,7 @@
 
       <!-- Batch Upload -->
       <div
-        class="form-group fade-in"
+        class="form-group fade-in page-fade-in"
         style="margin-bottom: 1.5em; animation-delay: 0.2s"
       >
         <label for="batch-upload"
@@ -93,8 +107,11 @@
         >
       </div>
 
-      <form id="citation-form" class="slide-in-citation">
-        <div class="form-group fade-in" style="animation-delay: 0.25s">
+      <form id="citation-form" class="slide-in-citation page-fade-in">
+        <div
+          class="form-group fade-in page-fade-in"
+          style="animation-delay: 0.25s"
+        >
           <label for="author"
             >Author(s):
             <span class="tooltip" title="e.g., Smith, John A.; Lee, Jane"
@@ -113,7 +130,10 @@
           >
         </div>
 
-        <div class="form-group fade-in" style="animation-delay: 0.3s">
+        <div
+          class="form-group fade-in page-fade-in"
+          style="animation-delay: 0.3s"
+        >
           <label for="year"
             >Publication Year:
             <span class="tooltip" title="e.g., 2023">&#9432;</span>
@@ -121,7 +141,10 @@
           <input type="number" id="year" name="year" placeholder="e.g., 2023" />
         </div>
 
-        <div class="form-group fade-in" style="animation-delay: 0.35s">
+        <div
+          class="form-group fade-in page-fade-in"
+          style="animation-delay: 0.35s"
+        >
           <label for="title"
             >Title:
             <span class="tooltip" title="e.g., The Principles of Citation"
@@ -137,7 +160,10 @@
           <small>Title of the book, article, or specific web page.</small>
         </div>
 
-        <div class="form-group fade-in" style="animation-delay: 0.4s">
+        <div
+          class="form-group fade-in page-fade-in"
+          style="animation-delay: 0.4s"
+        >
           <label for="publisher-source"
             >Publisher / Journal / Website Name:
             <span
@@ -173,10 +199,16 @@
           />
         </div>
 
-        <button type="submit" class="tada-citation">Generate Citations</button>
+        <button type="submit" class="tada-citation page-fade-in">
+          Generate Citations
+        </button>
       </form>
 
-      <div id="citation-results" class="fade-in" style="animation-delay: 0.5s">
+      <div
+        id="citation-results"
+        class="fade-in page-fade-in"
+        style="animation-delay: 0.5s"
+      >
         <h3>Generated Citations:</h3>
         <div id="apa-output" class="citation-output slide-in-citation">
           <strong>APA:</strong> <span>Waiting for input...</span>

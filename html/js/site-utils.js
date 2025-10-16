@@ -13,7 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function toggleTheme() {
+    document.documentElement.classList.add('theme-changing');
+    const nextIsDark = !document.body.classList.contains('dark-mode');
     document.body.classList.toggle('dark-mode');
+    document.documentElement.classList.toggle('dark-mode', nextIsDark);
     localStorage.setItem(
       'theme',
       document.body.classList.contains('dark-mode') ? 'dark' : 'light'
@@ -29,6 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (hdr) hdr.innerHTML = icon;
     if (ins) ins.innerHTML = icon;
     if (themeToggleLogin) themeToggleLogin.innerHTML = icon;
+    // allow one frame for repaint then re-enable transitions
+    requestAnimationFrame(() => document.documentElement.classList.remove('theme-changing'));
   }
 
   // Inject a high-specificity style block to enforce consistent sidebar sizing and header layout
@@ -54,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
   // Inject small animation CSS for header buttons (fallback when GSAP not available)
-  (function injectHeaderAnimationCSS(){
+  (function injectHeaderAnimationCSS() {
     try {
       if (document.getElementById('site-utils-anim')) return;
       const css = `
@@ -127,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (a) {
       const href = (a.getAttribute('href') || '').toLowerCase();
       if (href.includes('learning.html')) {
-        try { sessionStorage.setItem('playLearningAnimation', '1'); } catch (err) {}
+        try { sessionStorage.setItem('playLearningAnimation', '1'); } catch (err) { }
       }
     }
 
@@ -136,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (withOnclick) {
       const onclick = (withOnclick.getAttribute('onclick') || '').toLowerCase();
       if (onclick.includes('learning.html')) {
-        try { sessionStorage.setItem('playLearningAnimation', '1'); } catch (err) {}
+        try { sessionStorage.setItem('playLearningAnimation', '1'); } catch (err) { }
       }
     }
 
@@ -145,22 +150,25 @@ document.addEventListener('DOMContentLoaded', () => {
     if (dataHref) {
       const dh = (dataHref.getAttribute('data-href') || '').toLowerCase();
       if (dh.includes('learning.html')) {
-        try { sessionStorage.setItem('playLearningAnimation', '1'); } catch (err) {}
+        try { sessionStorage.setItem('playLearningAnimation', '1'); } catch (err) { }
       }
     }
   }, true);
 
   // Load saved theme on page load
   try {
-    if (localStorage.getItem('theme') === 'dark') {
+    const saved = localStorage.getItem('theme');
+    const isDark = saved === 'dark';
+    if (isDark) {
+      document.documentElement.classList.add('dark-mode');
       document.body.classList.add('dark-mode');
-      const icon = '<i class="fa-solid fa-sun"></i>';
-      const hdr = document.getElementById('themeToggleHeader');
-      const ins = document.getElementById('themeToggleInside');
-      if (hdr) hdr.innerHTML = icon;
-      if (ins) ins.innerHTML = icon;
-      if (themeToggleLogin) themeToggleLogin.innerHTML = icon;
     }
+    const icon = isDark ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+    const hdr = document.getElementById('themeToggleHeader');
+    const ins = document.getElementById('themeToggleInside');
+    if (hdr) hdr.innerHTML = icon;
+    if (ins) ins.innerHTML = icon;
+    if (themeToggleLogin) themeToggleLogin.innerHTML = icon;
   } catch (err) { /* ignore storage errors */ }
 
   // Learning page animation: call global playLearningAnimation() if present; otherwise use GSAP or CSS fallback
@@ -202,4 +210,4 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Also animate header buttons once on initial load for every page to match home page UX
-try { document.addEventListener('DOMContentLoaded', () => { try { if (typeof animateHeaderButtons === 'function') animateHeaderButtons(); } catch(e){} }); } catch(e) {}
+try { document.addEventListener('DOMContentLoaded', () => { try { if (typeof animateHeaderButtons === 'function') animateHeaderButtons(); } catch (e) { } }); } catch (e) { }

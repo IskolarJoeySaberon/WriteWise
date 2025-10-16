@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Prevent theme flash: set dark-mode early before CSS loads -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem("theme");
+          if (saved === "dark") {
+            document.documentElement.classList.add("dark-mode");
+            document.write("<style>html{background:#121212}</style>");
+          } else {
+            document.write("<style>html{background:#f4f4f4}</style>");
+          }
+        } catch (e) {}
+      })();
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Writing Assistant</title>
@@ -65,7 +79,7 @@
     </aside>
 
     <!-- Main Content -->
-    <main class="wrapper">
+    <main class="wrapper page-fade-in">
       <div class="container">
         <!-- Editor Panel -->
         <div class="left-panel">
@@ -81,6 +95,9 @@
             </button>
             <button id="insertCitation" class="btn" type="button">
               Insert Citation
+            </button>
+            <button id="copyEditorBtn" class="btn" type="button">
+              Copy to Clipboard
             </button>
           </div>
 
@@ -100,7 +117,11 @@
           <div id="detectedIssues"></div>
 
           <h3>Checklist</h3>
-          <ul id="checklist">
+          <p id="checklistNote" class="checklist-note" aria-live="polite">
+            This checklist updates automatically after you run Grammar Check.
+            Items are not clickable.
+          </p>
+          <ul id="checklist" aria-describedby="checklistNote">
             <li><input type="checkbox" /> Clear sentences</li>
             <li><input type="checkbox" /> Correct verb tense</li>
             <li><input type="checkbox" /> No redundant words</li>
@@ -119,7 +140,7 @@
           type="button"
           aria-label="Close"
         >
-          &times;
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
         </button>
         <h2>Generate Citation</h2>
         <form id="citationForm">

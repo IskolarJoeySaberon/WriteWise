@@ -12,6 +12,30 @@ document.addEventListener("DOMContentLoaded", () => {
     /** =========================
      * Grammar Check
      * ========================= */
+    let hasCompletedCheck = false;
+
+    // Classify severity of a LanguageTool match as 'serious' (red) or 'mild' (amber)
+    const classifySeverity = (match) => {
+        const categoryId = (match.rule?.category?.id || '').toUpperCase();
+        const issueType = (match.rule?.issueType || '').toLowerCase();
+        const ruleId = (match.rule?.id || '').toUpperCase();
+
+        const seriousCategories = new Set(['TYPOS', 'GRAMMAR', 'PUNCTUATION', 'CONFUSED_WORDS']);
+        const mildCategories = new Set(['STYLE', 'CASING', 'TYPOGRAPHY', 'WHITESPACE', 'REDUNDANCY']);
+
+        if (seriousCategories.has(categoryId)) return 'serious';
+        if (mildCategories.has(categoryId)) return 'mild';
+
+        if (['misspelling', 'grammar', 'typographical'].includes(issueType)) return 'serious';
+        if (['style', 'non-conformance', 'nonconformance'].includes(issueType)) return 'mild';
+
+        if (/(SPELL|AGREEMENT|PUNCTUATION|CONFUSED|MORPHOLOGY|CASE_MISMATCH)/.test(ruleId)) return 'serious';
+        if (/(STYLE|WORDY|REDUNDANT|CASING|WHITESPACE|DOUBLE_SPACE|OXFORD_COMMA)/.test(ruleId)) return 'mild';
+
+        // Fallback to mild if unknown
+        return 'mild';
+    };
+
     const checkGrammar = () => {
         const text = getEditorText();
         const suggestionsElement = document.getElementById("suggestions");
@@ -28,6 +52,9 @@ document.addEventListener("DOMContentLoaded", () => {
         quill.removeFormat(0, quill.getLength());
 
         // Use the free public endpoint for testing
+        // Indicate a fresh check is starting; keep checklist empty until completion
+        hasCompletedCheck = false;
+
         fetch("https://api.languagetool.org/v2/check", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -40,14 +67,19 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (suggestionsElement) suggestionsElement.innerHTML = "✅ No grammar issues found.";
                 } else {
                     highlightErrors(matches);
-                    updateChecklist(matches);
                 }
+                // Mark check as completed and evaluate checklist now
+                hasCompletedCheck = true;
+                updateChecklist(matches, text, true);
                 updateReadability(text, matches);
             })
             .catch(error => {
                 console.error("Grammar Check Error:", error);
                 if (suggestionsElement) suggestionsElement.innerHTML = "⚠️ Could not check grammar. Please try again.";
                 quill.removeFormat(0, quill.getLength());
+                // Keep checklist empty on error
+                hasCompletedCheck = false;
+                updateChecklist([], text, false);
             });
     };
 
@@ -68,10 +100,15 @@ document.addEventListener("DOMContentLoaded", () => {
         if (suggestionsElement) suggestionsElement.innerHTML = "";
         if (detectedIssuesElement) detectedIssuesElement.innerHTML = "";
 
+        const VISIBLE_LIMIT = 5;
+        let index = 0;
+        // Keep a copy of matches with computed best replacements for use by "Apply all"
+        const bestSet = [];
+
         matches.forEach(match => {
             const { offset, length, replacements = [], message } = match;
-            const isClarity = match.rule?.category?.id === "STYLE" || match.rule?.issueType === "style";
-            const formatName = isClarity ? "error-clarity" : "error-typo";
+            const severity = classifySeverity(match);
+            const formatName = severity === 'mild' ? 'error-clarity' : 'error-typo';
 
             // Highlight inside editor
             quill.formatText(offset, length, { [formatName]: true }, "user");
@@ -101,6 +138,10 @@ document.addEventListener("DOMContentLoaded", () => {
             buttonsContainer.className = "suggestion-options";
 
             const reps = replacements.length ? replacements : [{ value: levenshteinSuggest(wrongWord) }];
+            const best = reps[0]?.value || "";
+            if (best) {
+                bestSet.push({ offset, length, best });
+            }
 
             reps.forEach(rep => {
                 const btn = document.createElement("button");
@@ -118,13 +159,67 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Issues Detected entry
             const issueEntry = document.createElement("p");
+            issueEntry.setAttribute('data-severity', severity);
             issueEntry.innerHTML = `<span class="${formatName}" style="cursor:pointer;">${wrongWord}</span> → ${message}`;
             issueEntry.querySelector("span").addEventListener("click", () => {
                 quill.setSelection(offset, length, "user");
                 quill.focus();
             });
             if (detectedIssuesElement) detectedIssuesElement.appendChild(issueEntry);
+
+            // Handle collapsing for suggestions beyond the visible limit
+            if (index >= VISIBLE_LIMIT) {
+                suggestionBox.classList.add("suggestion-hidden");
+            }
+            index++;
         });
+
+        // Add toolbar with Show more / less and Apply all
+        if (suggestionsElement) {
+            const hiddenCount = Math.max(0, matches.length - VISIBLE_LIMIT);
+            const toolbar = document.createElement('div');
+            toolbar.className = 'suggestions-toolbar';
+
+            if (hiddenCount > 0) {
+                const toggle = document.createElement('button');
+                toggle.type = 'button';
+                toggle.className = 'suggestions-toggle btn';
+                toggle.textContent = `Show more (${hiddenCount})`;
+                let expanded = false;
+                toggle.addEventListener('click', () => {
+                    expanded = !expanded;
+                    suggestionsElement
+                        .querySelectorAll('.suggestion-hidden')
+                        .forEach(el => el.style.display = expanded ? 'block' : 'none');
+                    toggle.textContent = expanded ? 'Show less' : `Show more (${hiddenCount})`;
+                });
+                // Start collapsed
+                suggestionsElement
+                    .querySelectorAll('.suggestion-hidden')
+                    .forEach(el => el.style.display = 'none');
+                toolbar.appendChild(toggle);
+            }
+
+            if (bestSet.length > 0) {
+                const applyAll = document.createElement('button');
+                applyAll.type = 'button';
+                applyAll.className = 'btn suggestions-apply-all';
+                applyAll.textContent = 'Apply all changes';
+                applyAll.addEventListener('click', () => {
+                    // Apply from right to left to keep offsets valid
+                    const sorted = [...bestSet].sort((a, b) => b.offset - a.offset);
+                    sorted.forEach(({ offset, length, best }) => {
+                        if (best) applyCorrection(offset, length, best);
+                    });
+                    setTimeout(checkGrammar, 80);
+                });
+                toolbar.appendChild(applyAll);
+            }
+
+            // Copy button moved near the editor actions; no copy in toolbar to avoid duplication
+
+            if (toolbar.children.length) suggestionsElement.appendChild(toolbar);
+        }
     };
 
     const applyCorrection = (offset, length, replacement) => {
@@ -133,24 +228,103 @@ document.addEventListener("DOMContentLoaded", () => {
         quill.insertText(offset, replacement);
     };
 
+    // Copy to clipboard (editor actions)
+    const copyEditorBtn = document.getElementById('copyEditorBtn');
+    if (copyEditorBtn) {
+        copyEditorBtn.addEventListener('click', async () => {
+            const content = quill.getText().trim();
+            if (!content) {
+                const old = copyEditorBtn.textContent;
+                copyEditorBtn.textContent = 'Nothing to copy';
+                copyEditorBtn.disabled = true;
+                setTimeout(() => { copyEditorBtn.textContent = old; copyEditorBtn.disabled = false; }, 1200);
+                return;
+            }
+            const old = copyEditorBtn.textContent;
+            try {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    await navigator.clipboard.writeText(content);
+                } else {
+                    const ta = document.createElement('textarea');
+                    ta.value = content;
+                    ta.style.position = 'fixed';
+                    ta.style.opacity = '0';
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(ta);
+                }
+                copyEditorBtn.textContent = 'Copied!';
+            } catch (e) {
+                console.error('Copy failed', e);
+                copyEditorBtn.textContent = 'Copy failed';
+            } finally {
+                copyEditorBtn.disabled = true;
+                setTimeout(() => { copyEditorBtn.textContent = old; copyEditorBtn.disabled = false; }, 1500);
+            }
+        });
+    }
+
     /** =========================
      * Checklist
      * ========================= */
-    const updateChecklist = (matches) => {
-        const checklistItems = document.querySelectorAll("#checklist li");
-        checklistItems.forEach(item => item.classList.remove("action-required"));
-        matches.forEach(match => {
-            const msg = (match.message || "").toLowerCase();
-            if (msg.includes("redundant") || msg.includes("repetition")) markChecklistItem("No redundant words");
-            if (msg.includes("clarity") || msg.includes("confusing")) markChecklistItem("Clear sentences");
-            if (msg.includes("tense")) markChecklistItem("Correct verb tense");
-            if (msg.includes("concise") || msg.includes("wordy")) markChecklistItem("Concise phrasing");
+    const updateChecklist = (matches, text = "", evaluated = false) => {
+        // Ensure checkboxes are system-controlled
+        const items = Array.from(document.querySelectorAll('#checklist li'));
+        const wordCount = (text || "").split(/\s+/).filter(Boolean).length;
+        const MIN_WORDS = 5;
+        const map = {
+            'Clear sentences': false,
+            'Correct verb tense': false,
+            'No redundant words': false,
+            'Concise phrasing': false,
+        };
+
+        // Initialize: disable checkboxes and clear classes
+        items.forEach(li => {
+            const input = li.querySelector('input[type="checkbox"]');
+            if (input) {
+                input.disabled = true;
+                // Default to empty checkbox unless we later mark it as passed
+                input.checked = false;
+            }
+            li.classList.remove('action-required');
+            li.classList.remove('passed');
+        });
+
+        // If not evaluated yet, leave everything empty
+        if (!evaluated) return;
+
+        // Global rule: only auto-check if ALL suggestions are resolved
+        const allClear = wordCount >= MIN_WORDS && (!matches || matches.length === 0);
+        if (!allClear) {
+            items.forEach(li => {
+                const input = li.querySelector('input[type="checkbox"]');
+                if (input) input.checked = false;
+                li.classList.remove('passed');
+                // Optional: highlight pending state
+                // li.classList.add('action-required');
+            });
+            return;
+        }
+
+        // All clear: check and mark all items as passed
+        items.forEach(li => {
+            const input = li.querySelector('input[type="checkbox"]');
+            if (input) input.checked = true;
+            li.classList.remove('action-required');
+            li.classList.add('passed');
         });
     };
 
     const markChecklistItem = (text) => {
-        document.querySelectorAll("#checklist li").forEach(item => {
-            if (item.textContent.indexOf(text) !== -1) item.classList.add("action-required");
+        // kept for compatibility, now handled by updateChecklist
+        document.querySelectorAll('#checklist li').forEach(item => {
+            if (item.textContent.indexOf(text) !== -1) {
+                const input = item.querySelector('input[type="checkbox"]');
+                if (input) { input.checked = false; input.disabled = true; }
+                item.classList.add('action-required');
+            }
         });
     };
 
@@ -393,6 +567,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+
+    // Disable checklist boxes from user interaction on load
+    document.querySelectorAll('#checklist input[type="checkbox"]').forEach(cb => {
+        cb.disabled = true;
+        cb.checked = false; // start with empty boxes
+    });
 
     // Expose function to button
     window.checkGrammar = checkGrammar;

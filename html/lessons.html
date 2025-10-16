@@ -1,19 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Prevent theme flash: set dark-mode early before CSS loads -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem("theme");
+          if (saved === "dark") {
+            document.documentElement.classList.add("dark-mode");
+            document.write("<style>html{background:#121212}</style>");
+          } else {
+            document.write("<style>html{background:#f4f4f4}</style>");
+          }
+        } catch (e) {}
+      })();
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lessons — Redirecting</title>
     <meta http-equiv="refresh" content="0; url=learning.html" />
     <link rel="stylesheet" href="css/style.css" />
   </head>
-  <body style="font-family:inherit;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;">
-    <div style="text-align:center;max-width:500px;padding:24px;">
+  <body
+    style="
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    "
+  >
+    <div style="text-align: center; max-width: 500px; padding: 24px">
       <h2>Lessons moved to Learning Hub</h2>
-      <p>We've merged Lessons and Tutorials into a single <a href="learning.html">Learning hub</a>. You will be redirected shortly.</p>
+      <p>
+        We've merged Lessons and Tutorials into a single
+        <a href="learning.html">Learning hub</a>. You will be redirected
+        shortly.
+      </p>
       <p>If nothing happens, click <a href="learning.html">this link</a>.</p>
     </div>
-    <script>window.location.href = 'learning.html';</script>
+    <script>
+      window.location.href = "learning.html";
+    </script>
     <script defer src="js/site-utils.js"></script>
     <script defer src="js/responsive-embeds.js"></script>
   </body>

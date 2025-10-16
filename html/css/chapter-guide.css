@@ -77,7 +77,7 @@
   transition: background 0.2s;
 }
 .chapter-guide-modal .modal-content {
-  background: #fff;
+  background: var(--card-bg);
   border-radius: 14px;
   max-width: 420px;
   width: 95vw;
@@ -268,7 +268,7 @@ body {
   flex: 1 1 300px;
   padding: 1rem;
   border-radius: 8px;
-  background: linear-gradient(180deg, #fff, #fbfdff);
+  background: var(--card-bg);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
   border: 1px solid #eef6ff;
 }
@@ -366,7 +366,7 @@ body {
 .chapter-section {
   padding: 1.2rem;
   border-radius: 10px;
-  background: linear-gradient(180deg, #fff, #fbfdff);
+  background: var(--card-bg);
   border: 1px solid #eef5ff;
   margin-bottom: 1rem;
 }
@@ -448,7 +448,7 @@ body {
   margin: 0.8rem 0;
   padding: 0.8rem;
   border-radius: 8px;
-  background: #fff;
+  background: var(--card-bg);
   border: 1px solid #eef6ff;
 }
 .tasks-header {
@@ -523,7 +523,7 @@ body {
   display: none;
   margin-top: 8px;
   padding: 10px;
-  background: #fbfdff;
+  background: var(--card-bg);
   border-left: 4px solid var(--primary);
   border-radius: 6px;
 }
@@ -533,7 +533,7 @@ body {
   margin-top: 1rem;
   padding: 1rem;
   border-radius: 10px;
-  background: #fff;
+  background: var(--card-bg);
   border: 1px solid #eef6ff;
 }
 /* User-created section inherits sample-snippet card */
@@ -567,7 +567,7 @@ body {
   border: 1px solid #e5eefc;
   resize: vertical;
   font-family: inherit;
-  background: #fff;
+  background: var(--card-bg);
   box-sizing: border-box;
 }
 .snippet-meta {
@@ -588,7 +588,7 @@ body {
   flex-wrap: wrap;
 }
 .btn-secondary {
-  background: #fff;
+  background: var(--card-bg);
   border: 1px solid #d0e6ff;
   color: var(--primary-dark);
   padding: 6px 8px;
@@ -596,12 +596,12 @@ body {
   cursor: pointer;
 }
 .btn-secondary:hover {
-  background: #f1fbff;
+  background: var(--item-hover-bg, #f1fbff);
 }
 
 /* Reset task button styling */
 .btn-secondary.reset-task {
-  background: #fff2f2;
+  background: var(--danger-bg, #fff2f2);
   border: 1px solid #ffcdd2;
   color: #c62828;
 }
@@ -627,7 +627,7 @@ body {
   margin-top: 1rem;
   padding: 0.8rem;
   border-radius: 8px;
-  background: #fff;
+  background: var(--card-bg);
   border: 1px solid #eef6ff;
 }
 .notes-input {
@@ -637,7 +637,7 @@ body {
   border-radius: 8px;
   border: 1px solid #e5eefc;
   resize: vertical;
-  background: #fff;
+  background: var(--card-bg);
   box-sizing: border-box;
 }
 .notes-actions {
@@ -651,7 +651,7 @@ body {
   margin-top: 1rem;
   padding: 0.8rem;
   border-radius: 8px;
-  background: #fff;
+  background: var(--card-bg);
   border: 1px solid #eef6ff;
   display: flex;
   flex-direction: column;
@@ -684,7 +684,7 @@ body {
   z-index: 1200;
   padding: 16px 18px 16px 18px;
   border-radius: 12px;
-  background: linear-gradient(180deg, #fff, #f7faff 90%);
+  background: var(--card-bg);
   box-shadow: 0 8px 32px rgba(20, 30, 60, 0.13);
   border: 1.5px solid #e6f0ff;
   cursor: move;

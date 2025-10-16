@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Prevent theme flash: set dark-mode early before CSS loads -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem("theme");
+          if (saved === "dark") {
+            document.documentElement.classList.add("dark-mode");
+            document.write("<style>html{background:#121212}</style>");
+          } else {
+            document.write("<style>html{background:#f4f4f4}</style>");
+          }
+        } catch (e) {}
+      })();
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Research Suggestion Tool</title>
@@ -52,7 +66,7 @@
       </nav>
     </aside>
 
-    <main class="page-main">
+    <main class="page-main page-fade-in">
       <h2>Enter Your Research Topic</h2>
       <input type="text" id="topicInput" placeholder="Enter topic..." />
 

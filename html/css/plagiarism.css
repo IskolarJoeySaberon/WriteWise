@@ -9,8 +9,8 @@
   justify-content: center; /* center logo/title */
   align-items: center;
   padding: 0.5rem 1rem;
-  background: #004494;
-  color: #fff;
+  background: var(--header-bg);
+  color: var(--header-text);
   position: relative; /* allows absolute positioning of left group */
 }
 
@@ -65,7 +65,7 @@
   left: -240px; /* hidden by default */
   width: 220px; /* fixed width */
   height: 100vh; /* full height */
-  background-color: #011f4b;
+  background-color: var(--sidebar-bg, #011f4b);
   transition: left 0.3s ease-in-out;
   z-index: 1000;
 

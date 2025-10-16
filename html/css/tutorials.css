@@ -1,27 +1,37 @@
 /* --- Tutorials Page Fade-in Animation --- */
 .fade-in-tutorials {
-  animation: fadeInTutorials 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: fadeInTutorials 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 @keyframes fadeInTutorials {
   from {
     opacity: 0;
-    transform: scale(0.97) translateY(30px);
+    transform: translate3d(0, 8px, 0);
   }
   to {
     opacity: 1;
-    transform: scale(1) translateY(0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .fade-in-tutorials {
+    animation: none !important;
   }
 }
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  background: #f4f4f4;
+  background: var(--bg);
   transition: background 0.3s ease, color 0.3s ease; /* transition from dark mode */
 }
 
 header {
-  background-color: #0056b3;
-  color: white;
+  background-color: var(--header-bg);
+  color: var(--header-text);
   padding: 1rem;
   text-align: center;
 }
@@ -49,7 +59,7 @@ nav a:hover {
 
 main {
   padding: 1.5rem;
-  background: white;
+  background: var(--card-bg);
   margin: 1rem auto;
   max-width: 700px;
   border-radius: 10px;
@@ -58,7 +68,7 @@ main {
 footer {
   text-align: center;
   padding: 1rem;
-  background-color: #ddd;
+  background-color: var(--card-bg);
 }
 
 /* Tutorial Section Styles */
@@ -162,8 +172,8 @@ footer {
   justify-content: center; /* center logo/title */
   align-items: center;
   padding: 0.5rem 1rem;
-  background: #004494;
-  color: #fff;
+  background: var(--header-bg);
+  color: var(--header-text);
   position: relative; /* allows absolute positioning of left group */
   font-size: 10px;
 }
@@ -219,7 +229,7 @@ footer {
   left: -240px; /* hidden by default */
   width: 220px; /* fixed width */
   height: 100vh; /* full height */
-  background-color: #011f4b;
+  background-color: var(--sidebar-bg, #011f4b);
   transition: left 0.3s ease-in-out;
   z-index: 1000;
 
@@ -405,7 +415,7 @@ body.dark-mode footer {
   width: 520px;
   max-width: 92%;
   margin: 10vh auto;
-  background: #fff;
+  background: var(--card-bg);
   padding: 18px;
   border-radius: 10px;
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
@@ -544,7 +554,7 @@ body.dark-mode footer {
   align-items: start;
 }
 .lesson-list {
-  background: #fff;
+  background: var(--card-bg);
   border: 1px solid #eef4ff;
   padding: 12px;
   border-radius: 8px;
@@ -563,7 +573,7 @@ body.dark-mode footer {
   cursor: pointer;
 }
 .lesson-item:hover {
-  background: #f2fbff;
+  background: var(--item-hover-bg, #f2fbff);
   transform: translateX(2px);
 }
 .lesson-item .title {
@@ -583,7 +593,7 @@ body.dark-mode footer {
   align-items: center;
 }
 .btn.reset {
-  background: #fff;
+  background: var(--card-bg);
   color: #004494;
   border: 1px solid #cfe0ff;
   padding: 8px 10px;
@@ -595,7 +605,7 @@ body.dark-mode footer {
 }
 
 .lesson-content {
-  background: white;
+  background: var(--card-bg);
   border-radius: 8px;
   padding: 18px;
   min-height: 60vh;
@@ -606,7 +616,7 @@ body.dark-mode footer {
 .quiz .q {
   padding: 10px;
   border-radius: 6px;
-  background: #fbfbff;
+  background: var(--subtle-bg, #fbfbff);
   margin-bottom: 10px;
 }
 .quiz .options li {

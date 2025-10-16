@@ -1,29 +1,47 @@
 /* --- Custom Animations for Contact Page --- */
 .fade-in-contact {
-  animation: fadeInContact 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: fadeInContact 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  animation-delay: 0s !important; /* remove stagger */
 }
 @keyframes fadeInContact {
   from {
     opacity: 0;
-    transform: translateY(40px) scale(0.97);
+    transform: translate3d(0, 8px, 0);
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translate3d(0, 0, 0);
   }
 }
 
 .slide-in-contact {
-  animation: slideInContact 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: slideInContact 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  animation-delay: 0s !important; /* remove stagger */
 }
 @keyframes slideInContact {
   from {
     opacity: 0;
-    transform: translateX(-40px) scale(0.98);
+    transform: translate3d(-8px, 0, 0);
   }
   to {
     opacity: 1;
-    transform: translateX(0) scale(1);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Respect user’s reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .fade-in-contact,
+  .slide-in-contact,
+  .accordion-content,
+  #chatbot-container {
+    animation: none !important;
   }
 }
 

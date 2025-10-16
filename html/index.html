@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Prevent theme flash: set dark-mode early before CSS loads -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem("theme");
+          if (saved === "dark") {
+            document.documentElement.classList.add("dark-mode");
+            document.write("<style>html{background:#121212}</style>");
+          } else {
+            document.write("<style>html{background:#f4f4f4}</style>");
+          }
+        } catch (e) {}
+      })();
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WriteWise - Home</title>
@@ -14,13 +28,13 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
-  <script defer src="js/site-utils.js"></script>
-  <script defer src="js/main.js"></script>
-  <script defer src="js/index.js"></script>
+    <script defer src="js/site-utils.js"></script>
+    <script defer src="js/main.js"></script>
+    <script defer src="js/index.js"></script>
   </head>
 
   <body>
-  <!-- Floating login removed for simplified flow -->
+    <!-- Floating login removed for simplified flow -->
 
     <header class="responsive-header" id="mainHeader">
       <!-- Left group: sidebar + theme toggle -->
@@ -52,7 +66,7 @@
       </div>
       <nav class="sidebar-nav">
         <a class="nav-link" href="index.html">Home</a>
-  <a class="nav-link" href="learning.html#lessons">Learning</a>
+        <a class="nav-link" href="learning.html#lessons">Learning</a>
         <a class="nav-link" href="chapter-guide.html">Chapter Guide</a>
         <a class="nav-link" href="grammar.html">Grammar</a>
         <a class="nav-link" href="plagiarism.html">Plagiarism</a>
@@ -76,7 +90,9 @@
         </p>
         <div class="hero-buttons">
           <a href="chapter-guide.html" class="btn btn-primary">Explore Tools</a>
-          <a href="learning.html#lessons" class="btn btn-secondary">Learn More</a>
+          <a href="learning.html#lessons" class="btn btn-secondary"
+            >Learn More</a
+          >
         </div>
       </div>
     </section>
@@ -86,8 +102,10 @@
     <!-- Quick Start Search removed for a simpler home experience -->
 
     <!-- Quick Navigation Tiles -->
-    <section class="quick-nav" id="dark-mode">
-  <div class="tile" onclick="location.href='learning.html#lessons'">Learning</div>
+    <section class="quick-nav page-fade-in" id="dark-mode">
+      <div class="tile" onclick="location.href='learning.html#lessons'">
+        Learning
+      </div>
       <div class="tile" onclick="location.href='chapter-guide.html'">
         Chapter Guides
       </div>
@@ -106,7 +124,7 @@
     </section>
 
     <!-- Features Section -->
-    <section id="features" class="features-section">
+    <section id="features" class="features-section page-fade-in">
       <h2>Why Use WriteWise?</h2>
       <div class="features">
         <div class="feature">
@@ -147,7 +165,7 @@
     </section>
 
     <!-- Getting Started Guide -->
-    <section class="getting-started" id="getting-started">
+    <section class="getting-started page-fade-in" id="getting-started">
       <h2>What is Research?</h2>
       <div class="guide-content">
         <div class="video-container">
@@ -187,7 +205,7 @@
       </div>
     </section>
 
-  <!-- Chat button removed as requested -->
+    <!-- Chat button removed as requested -->
 
     <!-- Footer -->
     <footer id="footer">

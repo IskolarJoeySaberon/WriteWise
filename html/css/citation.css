@@ -1,29 +1,50 @@
 /* --- Animations and Visual Enhancements --- */
 .fade-in {
-  animation: fadeInCitation 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: fadeInCitation 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  animation-delay: 0s !important; /* remove stagger */
 }
 @keyframes fadeInCitation {
   from {
     opacity: 0;
-    transform: scale(0.97) translateY(30px);
+    transform: translate3d(0, 8px, 0);
   }
   to {
     opacity: 1;
-    transform: scale(1) translateY(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
 .slide-in-citation {
-  animation: slideInCitation 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: slideInCitation 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  animation-delay: 0s !important; /* remove stagger */
 }
 @keyframes slideInCitation {
   from {
     opacity: 0;
-    transform: translateX(40px) scale(0.98);
+    transform: translate3d(8px, 0, 0);
   }
   to {
     opacity: 1;
-    transform: translateX(0) scale(1);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .fade-in,
+  .slide-in-citation,
+  .pulse-citation,
+  #citation-results .citation-output,
+  #live-preview,
+  #export-options button,
+  button[type="submit"] {
+    animation: none !important;
   }
 }
 

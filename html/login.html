@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Prevent theme flash: set dark-mode early before CSS loads -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem("theme");
+          if (saved === "dark") {
+            document.documentElement.classList.add("dark-mode");
+            document.write("<style>html{background:#121212}</style>");
+          } else {
+            document.write("<style>html{background:#f4f4f4}</style>");
+          }
+        } catch (e) {}
+      })();
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign In / Log In - WriteWise</title>
@@ -26,7 +40,7 @@
         </button>
       </header>
 
-      <main class="login-main-content">
+      <main class="login-main-content page-fade-in">
         <!-- Toggle Tabs -->
         <div class="form-toggle-tabs">
           <button id="showLoginBtnTab" class="toggle-btn active">Log In</button>

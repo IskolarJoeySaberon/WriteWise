@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Prevent theme flash: set dark-mode early before CSS loads -->
+  <script>
+    (function(){
+      try{
+        var dark = localStorage.getItem('theme') === 'dark';
+        if(dark){
+          document.documentElement.classList.add('dark-mode');
+          document.write('<style>html,body{background:#121212;color-scheme:dark}</style>');
+        } else {
+          document.write('<style>html,body{background:#f4f4f4;color-scheme:light}</style>');
+        }
+      }catch(e){}
+    })();
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Plagiarism Check | WriteWise</title>
@@ -53,7 +67,7 @@
     </aside>
 
   <!-- Main -->
-  <main class="container plagiarism-page">
+  <main class="container plagiarism-page page-fade-in">
     <p>Paste your work and a reference/source to check for similarity. You can also upload a <b>.txt</b> file as your reference.</p>
 
 

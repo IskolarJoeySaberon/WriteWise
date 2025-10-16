@@ -1,6 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Prevent theme flash: set dark-mode early before CSS loads -->
+    <script>
+      (function () {
+        try {
+          var dark = localStorage.getItem("theme") === "dark";
+          if (dark) {
+            document.documentElement.classList.add("dark-mode");
+            document.write(
+              "<style>html,body{background:#121212;color-scheme:dark}</style>"
+            );
+          } else {
+            document.write(
+              "<style>html,body{background:#f4f4f4;color-scheme:light}</style>"
+            );
+          }
+        } catch (e) {}
+      })();
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WriteWise - Learning</title>
@@ -96,7 +114,7 @@
       </nav>
     </aside>
 
-    <main class="learning-main">
+    <main class="learning-main page-fade-in">
       <div class="learning-controls">
         <button id="tabLessonsBtn" class="tab-btn active">Lessons</button>
         <button id="tabTutorialsBtn" class="tab-btn">Tutorials</button>

@@ -1,3 +1,35 @@
+/* Shared page fade-in animation
+   Apply animation only to the inner content, not the padded container itself.
+   This prevents borders/padding from animating while the content fades/moves in. */
+.page-fade-in
+  > :not(.fade-in):not(.fade-in-contact):not(.slide-in-citation):not(
+    .tada-contact
+  ):not(.tada-citation) {
+  animation: pageFadeIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  animation-fill-mode: both;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .page-fade-in
+    > :not(.fade-in):not(.fade-in-contact):not(.slide-in-citation):not(
+      .tada-contact
+    ):not(.tada-citation) {
+    animation: none !important;
+  }
+}
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 6px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
 /* --- Global color tokens (light) --- */
 :root {
   --bg: #f4f4f4;
@@ -16,6 +48,8 @@
   --input-bg: #ffffff;
   --input-text: #111111;
   --input-border: #cccccc;
+  /* Hint UA to prepare both schemes to reduce flash */
+  color-scheme: light dark;
 }
 
 /* --- Global color tokens (dark) --- */
@@ -43,6 +77,30 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
+}
+/* Prevent white flash on navigation by matching HTML background early */
+html {
+  background-color: #f4f4f4;
+}
+html.dark-mode {
+  background-color: #121212;
+  color-scheme: dark;
+}
+/* Ensure core surfaces track variables even before body gets dark-mode */
+html.dark-mode body {
+  background: var(--bg) !important;
+  color: var(--text) !important;
+}
+html.dark-mode header {
+  background-color: var(--header-bg) !important;
+  color: var(--header-text) !important;
+}
+
+/* Disable transitions during theme change to avoid flicker */
+.theme-changing,
+.theme-changing * {
+  transition: none !important;
+  animation: none !important;
 }
 header {
   background-color: var(--header-bg);
@@ -881,6 +939,11 @@ a:hover {
     margin: 0;
     box-sizing: border-box;
     z-index: 1;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0 !important; /* no space between logo and text on mobile */
+    min-width: 0 !important; /* allow title to ellipsize */
     /* Optional per-page fine-tune for visual centering on mobile */
     transform: translateX(var(--title-shift-x, 0)) !important;
   }
@@ -891,6 +954,9 @@ a:hover {
     display: inline-block; /* allow consistent line-height without shifting */
     word-break: break-word;
     font-size: clamp(1.1rem, 5vw, 1.5rem);
+  }
+  .responsive-header .logo-title .logo-img {
+    margin: 0 !important;
   }
 }
 

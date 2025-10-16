@@ -1,15 +1,32 @@
 /* --- Lessons Page Fade-in Animation --- */
 .fade-in-lessons {
-  animation: fadeInLessons 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: fadeInLessons 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 @keyframes fadeInLessons {
   from {
     opacity: 0;
-    transform: scale(0.97) translateY(30px);
+    transform: translate3d(0, 8px, 0);
   }
   to {
     opacity: 1;
-    transform: scale(1) translateY(0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .fade-in-lessons,
+  .animated,
+  .bounceIn,
+  .fadeInUp,
+  .fadeInLeft,
+  .fadeInRight,
+  .tada,
+  .pulse {
+    animation: none !important;
   }
 }
 /* --- Modern Progress Bar Styles --- */
@@ -217,12 +234,12 @@
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  background: #f4f4f4;
+  background: var(--bg);
   transition: background 0.3s ease, color 0.3s ease; /* transition from dark mode */
 }
 header {
-  background-color: #0056b3;
-  color: white;
+  background-color: var(--header-bg);
+  color: var(--header-text);
   padding: 1rem;
   text-align: center;
 }
@@ -246,7 +263,7 @@ nav a:hover {
 }
 main {
   padding: 1.5rem;
-  background: white;
+  background: var(--card-bg);
   margin: 1rem auto;
   max-width: 700px;
   border-radius: 10px;
@@ -254,17 +271,17 @@ main {
 footer {
   text-align: center;
   padding: 1rem;
-  background-color: #ddd;
+  background-color: var(--card-bg);
 }
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  background: #f4f4f4;
+  background: var(--bg);
   transition: background 0.3s ease, color 0.3s ease; /* transition from dark mode */
 }
 header {
-  background-color: #0056b3;
-  color: white;
+  background-color: var(--header-bg);
+  color: var(--header-text);
   padding: 1rem;
   text-align: center;
 }
@@ -278,10 +295,10 @@ header {
 }
 
 .lesson-card {
-  border: 1px solid #ddd;
+  border: 1px solid var(--border);
   border-radius: 8px;
   padding: 1rem;
-  background-color: #f9f9f9;
+  background-color: var(--card-bg);
 }
 
 .lesson-title {
