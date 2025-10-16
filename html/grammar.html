@@ -5,12 +5,16 @@
     <script>
       (function () {
         try {
-          var saved = localStorage.getItem("theme");
-          if (saved === "dark") {
+          var dark = localStorage.getItem("theme") === "dark";
+          if (dark) {
             document.documentElement.classList.add("dark-mode");
-            document.write("<style>html{background:#121212}</style>");
+            document.write(
+              "<style>html,body{background:#121212;color-scheme:dark}</style>"
+            );
           } else {
-            document.write("<style>html{background:#f4f4f4}</style>");
+            document.write(
+              "<style>html,body{background:#f4f4f4;color-scheme:light}</style>"
+            );
           }
         } catch (e) {}
       })();
