@@ -126,8 +126,8 @@
   <button id="helpBtn" class="help-button">💬 Help</button>
   <div id="helpPanel" class="help-panel hidden">
     <div class="help-header">
-      <h4>Need Help?</h4>
-      <button id="closeHelp" class="close-btn">&times;</button>
+  <h4>Need Help?</h4>
+  <button id="closeHelp" class="close-btn" aria-label="Close Help"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="help-body">
       <p>Here are some quick options:</p>
@@ -146,6 +146,23 @@
   </div>
 </div>
 
+
+  <!-- Modal (generic) -->
+  <div id="appModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-backdrop" data-close="modal"></div>
+    <div class="modal-content" role="document">
+      <div class="modal-header">
+        <h4 id="modalTitle">Notice</h4>
+        <button class="modal-close" id="modalClose" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <p id="modalMessage">Message</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" id="modalOk">OK</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Footer -->
   <footer id="footer">
