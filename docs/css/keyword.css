@@ -128,7 +128,7 @@ body.dark-mode input#topicInput:focus {
 
 /* Thesis Card Design */
 .page-main .thesis-card {
-  background: #f4f4f4;
+  background: var(--card-bg);
   padding: 10px;
   margin: 5px 0;
   border-left: 4px solid #007bff;

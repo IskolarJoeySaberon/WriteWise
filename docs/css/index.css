@@ -3,7 +3,7 @@
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  background: #f4f4f4;
+  background: var(--bg);
   transition: background 0.3s ease, color 0.3s ease; /* transition from dark mode */
 }
 
