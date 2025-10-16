@@ -79,12 +79,36 @@
 .chapter-guide-modal .modal-content {
   background: var(--card-bg);
   border-radius: 14px;
-  max-width: 420px;
-  width: 95vw;
+  max-width: 520px;
+  width: min(92vw, 520px);
+  max-height: 85vh;
+  overflow: auto;
   padding: 2rem 1.5rem 1.5rem 1.5rem;
   box-shadow: 0 8px 32px rgba(20, 30, 60, 0.18);
   position: relative;
   animation: popIn 0.25s cubic-bezier(0.4, 1.6, 0.6, 1) both;
+}
+/* Countdown modal slightly smaller (base) */
+#countdownModal .modal-content {
+  max-width: 420px;
+  width: min(90vw, 420px);
+}
+/* Remove extra gaps around title and description */
+#countdownModal h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+#countdownModal .modal-text {
+  margin: 0.15rem 0 0.5rem;
+  line-height: 1.35;
+}
+/* Countdown actions: keep buttons on one line and push Cancel to the right */
+#countdownModal .modal-actions {
+  flex-wrap: nowrap;
+}
+#countdownModal #cancelCountdown {
+  margin-left: auto;
 }
 .chapter-guide-modal .close-modal {
   position: absolute;
@@ -117,6 +141,117 @@
 .chapter-guide-modal strong {
   color: #007bff;
 }
+.chapter-guide-modal .modal-text {
+  color: var(--muted);
+  margin: 0.25rem 0 1rem;
+}
+.chapter-guide-modal .modal-actions {
+  display: flex;
+  gap: 10px; /* clearer spacing between buttons */
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.chapter-guide-modal .modal-form {
+  margin: 0.25rem 0 0.75rem;
+}
+.chapter-guide-modal .modal-form input[type="number"] {
+  width: 180px;
+  padding: 10px 12px;
+  font-size: 1rem;
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+}
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Prevent background scroll when any modal is open */
+body.modal-open {
+  overflow: hidden;
+  height: 100vh;
+}
+
+/* Mobile tweaks */
+@media (max-width: 480px) {
+  /* Default modal on mobile: keep comfortable margins */
+  .chapter-guide-modal .modal-content {
+    width: 86vw; /* more side gap */
+    max-width: 86vw;
+    max-height: 74vh; /* slightly more top/bottom gap */
+    margin: 5.5vh auto;
+    padding: 1rem 0.85rem 0.85rem 0.85rem; /* slightly tighter */
+    border-radius: 12px;
+  }
+  /* Reset modal only: make it a touch smaller for clarity */
+  #resetAllModal.chapter-guide-modal .modal-content {
+    width: 82vw; /* even more side gap */
+    max-width: 82vw;
+    max-height: 70vh; /* even more top/bottom gap */
+    margin: 7.5vh auto; /* breathing room vertically */
+    padding: 0.95rem 0.85rem 0.85rem 0.85rem;
+  }
+  /* Countdown modal: smallest among the three to avoid edge touching */
+  #countdownModal.chapter-guide-modal .modal-content {
+    width: 70vw;
+    max-width: 70vw;
+    max-height: 64vh;
+    margin: 6vh auto;
+    padding: 0.7rem 0.75rem 0.7rem 0.75rem; /* tighter padding to reduce gaps */
+  }
+  /* Respect safe areas (notch, rounded corners) */
+  .chapter-guide-modal {
+    padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0)
+      env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
+  }
+  .chapter-guide-modal .close-modal {
+    top: 6px;
+    right: 10px;
+  }
+  .chapter-guide-modal .modal-actions {
+    justify-content: stretch;
+    gap: 12px;
+  }
+  #confirmResetAll,
+  #cancelResetAll {
+    width: 100%;
+  }
+  /* Countdown modal buttons full-width for easier tapping */
+  #countdownModal .modal-actions {
+    justify-content: flex-start;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  #countdownModal .modal-actions button {
+    width: auto;
+    padding: 6px 10px;
+    font-size: 0.92rem;
+  }
+  /* Input takes full width on very small screens */
+  #countdownModal .modal-form input[type="number"] {
+    width: 120px;
+    box-sizing: content-box;
+    padding: 8px 10px;
+    font-size: 0.95rem;
+  }
+  /* Tighter heading and text on mobile */
+  #countdownModal h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem;
+  }
+  #countdownModal .modal-text {
+    margin: 0.2rem 0 0.5rem;
+    font-size: 0.95rem;
+  }
+}
 @keyframes popIn {
   0% {
     transform: scale(0.85);
@@ -125,6 +260,46 @@
   100% {
     transform: scale(1);
     opacity: 1;
+  }
+}
+
+/* Desktop refinements for countdown modal */
+@media (min-width: 601px) {
+  /* Make countdown modal a bit narrower and tighter on desktop */
+  #countdownModal .modal-content {
+    max-width: 320px;
+    width: min(84vw, 320px);
+    padding: 0.7rem 0.8rem 0.7rem 0.8rem; /* tighter padding on desktop */
+  }
+  /* Place Start on the left and Cancel on the right */
+  #countdownModal .modal-actions {
+    justify-content: flex-start;
+    width: 100%;
+    gap: 6px;
+  }
+  /* Slightly shrink the number input for a compact layout */
+  #countdownModal .modal-form input[type="number"] {
+    width: 130px;
+  }
+  /* Tighter header and text spacing */
+  #countdownModal h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.6rem;
+  }
+  #countdownModal .modal-text {
+    margin: 0.25rem 0 0.6rem;
+  }
+  #countdownModal .modal-form {
+    margin: 0.2rem 0 0.5rem;
+  }
+}
+
+/* Compact width for small tablets/landscape phones (481px–600px) */
+@media (min-width: 481px) and (max-width: 600px) {
+  #countdownModal .modal-content {
+    max-width: 340px;
+    width: min(82vw, 340px);
+    padding: 0.85rem 0.9rem 0.8rem 0.9rem;
   }
 }
 :root {
@@ -677,8 +852,8 @@ body {
 /* Improved floating timer for perfect alignment and draggable */
 .floating-timer {
   position: fixed;
-  top: var(--timer-top-offset, 64px);
-  right: 32px;
+  top: var(--timer-top-offset, 76px);
+  right: 24px;
   min-width: 220px;
   max-width: 320px;
   z-index: 1200;
@@ -788,22 +963,47 @@ body {
   .floating-timer {
     left: 50% !important;
     right: auto !important;
-    transform: translateX(-50%);
-    top: var(--timer-top-offset, 64px) !important;
-    width: calc(100vw - 24px);
-    max-width: none;
+    transform: translateX(-50%) !important;
+    top: var(--timer-top-offset, 80px) !important;
+    width: min(84vw, 340px);
+    max-width: min(84vw, 340px);
+    padding: 12px 12px; /* more compact on mobile */
     cursor: default;
+  }
+  /* If timer is manually positioned, allow absolute left/top */
+  .floating-timer.custom-pos {
+    left: auto !important;
+    right: auto !important;
+    transform: none !important;
+    width: auto;
+    max-width: min(84vw, 340px);
   }
   .floating-timer .timer-body {
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 8px; /* slightly tighter spacing */
   }
   .floating-timer #global-timer-display {
-    font-size: 1rem;
+    font-size: 0.95rem; /* compact display size on mobile */
+  }
+  /* Align timer buttons neatly on mobile */
+  .floating-timer .timer-controls {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    width: 100%;
+  }
+  .floating-timer .timer-controls .btn-small {
+    width: 100%;
+  }
+  .floating-timer .timer-mode {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    width: 100%;
   }
   .floating-timer.minimized {
     width: auto;
-    transform: none;
+    transform: none !important;
     right: 12px !important;
     left: auto !important;
     top: var(--timer-top-offset-min, 64px) !important;

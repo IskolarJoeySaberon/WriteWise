@@ -112,6 +112,67 @@
         </div>
       </div>
 
+      <!-- Reset All Confirmation Modal -->
+      <div id="resetAllModal" class="chapter-guide-modal" style="display: none">
+        <div
+          class="modal-content"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="resetAllTitle"
+        >
+          <button class="close-modal" id="closeResetAllModal" title="Close">
+            &times;
+          </button>
+          <h3 id="resetAllTitle">Reset all progress?</h3>
+          <p class="modal-text">
+            This will clear all locally saved notes, tasks, timers, and
+            citations for this Chapter Guide. This action cannot be undone.
+          </p>
+          <div class="modal-actions">
+            <button id="confirmResetAll" class="btn-action warn">
+              Yes, reset everything
+            </button>
+            <button id="cancelResetAll" class="btn-secondary">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Countdown Setup Modal -->
+      <div
+        id="countdownModal"
+        class="chapter-guide-modal"
+        style="display: none"
+      >
+        <div
+          class="modal-content"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="countdownTitle"
+        >
+          <button class="close-modal" id="closeCountdownModal" title="Close">
+            &times;
+          </button>
+          <h3 id="countdownTitle">Set countdown</h3>
+          <p class="modal-text">Enter the countdown time in minutes.</p>
+          <div class="modal-form">
+            <label for="countdownMinutes" class="sr-only">Minutes</label>
+            <input
+              id="countdownMinutes"
+              type="number"
+              min="1"
+              step="1"
+              placeholder="25"
+            />
+          </div>
+          <div class="modal-actions">
+            <button id="confirmCountdown" class="btn-action">
+              Start countdown
+            </button>
+            <button id="cancelCountdown" class="btn-secondary">Cancel</button>
+          </div>
+        </div>
+      </div>
+
       <!-- Chapter Guide Modal Popup -->
       <div
         id="chapterGuideModal"

@@ -1098,8 +1098,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let interval = null;
     let totalSeconds = 0;
+    let initialCountdownSeconds = 0; // stores the originally set countdown seconds to restore on reset
     let mode = "elapsed";
     let isRunning = false;
+
+    // Countdown modal elements
+    const countdownModal = document.getElementById('countdownModal');
+    const confirmCountdown = document.getElementById('confirmCountdown');
+    const cancelCountdown = document.getElementById('cancelCountdown');
+    const closeCountdownModal = document.getElementById('closeCountdownModal');
+    const countdownMinutesInput = document.getElementById('countdownMinutes');
+    const countdownDialog = countdownModal ? countdownModal.querySelector('.modal-content') : null;
+
+    function showCountdownModal(show) {
+      if (!countdownModal) return;
+      countdownModal.style.display = show ? 'flex' : 'none';
+      try { document.body.classList.toggle('modal-open', !!show); } catch (_) { }
+      if (show) {
+        // Prefill with last value or 25
+        try {
+          const last = localStorage.getItem('lastCountdownMinutes');
+          if (countdownMinutesInput) countdownMinutesInput.value = last && !isNaN(parseInt(last, 10)) ? last : '25';
+        } catch (_) {
+          if (countdownMinutesInput) countdownMinutesInput.value = '25';
+        }
+        // Center the dialog on open
+        if (countdownDialog) {
+          countdownDialog.style.left = '';
+          countdownDialog.style.top = '';
+          countdownDialog.style.transform = '';
+          countdownDialog.dataset.dragX = '0';
+          countdownDialog.dataset.dragY = '0';
+        }
+        setTimeout(() => { try { countdownMinutesInput && countdownMinutesInput.focus(); countdownMinutesInput.select(); } catch (_) { } }, 0);
+      }
+    }
 
     function render() {
       const sign = totalSeconds < 0 ? "-" : "";
@@ -1137,12 +1170,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function reset() {
+      // Always stop the timer first
       stop();
-      totalSeconds = mode === "elapsed" ? 0 : totalSeconds;
-      if (mode === "countdown") {
-        // keep current countdown value
-      } else {
+      if (mode === "elapsed") {
+        // Reset elapsed timer to 0
         totalSeconds = 0;
+      } else if (mode === "countdown") {
+        // Reset countdown back to the initially set value
+        totalSeconds = Math.max(0, initialCountdownSeconds || totalSeconds);
       }
       render();
     }
@@ -1168,49 +1203,141 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     if (modeCountdown) modeCountdown.addEventListener("click", () => {
-      const mins = prompt("Set countdown time in minutes:", "25");
-      const m = parseInt(mins, 10);
-      if (isNaN(m) || m <= 0) return alert("Invalid minutes");
-      mode = "countdown";
-      if (modeElapsed) modeElapsed.classList.remove("active");
-      modeCountdown.classList.add("active");
-      if (label) label.textContent = "Countdown";
-      stop();
-      totalSeconds = m * 60;
-      render();
+      showCountdownModal(true);
     });
 
-    // Draggable functionality
+    function applyCountdownMinutes(m) {
+      mode = 'countdown';
+      if (modeElapsed) modeElapsed.classList.remove('active');
+      if (modeCountdown) modeCountdown.classList.add('active');
+      if (label) label.textContent = 'Countdown';
+      stop();
+      initialCountdownSeconds = Math.max(0, Math.floor(m * 60));
+      totalSeconds = initialCountdownSeconds;
+      render();
+      // auto-start countdown
+      start();
+    }
+
+    if (confirmCountdown) confirmCountdown.addEventListener('click', () => {
+      if (!countdownMinutesInput) return showCountdownModal(false);
+      const m = parseInt(countdownMinutesInput.value, 10);
+      if (isNaN(m) || m <= 0) {
+        try { countdownMinutesInput.focus(); countdownMinutesInput.select(); } catch (_) { }
+        return;
+      }
+      try { localStorage.setItem('lastCountdownMinutes', String(m)); } catch (_) { }
+      showCountdownModal(false);
+      applyCountdownMinutes(m);
+    });
+    if (cancelCountdown) cancelCountdown.addEventListener('click', () => showCountdownModal(false));
+    if (closeCountdownModal) closeCountdownModal.addEventListener('click', () => showCountdownModal(false));
+    if (countdownModal) countdownModal.addEventListener('click', (e) => {
+      if (e.target === countdownModal) showCountdownModal(false);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && countdownModal && countdownModal.style.display !== 'none') {
+        showCountdownModal(false);
+      }
+    });
+
+    // Draggable countdown modal
+    (function setupDraggableCountdown() {
+      if (!countdownModal || !countdownDialog) return;
+      let dragging = false;
+      let startX = 0, startY = 0;
+      let origX = 0, origY = 0;
+
+      function onMouseDown(e) {
+        // Only start drag if click is on the header area (title or close region)
+        const inHeader = e.target.closest('#countdownTitle, .close-modal');
+        if (!inHeader) return;
+        dragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        origX = parseFloat(countdownDialog.dataset.dragX || '0');
+        origY = parseFloat(countdownDialog.dataset.dragY || '0');
+        countdownDialog.style.transition = 'none';
+        e.preventDefault();
+      }
+
+      function onMouseMove(e) {
+        if (!dragging) return;
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        const nx = origX + dx;
+        const ny = origY + dy;
+        countdownDialog.style.transform = `translate(${nx}px, ${ny}px)`;
+      }
+
+      function onMouseUp() {
+        if (!dragging) return;
+        // Persist last offsets
+        const m = countdownDialog.style.transform.match(/translate\(([-0-9.]+)px,\s*([-0-9.]+)px\)/);
+        if (m) {
+          countdownDialog.dataset.dragX = m[1];
+          countdownDialog.dataset.dragY = m[2];
+        }
+        dragging = false;
+        countdownDialog.style.transition = '';
+      }
+
+      countdownDialog.addEventListener('mousedown', onMouseDown);
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+    })();
+
+    // Draggable functionality (mouse + touch)
     let isDragging = false, dragOffsetX = 0, dragOffsetY = 0;
-    if (timerBox) timerBox.addEventListener("mousedown", function (e) {
-      if (e.target.closest("button")) return;
+    function dragStart(clientX, clientY, evt) {
+      if (!timerBox) return;
       isDragging = true;
-      dragOffsetX = e.clientX - timerBox.getBoundingClientRect().left;
-      dragOffsetY = e.clientY - timerBox.getBoundingClientRect().top;
+      dragOffsetX = clientX - timerBox.getBoundingClientRect().left;
+      dragOffsetY = clientY - timerBox.getBoundingClientRect().top;
       timerBox.style.transition = "none";
       document.body.style.userSelect = "none";
-    });
-
-    document.addEventListener("mousemove", function (e) {
-      if (!isDragging) return;
-      let x = e.clientX - dragOffsetX;
-      let y = e.clientY - dragOffsetY;
+      // On small screens, mark as custom positioned so CSS doesn't force centering
+      try { if (window.matchMedia('(max-width: 600px)').matches) timerBox.classList.add('custom-pos'); } catch (_) { }
+      if (evt) evt.preventDefault();
+    }
+    function dragMove(clientX, clientY) {
+      if (!isDragging || !timerBox) return;
+      let x = clientX - dragOffsetX;
+      let y = clientY - dragOffsetY;
       x = Math.max(0, Math.min(window.innerWidth - timerBox.offsetWidth, x));
       y = Math.max(0, Math.min(window.innerHeight - timerBox.offsetHeight, y));
-      if (timerBox) {
-        timerBox.style.left = x + "px";
-        timerBox.style.top = y + "px";
-        timerBox.style.right = "auto";
-      }
+      timerBox.style.left = x + "px";
+      timerBox.style.top = y + "px";
+      timerBox.style.right = "auto";
+      // Remove mobile centering transform if present
+      try { timerBox.style.transform = ""; } catch (_) { }
+    }
+    function dragEnd() {
+      if (!isDragging) return;
+      isDragging = false;
+      if (timerBox) timerBox.style.transition = "box-shadow 0.2s";
+      document.body.style.userSelect = "";
+    }
+    if (timerBox) timerBox.addEventListener("mousedown", function (e) {
+      if (e.target.closest("button")) return;
+      dragStart(e.clientX, e.clientY, e);
     });
 
-    document.addEventListener("mouseup", function () {
-      if (isDragging) {
-        isDragging = false;
-        if (timerBox) timerBox.style.transition = "box-shadow 0.2s";
-        document.body.style.userSelect = "";
-      }
-    });
+    document.addEventListener("mousemove", function (e) { dragMove(e.clientX, e.clientY); });
+
+    document.addEventListener("mouseup", function () { dragEnd(); });
+
+    // Touch support
+    if (timerBox) timerBox.addEventListener("touchstart", function (e) {
+      if (e.target.closest("button")) return;
+      const t = e.touches[0];
+      dragStart(t.clientX, t.clientY, e);
+    }, { passive: false });
+    document.addEventListener("touchmove", function (e) {
+      const t = e.touches[0];
+      dragMove(t.clientX, t.clientY);
+    }, { passive: false });
+    document.addEventListener("touchend", function () { dragEnd(); }, { passive: false });
 
     // Minimize/Expand behavior
     (function fixTimerMinimize() {
@@ -1239,6 +1366,15 @@ document.addEventListener("DOMContentLoaded", () => {
         e.stopPropagation();
         const min = !timerBox.classList.contains('minimized');
         applyMinimizedState(min);
+        // Recenter when expanding on mobile so it doesn't remain off-screen
+        try {
+          if (!min && window.matchMedia('(max-width: 600px)').matches) {
+            timerBox.style.left = '';
+            timerBox.style.right = '';
+            timerBox.style.transform = '';
+            timerBox.classList.remove('custom-pos');
+          }
+        } catch (_) { }
       });
       minimizeBtn.dataset.bound = '1';
 
@@ -1410,11 +1546,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // === RESET ALL PROGRESS BUTTON ===
   const resetAllBtn = document.getElementById("resetAllBtn");
-  if (resetAllBtn) resetAllBtn.addEventListener("click", () => {
-    if (!confirm("Are you sure you want to reset everything? This will clear all your work and reload the page.")) return;
+  const resetAllModal = document.getElementById("resetAllModal");
+  const confirmResetAll = document.getElementById("confirmResetAll");
+  const cancelResetAll = document.getElementById("cancelResetAll");
+  const closeResetAllModal = document.getElementById("closeResetAllModal");
+
+  function showResetModal(show) {
+    if (!resetAllModal) return;
+    resetAllModal.style.display = show ? "flex" : "none";
     try {
-      localStorage.clear();
-    } catch (e) { }
+      document.body.classList.toggle('modal-open', !!show);
+    } catch (_) { }
+    if (show) {
+      // Focus the confirm for quick keyboard access
+      setTimeout(() => { try { confirmResetAll && confirmResetAll.focus(); } catch (_) { } }, 0);
+    }
+  }
+
+  if (resetAllBtn) resetAllBtn.addEventListener("click", () => {
+    // Open the custom modal instead of native confirm
+    showResetModal(true);
+  });
+
+  if (cancelResetAll) cancelResetAll.addEventListener("click", () => showResetModal(false));
+  if (closeResetAllModal) closeResetAllModal.addEventListener("click", () => showResetModal(false));
+  // Close if clicking outside the dialog content
+  if (resetAllModal) resetAllModal.addEventListener("click", (e) => {
+    if (e.target === resetAllModal) showResetModal(false);
+  });
+  // Esc to close
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && resetAllModal && resetAllModal.style.display !== 'none') {
+      showResetModal(false);
+    }
+  });
+  if (confirmResetAll) confirmResetAll.addEventListener("click", () => {
+    try { localStorage.clear(); } catch (e) { }
+    showResetModal(false);
     location.reload();
   });
 });
