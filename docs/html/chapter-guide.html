@@ -173,6 +173,26 @@
         </div>
       </div>
 
+      <!-- Time Up Modal -->
+      <div id="timeUpModal" class="chapter-guide-modal" style="display: none">
+        <div
+          class="modal-content"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="timeUpTitle"
+        >
+          <button class="close-modal" id="closeTimeUpModal" title="Close">
+            &times;
+          </button>
+          <h3 id="timeUpTitle">Time is up</h3>
+          <p class="modal-text">Your countdown has finished.</p>
+          <div class="modal-actions">
+            <button id="restartCountdown" class="btn-action">Restart</button>
+            <button id="dismissTimeUp" class="btn-secondary">Close</button>
+          </div>
+        </div>
+      </div>
+
       <!-- Chapter Guide Modal Popup -->
       <div
         id="chapterGuideModal"

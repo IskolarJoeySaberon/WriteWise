@@ -1110,6 +1110,27 @@ document.addEventListener("DOMContentLoaded", () => {
     const countdownMinutesInput = document.getElementById('countdownMinutes');
     const countdownDialog = countdownModal ? countdownModal.querySelector('.modal-content') : null;
 
+    // Time Up modal elements
+    const timeUpModal = document.getElementById('timeUpModal');
+    const closeTimeUpModal = document.getElementById('closeTimeUpModal');
+    const dismissTimeUp = document.getElementById('dismissTimeUp');
+    const restartCountdownBtn = document.getElementById('restartCountdown');
+
+    function showTimeUpModal(show) {
+      if (!timeUpModal) return;
+      timeUpModal.style.display = show ? 'flex' : 'none';
+      try { document.body.classList.toggle('modal-open', !!show); } catch (_) { }
+      if (show) {
+        // focus the close button for accessibility
+        setTimeout(() => {
+          try {
+            const focusEl = document.getElementById('dismissTimeUp') || closeTimeUpModal;
+            focusEl && focusEl.focus();
+          } catch (_) { }
+        }, 0);
+      }
+    }
+
     function showCountdownModal(show) {
       if (!countdownModal) return;
       countdownModal.style.display = show ? 'flex' : 'none';
@@ -1151,7 +1172,8 @@ document.addEventListener("DOMContentLoaded", () => {
       render();
       if (mode === "countdown" && totalSeconds === 0) {
         stop();
-        setTimeout(() => alert("⏰ Countdown finished"), 100);
+        // Small delay to ensure UI updates before showing modal
+        setTimeout(() => showTimeUpModal(true), 100);
       }
     }
 
@@ -1238,6 +1260,30 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && countdownModal && countdownModal.style.display !== 'none') {
         showCountdownModal(false);
+      }
+    });
+
+    // Time Up modal wiring
+    if (closeTimeUpModal) closeTimeUpModal.addEventListener('click', () => showTimeUpModal(false));
+    if (dismissTimeUp) dismissTimeUp.addEventListener('click', () => showTimeUpModal(false));
+    if (timeUpModal) timeUpModal.addEventListener('click', (e) => {
+      if (e.target === timeUpModal) showTimeUpModal(false);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && timeUpModal && timeUpModal.style.display !== 'none') {
+        showTimeUpModal(false);
+      }
+    });
+    if (restartCountdownBtn) restartCountdownBtn.addEventListener('click', () => {
+      showTimeUpModal(false);
+      // If we had an initial countdown set, restart from that
+      if (initialCountdownSeconds > 0) {
+        totalSeconds = initialCountdownSeconds;
+        render();
+        start();
+      } else {
+        // If no initial value (should not happen in normal flow), open setup
+        showCountdownModal(true);
       }
     });
 
