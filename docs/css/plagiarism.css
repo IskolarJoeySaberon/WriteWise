@@ -689,6 +689,14 @@ textarea::placeholder {
   cursor: pointer;
 }
 
+/* Keep help small button text white even with panel-wide color override */
+.help-panel .btn.small,
+.help-panel .btn.small-btn,
+.help-panel .help-form .btn,
+.help-panel .help-form button.btn {
+  color: #fff !important;
+}
+
 /* Hidden helper class */
 .hidden {
   display: none !important;
