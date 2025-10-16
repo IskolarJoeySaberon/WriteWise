@@ -499,7 +499,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const style = (document.getElementById("style")?.value || "apa").trim();
 
             if (!author || !year || !title) {
-                alert("Please fill in Author, Year, and Title.");
+                prompt("Please fill in Author, Year, and Title.");
                 return;
             }
 
