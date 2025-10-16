@@ -1,221 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Prevent theme flash: set dark-mode early before CSS loads -->
-    <script>
-      (function () {
-        try {
-          var saved = localStorage.getItem("theme");
-          if (saved === "dark") {
-            document.documentElement.classList.add("dark-mode");
-            document.write("<style>html{background:#121212}</style>");
-          } else {
-            document.write("<style>html{background:#f4f4f4}</style>");
-          }
-        } catch (e) {}
-      })();
-    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WriteWise - Home</title>
+    <title>WriteWise</title>
+    <meta http-equiv="refresh" content="0; url=html/index.html" />
     <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/index.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <script defer src="js/site-utils.js"></script>
-    <script defer src="js/main.js"></script>
-    <script defer src="js/index.js"></script>
   </head>
-
-  <body>
-    <!-- Floating login removed for simplified flow -->
-
-    <header class="responsive-header" id="mainHeader">
-      <!-- Left group: sidebar + theme toggle -->
-      <div class="header-actions">
-        <button id="toggleSidebarHeader" class="sidebar-toggle">☰</button>
-        <button id="themeToggleHeader" class="sidebar-toggle">
-          <i class="fa-solid fa-moon"></i>
-        </button>
-      </div>
-
-      <!-- Center group: logo + title -->
-      <div class="logo-title">
-        <img
-          src="images/logo-index.png"
-          alt="WriteWise Logo"
-          class="logo-img"
-        />
-        <h1>WriteWise</h1>
-      </div>
-    </header>
-
-    <!-- Sidebar -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-top">
-        <button id="toggleSidebarInside" class="sidebar-toggle">☰</button>
-        <button id="themeToggleInside" class="sidebar-toggle">
-          <i class="fa-solid fa-moon"></i>
-        </button>
-      </div>
-      <nav class="sidebar-nav">
-        <a class="nav-link" href="index.html">Home</a>
-        <a class="nav-link" href="learning.html#lessons">Learning</a>
-        <a class="nav-link" href="chapter-guide.html">Chapter Guide</a>
-        <a class="nav-link" href="grammar.html">Grammar</a>
-        <a class="nav-link" href="plagiarism.html">Plagiarism</a>
-        <a class="nav-link" href="keywords.html">Keywords</a>
-        <a class="nav-link" href="citations.html">Citations</a>
-        <a class="nav-link" href="contact.html">Contact</a>
-      </nav>
-    </aside>
-
-    <!-- Hero Section -->
-    <section
-      class="hero-section"
-      style="background-image: url('images/index-back.jpg')"
-    >
-      <div class="hero-overlay"></div>
-      <div class="hero-content">
-        <h1>Empower Your Research Journey</h1>
-        <p>
-          Your trusted companion in crafting quality research and thesis
-          projects.
-        </p>
-        <div class="hero-buttons">
-          <a href="chapter-guide.html" class="btn btn-primary">Explore Tools</a>
-          <a href="learning.html#lessons" class="btn btn-secondary"
-            >Learn More</a
-          >
-        </div>
-      </div>
-    </section>
-
-    <!-- Dashboard section removed as requested -->
-
-    <!-- Quick Start Search removed for a simpler home experience -->
-
-    <!-- Quick Navigation Tiles -->
-    <section class="quick-nav page-fade-in" id="dark-mode">
-      <div class="tile" onclick="location.href='learning.html#lessons'">
-        Learning
-      </div>
-      <div class="tile" onclick="location.href='chapter-guide.html'">
-        Chapter Guides
-      </div>
-      <div class="tile" onclick="location.href='grammar.html'">
-        Grammar Support
-      </div>
-      <div class="tile" onclick="location.href='plagiarism.html'">
-        Plagiarism Checker
-      </div>
-      <div class="tile" onclick="location.href='keywords.html'">
-        Keyword Generator
-      </div>
-      <div class="tile" onclick="location.href='citations.html'">
-        Citation Styles
-      </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="features" class="features-section page-fade-in">
-      <h2>Why Use WriteWise?</h2>
-      <div class="features">
-        <div class="feature">
-          <img src="images/accessible.png" alt="Accessible" />
-          <h3>Accessible Anytime</h3>
-          <p>Use WriteWise on any device, anywhere.</p>
-        </div>
-        <div class="feature">
-          <img src="images/guided.png" alt="Guided Writing" />
-          <h3>Guided Research Writing</h3>
-          <p>Step-by-step guidance for every chapter.</p>
-        </div>
-        <div class="feature">
-          <img src="images/smart.png" alt="Smart Tools" />
-          <h3>Smart Writing Tools</h3>
-          <p>Grammar checks, citation help, and topic suggestions.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section id="testimonials" class="testimonials-section">
-      <h2>What Students Say</h2>
-      <div class="testimonial-carousel">
-        <div class="testimonial">
-          <p>“WriteWise helped me finish Chapter 1 in just one night!”</p>
-          <span>- Mark, IT Student</span>
-        </div>
-        <div class="testimonial">
-          <p>“Best guide for thesis writing, hands down!”</p>
-          <span>- Clara, Engineering Student</span>
-        </div>
-        <div class="testimonial">
-          <p>“I didn’t know how to cite APA. Now I do.”</p>
-          <span>- Jonas, BSBA Student</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Getting Started Guide -->
-    <section class="getting-started page-fade-in" id="getting-started">
-      <h2>What is Research?</h2>
-      <div class="guide-content">
-        <div class="video-container">
-          <iframe
-            width="640"
-            height="315"
-            src="https://www.youtube.com/embed/mV0bUQpz468?si=0JjwqkaqHqQnYopr"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-          ></iframe>
-        </div>
-        <ul class="steps">
-          <li>
-            <strong>Definition:</strong> A systematic process of collecting and
-            analyzing data to increase knowledge.
-          </li>
-          <li>
-            <strong>Purpose:</strong> Solve problems, build theories, or improve
-            understanding of a topic.
-          </li>
-          <li>
-            <strong>Types:</strong> Qualitative, Quantitative, or Mixed Methods
-            research.
-          </li>
-          <li>
-            <strong>Importance:</strong> Drives innovation, policy, education,
-            and informed decision-making.
-          </li>
-          <li>
-            <strong>Basic Flow:</strong> Topic selection → Literature Review →
-            Methodology → Data Collection → Conclusion.
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- Chat button removed as requested -->
-
-    <!-- Footer -->
-    <footer id="footer">
-      <p>&copy; 2025 WriteWise. All rights reserved.</p>
-    </footer>
-
-    <!-- GSAP Animations -->
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-    <script defer src="js/hero.js"></script>
-    <script defer src="js/responsive-embeds.js"></script>
-    <script defer src="js/header-mobile.js"></script>
+  <body
+    style="
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    "
+  >
+    <div style="text-align: center; padding: 24px">
+      <h2>Redirecting to WriteWise…</h2>
+      <p>
+        If you are not redirected automatically,
+        <a href="html/index.html">click here</a>.
+      </p>
+    </div>
+    <script>
+      try {
+        location.replace("html/index.html");
+      } catch (e) {
+        window.location.href = "html/index.html";
+      }
+    </script>
   </body>
 </html>
