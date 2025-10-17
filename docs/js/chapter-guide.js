@@ -1022,7 +1022,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.addEventListener('keydown', onEsc);
       modal.addEventListener('click', onOutside);
       // Focus confirm for quick keyboard flow
-      setTimeout(() => { try { confirmBtn.focus(); } catch(_){} }, 0);
+      setTimeout(() => { try { confirmBtn.focus(); } catch (_) { } }, 0);
     }
 
     _doResetTask(taskId, btn) {

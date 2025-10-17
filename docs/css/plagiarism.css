@@ -137,6 +137,8 @@
   --danger: #dc3545;
   --input-border: #d0d7e6;
   --shadow: rgba(0, 0, 0, 0.06);
+  /* Controls Help button vertical offset */
+  --help-button-bottom: 80px;
 }
 
 /* ---------------------------
@@ -552,7 +554,7 @@ textarea::placeholder {
 /* Circular chat bubble */
 .help-button {
   position: fixed;
-  bottom: 20px;
+  bottom: var(--help-button-bottom);
   right: 20px;
   padding: 12px 20px;
   background-color: #007bff;
@@ -591,7 +593,9 @@ textarea::placeholder {
   position: fixed; /* always center in viewport */
   left: 50%;
   transform: translate(-50%, 0);
-  bottom: 84px; /* leave room above the help button */
+  bottom: calc(
+    var(--help-button-bottom) + 64px
+  ); /* leave room above the help button */
   width: min(94vw, 420px);
   max-width: 94vw;
   background: var(--card);
@@ -904,6 +908,7 @@ body.dark-mode {
   --accent: #48c1ff;
   --input-border: #2b2f36;
   --shadow: rgba(0, 0, 0, 0.5);
+  --help-button-bottom: 96px; /* a bit higher in dark mode if needed */
   background: #0f1112;
   color: var(--text);
 }
