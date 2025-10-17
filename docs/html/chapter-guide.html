@@ -137,6 +137,30 @@
         </div>
       </div>
 
+      <!-- Reset Single Task Modal (matches Reset All design) -->
+      <div id="resetTaskModal" class="chapter-guide-modal" style="display: none">
+        <div
+          class="modal-content"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="resetTaskTitle"
+        >
+          <button class="close-modal" id="closeResetTaskModal" title="Close">
+            &times;
+          </button>
+          <h3 id="resetTaskTitle">Reset this task?</h3>
+          <p class="modal-text" id="resetTaskText">
+            This will clear your progress for this task. This action cannot be undone.
+          </p>
+          <div class="modal-actions">
+            <button id="confirmResetTask" class="btn-action warn">
+              Yes, reset this task
+            </button>
+            <button id="cancelResetTask" class="btn-secondary">Cancel</button>
+          </div>
+        </div>
+      </div>
+
       <!-- Countdown Setup Modal -->
       <div
         id="countdownModal"

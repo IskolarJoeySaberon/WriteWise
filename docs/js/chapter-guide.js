@@ -987,10 +987,45 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     resetTask(btn) {
       const taskId = btn.dataset.task;
-      // Confirm before resetting
       const title = this.taskGuides[taskId]?.title || 'this task';
-      const ok = confirm(`Are you sure you want to reset your progress for ${title}?`);
-      if (!ok) return;
+      // Prepare modal elements
+      const modal = document.getElementById('resetTaskModal');
+      const confirmBtn = document.getElementById('confirmResetTask');
+      const cancelBtn = document.getElementById('cancelResetTask');
+      const closeBtn = document.getElementById('closeResetTaskModal');
+      const textEl = document.getElementById('resetTaskText');
+      if (!modal || !confirmBtn || !cancelBtn || !closeBtn) {
+        // Fallback to confirm if modal not found
+        const ok = confirm(`Are you sure you want to reset your progress for ${title}?`);
+        if (!ok) return this._doResetTask(taskId, btn);
+        return;
+      }
+      // Update message with task title
+      if (textEl) textEl.textContent = `This will clear your progress for "${title}". This action cannot be undone.`;
+      // Show modal
+      modal.style.display = 'flex';
+      const cleanup = () => {
+        modal.style.display = 'none';
+        confirmBtn.removeEventListener('click', onConfirm);
+        cancelBtn.removeEventListener('click', onCancel);
+        closeBtn.removeEventListener('click', onCancel);
+        document.removeEventListener('keydown', onEsc);
+        modal.removeEventListener('click', onOutside);
+      };
+      const onConfirm = () => { cleanup(); this._doResetTask(taskId, btn); };
+      const onCancel = () => cleanup();
+      const onEsc = (e) => { if (e.key === 'Escape') cleanup(); };
+      const onOutside = (e) => { if (e.target === modal) cleanup(); };
+      confirmBtn.addEventListener('click', onConfirm);
+      cancelBtn.addEventListener('click', onCancel);
+      closeBtn.addEventListener('click', onCancel);
+      document.addEventListener('keydown', onEsc);
+      modal.addEventListener('click', onOutside);
+      // Focus confirm for quick keyboard flow
+      setTimeout(() => { try { confirmBtn.focus(); } catch(_){} }, 0);
+    }
+
+    _doResetTask(taskId, btn) {
       // Remove from completed set
       this.completedTasks.delete(taskId);
       // Reset UI
