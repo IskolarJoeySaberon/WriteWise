@@ -1,4 +1,34 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Simple reusable modal for small confirmations (used by Save Note)
+  function openSimpleModal(title, message) {
+    const overlay = document.createElement("div");
+    overlay.className = "chapter-guide-modal";
+    overlay.setAttribute("role", "dialog");
+    overlay.style.display = "flex";
+
+    overlay.innerHTML = `
+      <div class="modal-content" aria-modal="true" aria-labelledby="simpleModalTitle">
+        <button class="close-modal" title="Close">&times;</button>
+        <h3 id="simpleModalTitle">${title}</h3>
+        <p class="modal-text">${message}</p>
+        <div class="modal-actions">
+          <button class="btn-action" id="simpleModalOk">OK</button>
+        </div>
+      </div>`;
+
+    const close = () => overlay.remove();
+    overlay.addEventListener("click", (e) => { if (e.target === overlay) close(); });
+    // defer binding to ensure nodes exist
+    setTimeout(() => {
+      const ok = overlay.querySelector('#simpleModalOk');
+      const x = overlay.querySelector('.close-modal');
+      if (ok) ok.addEventListener('click', close);
+      if (x) x.addEventListener('click', close);
+      if (ok) ok.focus();
+    }, 0);
+
+    document.body.appendChild(overlay);
+  }
   // === INTERACTIVE CHECKLIST SYSTEM ===
   class InteractiveChecklist {
     constructor() {
@@ -1222,7 +1252,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const ch = e.target.dataset.chapter;
       const val = document.getElementById(`notes-${ch}`).value;
       localStorage.setItem(`notes-${ch}`, val);
-      alert(`📝 Notes saved for Chapter ${ch}`);
+      openSimpleModal('Notes saved', `Your notes for Chapter ${ch} have been saved locally.`);
     });
   });
 

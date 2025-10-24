@@ -88,6 +88,38 @@
   position: relative;
   animation: popIn 0.25s cubic-bezier(0.4, 1.6, 0.6, 1) both;
 }
+/* Simple info modals (e.g., Save Note) — compact spacing by default.
+   Target any chapter-guide modal that is NOT one of the named/structured modals. */
+.chapter-guide-modal:not(#performanceModal):not(#resetAllModal):not(
+    #resetTaskModal
+  ):not(#countdownModal):not(#timeUpModal)
+  .modal-content {
+  padding: 1rem 1rem 0.85rem 1rem;
+  max-width: 380px;
+  width: min(88vw, 380px);
+}
+.chapter-guide-modal:not(#performanceModal):not(#resetAllModal):not(
+    #resetTaskModal
+  ):not(#countdownModal):not(#timeUpModal)
+  h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.15rem;
+  line-height: 1.25;
+}
+.chapter-guide-modal:not(#performanceModal):not(#resetAllModal):not(
+    #resetTaskModal
+  ):not(#countdownModal):not(#timeUpModal)
+  .modal-text {
+  margin: 0.15rem 0 0.6rem 0;
+  line-height: 1.35;
+}
+.chapter-guide-modal:not(#performanceModal):not(#resetAllModal):not(
+    #resetTaskModal
+  ):not(#countdownModal):not(#timeUpModal)
+  .modal-actions {
+  margin-top: 0.5rem;
+  gap: 8px;
+}
 /* Tighter top spacing for simple alert modals to remove big gap above title */
 #resetAllModal .modal-content,
 #resetTaskModal .modal-content,
@@ -307,6 +339,47 @@ body.modal-open {
     margin: 5.5vh auto;
     padding: 1rem 0.85rem 0.85rem 0.85rem; /* slightly tighter */
     border-radius: 12px;
+  }
+  /* Simple info modals (e.g., Save Note) get even more compact on very small screens */
+  .chapter-guide-modal:not(#performanceModal):not(#resetAllModal):not(
+      #resetTaskModal
+    ):not(#countdownModal):not(#timeUpModal)
+    .modal-content {
+    width: 78vw;
+    max-width: 78vw;
+    margin: 7.5vh auto;
+    padding: 0.75rem 0.8rem 0.65rem 0.8rem;
+  }
+  .chapter-guide-modal:not(#performanceModal):not(#resetAllModal):not(
+      #resetTaskModal
+    ):not(#countdownModal):not(#timeUpModal)
+    h3 {
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+  }
+  .chapter-guide-modal:not(#performanceModal):not(#resetAllModal):not(
+      #resetTaskModal
+    ):not(#countdownModal):not(#timeUpModal)
+    .modal-text {
+    margin: 0.1rem 0 0.45rem 0;
+    line-height: 1.3;
+    font-size: 0.95rem;
+  }
+  .chapter-guide-modal:not(#performanceModal):not(#resetAllModal):not(
+      #resetTaskModal
+    ):not(#countdownModal):not(#timeUpModal)
+    .modal-actions {
+    justify-content: flex-end;
+    gap: 6px;
+    margin-top: 0.45rem;
+  }
+  .chapter-guide-modal:not(#performanceModal):not(#resetAllModal):not(
+      #resetTaskModal
+    ):not(#countdownModal):not(#timeUpModal)
+    .modal-actions
+    .btn-action {
+    padding: 6px 10px;
+    font-size: 0.92rem;
   }
   /* Performance modal: extra compact on small screens */
   #performanceModal.chapter-guide-modal .modal-content,
