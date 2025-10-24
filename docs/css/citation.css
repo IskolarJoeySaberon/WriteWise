@@ -739,6 +739,40 @@ select:focus {
 
 /* Remove older rectangular button styling (replaced by pill style above) */
 
+/* Error highlight for invalid fields */
+.has-error {
+  border-color: #e53935 !important;
+  box-shadow: 0 0 0 2px rgba(229, 57, 53, 0.15) !important;
+}
+
+/* Neutralize browser autofill background (Chrome/Edge/Safari) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-text-fill-color: inherit !important;
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+  box-shadow: 0 0 0px 1000px #ffffff inset !important;
+  transition: background-color 9999s ease-in-out 0s !important;
+}
+body.dark-mode input:-webkit-autofill,
+body.dark-mode input:-webkit-autofill:hover,
+body.dark-mode input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #e0e0e0 !important;
+  -webkit-box-shadow: 0 0 0px 1000px #333333 inset !important;
+  box-shadow: 0 0 0px 1000px #333333 inset !important;
+}
+/* Firefox */
+input:-moz-autofill {
+  box-shadow: 0 0 0px 1000px #ffffff inset !important;
+  -moz-text-fill-color: inherit !important;
+}
+body.dark-mode input:-moz-autofill {
+  box-shadow: 0 0 0px 1000px #333333 inset !important;
+  -moz-text-fill-color: #e0e0e0 !important;
+}
+
 /* Results Area Styling */
 #citation-results {
   margin-top: 2rem;

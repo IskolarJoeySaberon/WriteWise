@@ -101,13 +101,15 @@
 
         <div class="batch-actions card">
           <button id="exportAllBtn" class="btn-action">
-            ⬇️ Export All Chapters
+            <i class="fa-solid fa-download" aria-hidden="true"></i> Export All
+            Chapters
           </button>
           <button id="exportCitationsBtn" class="btn-action">
-            📚 Export Citations
+            <i class="fa-solid fa-book" aria-hidden="true"></i> Export Citations
           </button>
           <button id="resetAllBtn" class="btn-action warn">
-            ♻️ Reset All Progress
+            <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i> Reset
+            All Progress
           </button>
         </div>
       </div>
@@ -218,6 +220,40 @@
           <div class="modal-actions">
             <button id="restartCountdown" class="btn-action">Restart</button>
             <button id="dismissTimeUp" class="btn-secondary">Close</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Performance Indicator Modal -->
+      <div
+        id="performanceModal"
+        class="chapter-guide-modal"
+        style="display: none"
+      >
+        <div
+          class="modal-content"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="performanceTitle"
+        >
+          <button class="close-modal" id="closePerformanceModal" title="Close">
+            &times;
+          </button>
+          <div class="modal-header-ui">
+            <span class="success-icon" aria-hidden="true"
+              ><i class="fa-solid fa-circle-check"></i
+            ></span>
+            <div class="title-wrap">
+              <h3 id="performanceTitle" class="modal-title-ui">
+                Chapter Complete
+              </h3>
+              <p class="modal-subtitle" id="performanceMessage">
+                Nice work — you're ready to draft your own chapter.
+              </p>
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button id="performanceOk" class="btn-action">Continue</button>
           </div>
         </div>
       </div>

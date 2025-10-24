@@ -96,6 +96,37 @@ html.dark-mode header {
   color: var(--header-text) !important;
 }
 
+/* Neutralize browser autofill background globally (Chrome/Edge/Safari/Firefox) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-text-fill-color: var(--input-text) !important;
+  -webkit-box-shadow: 0 0 0px 1000px var(--input-bg) inset !important;
+  box-shadow: 0 0 0px 1000px var(--input-bg) inset !important;
+  transition: background-color 9999s ease-in-out 0s !important;
+  caret-color: var(--input-text) !important;
+}
+.dark-mode input:-webkit-autofill,
+.dark-mode input:-webkit-autofill:hover,
+.dark-mode input:-webkit-autofill:focus,
+.dark-mode textarea:-webkit-autofill,
+.dark-mode select:-webkit-autofill {
+  -webkit-text-fill-color: var(--input-text) !important;
+  -webkit-box-shadow: 0 0 0px 1000px var(--input-bg) inset !important;
+  box-shadow: 0 0 0px 1000px var(--input-bg) inset !important;
+}
+/* Firefox */
+input:-moz-autofill {
+  box-shadow: 0 0 0px 1000px var(--input-bg) inset !important;
+  -moz-text-fill-color: var(--input-text) !important;
+}
+.dark-mode input:-moz-autofill {
+  box-shadow: 0 0 0px 1000px var(--input-bg) inset !important;
+  -moz-text-fill-color: var(--input-text) !important;
+}
+
 /* Disable transitions during theme change to avoid flicker */
 .theme-changing,
 .theme-changing * {

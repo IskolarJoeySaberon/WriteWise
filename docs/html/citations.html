@@ -138,7 +138,16 @@
             >Publication Year:
             <span class="tooltip" title="e.g., 2023">&#9432;</span>
           </label>
-          <input type="number" id="year" name="year" placeholder="e.g., 2023" />
+          <!-- Use text input to remove number spinners; keep numeric keyboard & validation via inputmode/pattern -->
+          <input
+            type="text"
+            id="year"
+            name="year"
+            inputmode="numeric"
+            pattern="\d{4}"
+            maxlength="4"
+            placeholder="e.g., 2023"
+          />
         </div>
 
         <div

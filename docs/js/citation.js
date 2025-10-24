@@ -22,15 +22,166 @@ document.addEventListener('DOMContentLoaded', () => {
   const publisherSourceInput = document.getElementById('publisher-source');
   const urlInput = document.getElementById('url');
 
+  // Mark critical fields as required and add a basic pattern for year
+  if (authorInput) authorInput.required = true;
+  if (titleInput) titleInput.required = true;
+  if (yearInput) {
+    yearInput.required = true;
+    // 4-digit year pattern; range will be validated with custom logic
+    yearInput.setAttribute('pattern', '\\d{4}');
+  }
+
+  // Helper: clear native validity and error styles
+  function clearFieldError(input) {
+    if (!input) return;
+    input.setCustomValidity('');
+    input.classList.remove('has-error');
+  }
+
+  // Helper: set field error using HTML5 constraint validation UI
+  function setFieldError(input, message) {
+    if (!input) return;
+    input.classList.add('has-error');
+    input.setCustomValidity(message || 'This field is required');
+    input.reportValidity();
+  }
+
+  // Silent validity check used to enable/disable buttons without showing messages
+  function isRequiredFieldsValid() {
+    const currentYear = new Date().getFullYear();
+    const authorVal = (authorInput?.value || '').trim();
+    const titleVal = (titleInput?.value || '').trim();
+    const yearVal = (yearInput?.value || '').trim();
+    if (!authorVal || !titleVal) return false;
+    if (!/^\d{4}$/.test(yearVal)) return false;
+    const y = parseInt(yearVal, 10);
+    if (y < 1000 || y > currentYear + 1) return false;
+    return true;
+  }
+
+  // Controls to disable/enable actions until required fields are valid
+  const submitBtn = citationForm?.querySelector('button[type="submit"]');
+  const copyBtn = document.getElementById('copy-citation');
+  const docxBtn = document.getElementById('download-docx');
+  const bibtexBtn = document.getElementById('download-bibtex');
+
+  function updateActionStates() {
+    const ok = isRequiredFieldsValid();
+    // Keep submit enabled; browser will show native validation bubble if invalid
+    if (submitBtn) submitBtn.disabled = false;
+    if (copyBtn) copyBtn.disabled = !ok;
+    if (docxBtn) docxBtn.disabled = !ok;
+    if (bibtexBtn) bibtexBtn.disabled = !ok;
+  }
+  // Initialize states on load
+  updateActionStates();
+
+  // Validate critical fields: Author, Year, Title
+  function validateRequiredFields() {
+    let ok = true;
+    const currentYear = new Date().getFullYear();
+
+    // Reset previous errors
+    clearFieldError(authorInput);
+    clearFieldError(titleInput);
+    clearFieldError(yearInput);
+
+    const authorVal = (authorInput?.value || '').trim();
+    const titleVal = (titleInput?.value || '').trim();
+    const yearVal = (yearInput?.value || '').trim();
+
+    if (!authorVal) {
+      setFieldError(authorInput, 'Author name is required.');
+      ok = false;
+    }
+    if (!titleVal) {
+      setFieldError(titleInput, 'Title is required.');
+      ok = false;
+    }
+    if (!/^\d{4}$/.test(yearVal)) {
+      setFieldError(yearInput, 'Publication year must be a 4-digit number.');
+      ok = false;
+    } else {
+      const y = parseInt(yearVal, 10);
+      if (y < 1000 || y > currentYear + 1) {
+        setFieldError(yearInput, `Publication year must be between 1000 and ${currentYear + 1}.`);
+        ok = false;
+      }
+    }
+
+    return ok;
+  }
+
+  // Clear error state while typing
+  ['input', 'change', 'blur'].forEach(evt => {
+    authorInput?.addEventListener(evt, () => { clearFieldError(authorInput); updateActionStates(); });
+    titleInput?.addEventListener(evt, () => { clearFieldError(titleInput); updateActionStates(); });
+    yearInput?.addEventListener(evt, () => { clearFieldError(yearInput); updateActionStates(); });
+  });
+
+  // Enforce numeric-only behavior for Publication Year and limit to 4 digits
+  if (yearInput) {
+    yearInput.addEventListener('keydown', (e) => {
+      if (e.ctrlKey || e.metaKey || e.altKey) return; // allow shortcuts
+      const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End'];
+      if (allowedKeys.includes(e.key)) return;
+      // Allow only digits 0-9
+      if (!/^\d$/.test(e.key)) {
+        e.preventDefault();
+        return;
+      }
+      // Prevent typing beyond 4 digits unless replacing selection
+      const selStart = yearInput.selectionStart ?? 0;
+      const selEnd = yearInput.selectionEnd ?? 0;
+      const len = yearInput.value.length;
+      const replacing = selEnd > selStart;
+      if (len >= 4 && !replacing) {
+        e.preventDefault();
+      }
+    });
+
+    // Sanitize any non-digit input and trim to 4 digits
+    yearInput.addEventListener('input', () => {
+      const digits = (yearInput.value || '').replace(/\D/g, '').slice(0, 4);
+      if (yearInput.value !== digits) {
+        yearInput.value = digits;
+      }
+      clearFieldError(yearInput);
+      updateActionStates();
+    });
+
+    // Sanitize pasted content to digits only
+    yearInput.addEventListener('paste', (e) => {
+      e.preventDefault();
+      const clip = (e.clipboardData || window.clipboardData).getData('text') || '';
+      const digits = clip.replace(/\D/g, '').slice(0, 4);
+      const el = yearInput;
+      const start = el.selectionStart ?? el.value.length;
+      const end = el.selectionEnd ?? start;
+      const newVal = (el.value.slice(0, start) + digits + el.value.slice(end)).slice(0, 4);
+      el.value = newVal;
+      clearFieldError(yearInput);
+      updateActionStates();
+    });
+  }
+
   // Get references to the output areas
   const apaOutputSpan = document.querySelector('#apa-output span');
   const mlaOutputSpan = document.querySelector('#mla-output span');
   const chicagoOutputSpan = document.querySelector('#chicago-output span');
 
+  // Removed custom modal; using native validation instead.
+
   // Add event listener for form submission
   citationForm.addEventListener('submit', (event) => {
     // Prevent the default form submission behavior (which reloads the page)
     event.preventDefault();
+
+    // Block generation if required fields are missing/invalid; show native bubble
+    if (!validateRequiredFields()) {
+      citationForm.reportValidity();
+      return;
+    }
 
     // Get the trimmed values from the input fields
     const authors = authorInput.value.trim();
@@ -198,12 +349,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Export Options ---
   document.getElementById('copy-citation').addEventListener('click', function () {
+    if (!validateRequiredFields()) {
+      citationForm.reportValidity();
+      return;
+    }
     const text = livePreview.innerText;
     navigator.clipboard.writeText(text).then(() => {
       alert('Citation copied to clipboard!');
     });
   });
   document.getElementById('download-docx').addEventListener('click', function () {
+    if (!validateRequiredFields()) {
+      citationForm.reportValidity();
+      return;
+    }
     const text = livePreview.innerHTML.replace(/<[^>]+>/g, '');
     const blob = new Blob([text], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
     const a = document.createElement('a');
@@ -212,6 +371,10 @@ document.addEventListener('DOMContentLoaded', () => {
     a.click();
   });
   document.getElementById('download-bibtex').addEventListener('click', function () {
+    if (!validateRequiredFields()) {
+      citationForm.reportValidity();
+      return;
+    }
     // Simple BibTeX export (for demonstration)
     const text = `@article{sample,\n  author = {${authorInput.value}},\n  title = {${titleInput.value}},\n  year = {${yearInput.value}},\n  journal = {${publisherSourceInput.value}},\n  url = {${urlInput.value}}\n}`;
     const blob = new Blob([text], { type: 'text/plain' });

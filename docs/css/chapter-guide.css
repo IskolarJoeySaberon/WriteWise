@@ -88,6 +88,95 @@
   position: relative;
   animation: popIn 0.25s cubic-bezier(0.4, 1.6, 0.6, 1) both;
 }
+/* Tighter top spacing for simple alert modals to remove big gap above title */
+#resetAllModal .modal-content,
+#resetTaskModal .modal-content,
+#timeUpModal .modal-content {
+  padding-top: 1.25rem;
+}
+
+#resetAllModal h3,
+#resetTaskModal h3,
+#timeUpModal h3 {
+  margin-top: 0; /* remove default h3 top margin */
+  margin-bottom: 0.5rem; /* keep compact spacing to text */
+  line-height: 1.2;
+}
+/* Performance modal: lighter blue background and no internal scrollbars */
+#performanceModal .modal-content {
+  background: linear-gradient(135deg, #f7fbff, #e9f2ff);
+  overflow: hidden; /* avoid inner scrollbars */
+  max-height: 75vh; /* generous but shorter than base to reduce chances of scroll */
+}
+/* Celebration variant for performance modal */
+#performanceModal .modal-content.celebrate {
+  animation: popBounce 0.6s cubic-bezier(0.2, 0.9, 0.25, 1.2) both;
+  background: linear-gradient(135deg, #f2f8ff, #eaf4ff);
+  box-shadow: 0 10px 40px rgba(0, 88, 163, 0.26),
+    0 0 0 2px rgba(0, 119, 255, 0.08) inset;
+}
+#performanceModal .modal-content.celebrate::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 16px;
+  background: conic-gradient(
+    from 0deg,
+    #ff6b6b,
+    #ffd93d,
+    #6bcb77,
+    #4ea1ff,
+    #b48ef7,
+    #ff6b6b
+  );
+  filter: blur(18px);
+  opacity: 0.18;
+  z-index: -1;
+}
+@keyframes popBounce {
+  0% {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+/* UI header styling for performance modal */
+#performanceModal .modal-header-ui {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+#performanceModal .success-icon {
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  background: #eaf4ff;
+  color: #2b6fb5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) inset;
+  flex: 0 0 auto;
+}
+#performanceModal .success-icon i {
+  font-size: 20px;
+}
+#performanceModal .modal-title-ui {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #0b336a;
+}
+#performanceModal .modal-subtitle {
+  margin: 4px 0 0;
+  color: var(--muted);
+}
 /* Countdown modal slightly smaller (base) */
 #countdownModal .modal-content {
   max-width: 420px;
@@ -145,6 +234,34 @@
   color: var(--muted);
   margin: 0.25rem 0 1rem;
 }
+/* Confetti overlay for performance modal */
+#performanceModal .confetti-container {
+  position: absolute;
+  inset: 0; /* confine to modal content to prevent page scrollbars */
+  overflow: hidden;
+  pointer-events: none;
+}
+#performanceModal .confetti-piece {
+  position: absolute;
+  top: -12px;
+  width: 8px;
+  height: 14px;
+  border-radius: 2px;
+  opacity: 0.95;
+  transform-origin: left top;
+  animation: confettiFall var(--dur, 1.8s) linear var(--delay, 0s) forwards;
+  will-change: transform, opacity;
+}
+@keyframes confettiFall {
+  0% {
+    transform: translate3d(var(--xStart, 0px), -12px, 0) rotate(0deg);
+    opacity: 0.95;
+  }
+  100% {
+    transform: translate3d(var(--xEnd, 0px), 120%, 0) rotate(var(--rot, 360deg));
+    opacity: 0.85;
+  }
+}
 .chapter-guide-modal .modal-actions {
   display: flex;
   gap: 10px; /* clearer spacing between buttons */
@@ -190,6 +307,34 @@ body.modal-open {
     margin: 5.5vh auto;
     padding: 1rem 0.85rem 0.85rem 0.85rem; /* slightly tighter */
     border-radius: 12px;
+  }
+  /* Performance modal: extra compact on small screens */
+  #performanceModal.chapter-guide-modal .modal-content,
+  #performanceModal .modal-content {
+    width: 82vw;
+    max-width: 82vw;
+    max-height: 62vh;
+    margin: 7vh auto;
+    padding: 0.85rem 0.8rem; /* compact padding */
+    border-radius: 12px;
+  }
+  /* Compact header elements inside performance modal */
+  #performanceModal .modal-header-ui {
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  #performanceModal .success-icon {
+    width: 32px;
+    height: 32px;
+  }
+  #performanceModal .success-icon i {
+    font-size: 18px;
+  }
+  #performanceModal .modal-title-ui {
+    font-size: 1.1rem;
+  }
+  #performanceModal .modal-subtitle {
+    font-size: 0.95rem;
   }
   /* Reset modal only: make it a touch smaller for clarity */
   #resetAllModal.chapter-guide-modal .modal-content {
@@ -552,6 +697,7 @@ body {
   gap: 0.6rem;
   margin-bottom: 0.6rem;
   flex-wrap: wrap;
+  border-radius: 8px; /* slightly rounded header edges */
 }
 .chapter-header h3 {
   margin: 0;

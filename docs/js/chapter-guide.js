@@ -336,6 +336,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       this.completedTasks = new Set();
       this.activeTask = null;
+      this._justShowedOverall = false; // guard to avoid double popups on last task
       this.init();
     }
 
@@ -796,6 +797,18 @@ document.addEventListener("DOMContentLoaded", () => {
       if (progressText) {
         progressText.textContent = `${percentage}%`;
       }
+
+      // Performance indicator: show once when all chapters are complete
+      try {
+        if (percentage === 100) {
+          const shown = localStorage.getItem('cg-overall-complete-shown') === '1';
+          if (!shown) {
+            this._justShowedOverall = true;
+            this.showPerformanceIndicator('overall');
+            localStorage.setItem('cg-overall-complete-shown', '1');
+          }
+        }
+      } catch (_) { }
     }
 
     updateChapterProgress(chapter) {
@@ -821,6 +834,125 @@ document.addEventListener("DOMContentLoaded", () => {
       if (progressText) {
         progressText.textContent = `${percentage}% Completed`;
       }
+
+      // Performance indicator for per-chapter completion (100%)
+      try {
+        if (percentage === 100) {
+          const key = `cg-ch${chapter}-complete-shown`;
+          const shown = localStorage.getItem(key) === '1';
+          // If overall popup just showed, skip chapter popup for this tick
+          if (!shown && !this._justShowedOverall) {
+            this.showPerformanceIndicator('chapter', chapter);
+            localStorage.setItem(key, '1');
+          }
+        }
+      } catch (_) { }
+      // Reset the guard after checks
+      this._justShowedOverall = false;
+    }
+
+    // === Performance Indicator Modal ===
+    showPerformanceIndicator(type, chapter = null) {
+      const modal = document.getElementById('performanceModal');
+      const titleEl = document.getElementById('performanceTitle');
+      const msgEl = document.getElementById('performanceMessage');
+      const okBtn = document.getElementById('performanceOk');
+      const closeBtn = document.getElementById('closePerformanceModal');
+      if (!modal || !titleEl || !msgEl || !okBtn || !closeBtn) return;
+
+      if (type === 'overall') {
+        titleEl.textContent = 'All chapters complete';
+        msgEl.textContent = 'Great job — you’re ready to draft your own chapter or refine your paper.';
+      } else {
+        const ch = chapter ? `Chapter ${chapter}` : 'This chapter';
+        titleEl.textContent = `${ch} complete`;
+        msgEl.textContent = 'Nice work — you’re ready to draft your own chapter.';
+      }
+      // Button label
+      try { document.getElementById('performanceOk').textContent = 'Continue'; } catch (_) { }
+
+      const onClose = () => {
+        modal.style.display = 'none';
+        try { document.body.classList.remove('modal-open'); } catch (_) { }
+        try {
+          const content = modal.querySelector('.modal-content');
+          if (content) content.classList.remove('celebrate');
+        } catch (_) { }
+        okBtn.removeEventListener('click', onClose);
+        closeBtn.removeEventListener('click', onClose);
+        document.removeEventListener('keydown', onEsc);
+        modal.removeEventListener('click', onBackdrop);
+        // Clean confetti
+        setTimeout(() => {
+          try {
+            const c = modal.querySelector('.confetti-container');
+            if (c && c.parentNode) c.parentNode.removeChild(c);
+          } catch (_) { }
+        }, 50);
+      };
+      const onEsc = (e) => { if (e.key === 'Escape') onClose(); };
+      const onBackdrop = (e) => { if (e.target === modal) onClose(); };
+
+      okBtn.addEventListener('click', onClose);
+      closeBtn.addEventListener('click', onClose);
+      document.addEventListener('keydown', onEsc);
+      modal.addEventListener('click', onBackdrop);
+
+      modal.style.display = 'flex';
+      try { document.body.classList.add('modal-open'); } catch (_) { }
+      setTimeout(() => { try { okBtn.focus(); } catch (_) { } }, 0);
+
+      // Add celebration bounce and confetti (subtle UI-friendly)
+      try {
+        const content = modal.querySelector('.modal-content');
+        if (content) content.classList.add('celebrate');
+        this.launchConfetti(modal);
+      } catch (_) { }
+    }
+
+    launchConfetti(modal) {
+      if (!modal) return;
+      // Create container anchored to the dialog content to confine visuals within the popup
+      const content = modal.querySelector('.modal-content');
+      if (!content) return;
+      let container = content.querySelector('.confetti-container');
+      if (!container) {
+        container = document.createElement('div');
+        container.className = 'confetti-container';
+        content.appendChild(container);
+      }
+      // Generate pieces
+      const colors = ['#ff6b6b', '#ffd93d', '#6bcb77', '#4ea1ff', '#b48ef7', '#ff8fab'];
+      const pieces = 50; // slightly toned for a cleaner UI feel
+      for (let i = 0; i < pieces; i++) {
+        const s = document.createElement('span');
+        s.className = 'confetti-piece';
+        const left = Math.random() * 100; // %
+        const dur = 1.4 + Math.random() * 1.6; // 1.4s - 3.0s
+        const delay = Math.random() * 0.3; // 0 - 0.3s
+        const rot = (180 + Math.random() * 540) | 0; // 180 - 720deg
+        const xStart = (Math.random() * 40 - 20).toFixed(0) + 'px';
+        const xEnd = (Math.random() * 140 - 70).toFixed(0) + 'px';
+        const bg = colors[(Math.random() * colors.length) | 0];
+        const w = 6 + Math.random() * 7; // 6-13px
+        const h = 10 + Math.random() * 10; // 10-20px
+        s.style.left = left + '%';
+        s.style.setProperty('--dur', dur + 's');
+        s.style.setProperty('--delay', delay + 's');
+        s.style.setProperty('--rot', rot + 'deg');
+        s.style.setProperty('--xStart', xStart);
+        s.style.setProperty('--xEnd', xEnd);
+        s.style.background = bg;
+        s.style.width = w + 'px';
+        s.style.height = h + 'px';
+        container.appendChild(s);
+      }
+      // Auto cleanup
+      setTimeout(() => {
+        try {
+          if (container && container.parentNode) container.parentNode.removeChild(container);
+        } catch (_) { }
+      }, 3200);
     }
 
     saveProgress() {
