@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <!-- Prevent theme flash: set dark-mode early before CSS loads -->
@@ -9,11 +9,11 @@
           if (dark) {
             document.documentElement.classList.add("dark-mode");
             document.write(
-              "<style>html,body{background:#121212;color-scheme:dark}</style>"
+              "<style>html,body{background:#121212;color-scheme:dark}</style>",
             );
           } else {
             document.write(
-              "<style>html,body{background:#ffffff;color-scheme:light}</style>"
+              "<style>html,body{background:#ffffff;color-scheme:light}</style>",
             );
           }
         } catch (e) {}
@@ -22,6 +22,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Writing Assistant</title>
+    <link rel="icon" type="image/png" href="../images/logo-index.png" />
 
     <!-- Styles -->
     <link rel="stylesheet" href="../css/style.css" />

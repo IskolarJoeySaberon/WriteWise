@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <!-- Prevent theme flash: set dark-mode early before CSS loads -->
@@ -9,11 +9,11 @@
           if (dark) {
             document.documentElement.classList.add("dark-mode");
             document.write(
-              "<style>html,body{background:#121212;color-scheme:dark}</style>"
+              "<style>html,body{background:#121212;color-scheme:dark}</style>",
             );
           } else {
             document.write(
-              "<style>html,body{background:#ffffff;color-scheme:light}</style>"
+              "<style>html,body{background:#ffffff;color-scheme:light}</style>",
             );
           }
         } catch (e) {}
@@ -22,6 +22,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WriteWise - Learning</title>
+    <link rel="icon" type="image/png" href="../images/logo-index.png" />
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/lessons.css" />
     <link rel="stylesheet" href="../css/tutorials.css" />
@@ -76,7 +77,7 @@
               history.replaceState(
                 null,
                 "",
-                "#" + (isLessons ? "lessons" : "tutorials")
+                "#" + (isLessons ? "lessons" : "tutorials"),
               );
             } catch (e) {
               location.hash = isLessons ? "lessons" : "tutorials";
@@ -920,7 +921,15 @@
                     src="https://www.youtube.com/embed/AKKyeOJkv-c?si=xhKyXKEKtCwKDXkC"
                     title="Chapter 1 Tutorial"
                     frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allow="
+                      accelerometer;
+                      autoplay;
+                      clipboard-write;
+                      encrypted-media;
+                      gyroscope;
+                      picture-in-picture;
+                      web-share;
+                    "
                     allowfullscreen
                   ></iframe>
                   <p>
@@ -1038,7 +1047,15 @@
                     src="https://www.youtube.com/embed/zIYC6zG265E?si=yqMa_vKbTnO5l9EO"
                     title="Chapter 2 Tutorial"
                     frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allow="
+                      accelerometer;
+                      autoplay;
+                      clipboard-write;
+                      encrypted-media;
+                      gyroscope;
+                      picture-in-picture;
+                      web-share;
+                    "
                     referrerpolicy="strict-origin-when-cross-origin"
                     allowfullscreen
                   ></iframe>
@@ -1148,7 +1165,15 @@
                     src="https://www.youtube.com/embed/yplWZs3dqNQ?si=93zEi7OctNPp1q7I"
                     title="Chapter 3 Tutorial"
                     frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allow="
+                      accelerometer;
+                      autoplay;
+                      clipboard-write;
+                      encrypted-media;
+                      gyroscope;
+                      picture-in-picture;
+                      web-share;
+                    "
                     referrerpolicy="strict-origin-when-cross-origin"
                     allowfullscreen
                   ></iframe>
@@ -1274,7 +1299,15 @@
                     src="YOUR_CHAPTER_4_VIDEO_URL"
                     title="Chapter 4 Tutorial"
                     frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allow="
+                      accelerometer;
+                      autoplay;
+                      clipboard-write;
+                      encrypted-media;
+                      gyroscope;
+                      picture-in-picture;
+                      web-share;
+                    "
                     allowfullscreen
                   ></iframe>
                 </div>
@@ -1341,7 +1374,15 @@
                     src="YOUR_CHAPTER_5_VIDEO_URL"
                     title="Chapter 5 Tutorial"
                     frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allow="
+                      accelerometer;
+                      autoplay;
+                      clipboard-write;
+                      encrypted-media;
+                      gyroscope;
+                      picture-in-picture;
+                      web-share;
+                    "
                     allowfullscreen
                   ></iframe>
                 </div>
@@ -1518,7 +1559,7 @@
                   let info = null;
                   if (container) {
                     info = container.querySelector(
-                      '[id^="hotspot-info"], .hotspot-info, .fade-in'
+                      '[id^="hotspot-info"], .hotspot-info, .fade-in',
                     );
                   }
                   // Fallback to global hotspot-info if present
@@ -1641,7 +1682,7 @@
                   const in1 = document.getElementById("fillBlank" + id);
                   const in2 = document.getElementById("fillBlank" + id + "b");
                   const result = document.getElementById(
-                    "fillBlank" + id + "Result"
+                    "fillBlank" + id + "Result",
                   );
                   let ok = false;
                   if (in1 && in1.value.trim()) ok = true;
@@ -1655,7 +1696,7 @@
                     prompt(
                       ok
                         ? "Checked — answers submitted."
-                        : "Please fill the blanks."
+                        : "Please fill the blanks.",
                     );
                   }
                 });
@@ -1685,7 +1726,7 @@
                   "Image fallback applied for",
                   img.dataset.originalSrc || img.src,
                   "->",
-                  img.src
+                  img.src,
                 );
               });
               // If already loaded but broken
@@ -1719,11 +1760,11 @@
       (function tutorialsPrevNext() {
         try {
           const sections = Array.from(
-            document.querySelectorAll("#tabTutorials .tutorial-section")
+            document.querySelectorAll("#tabTutorials .tutorial-section"),
           );
           if (!sections.length) return;
           let currentIdx = sections.findIndex(
-            (s) => s.style.display !== "none"
+            (s) => s.style.display !== "none",
           );
           if (currentIdx < 0) currentIdx = 0;
           function show(idx) {
@@ -1735,7 +1776,7 @@
               .forEach((btn) => {
                 const ch = parseInt(
                   btn.getAttribute("data-chapter") || "1",
-                  10
+                  10,
                 );
                 btn.disabled = idx === 0;
               });
@@ -1744,7 +1785,7 @@
               .forEach((btn) => {
                 const ch = parseInt(
                   btn.getAttribute("data-chapter") || String(idx + 1),
-                  10
+                  10,
                 );
                 btn.disabled = idx >= sections.length - 1;
               });
@@ -1794,8 +1835,8 @@
             list.innerHTML = "";
             const titles = Array.from(
               document.querySelectorAll(
-                "#tabLessons .lesson-card .lesson-title"
-              )
+                "#tabLessons .lesson-card .lesson-title",
+              ),
             );
             titles.forEach((t) => {
               const li = document.createElement("li");
@@ -1838,7 +1879,7 @@
           confirmBtn?.addEventListener("click", () => {
             try {
               const selected = Array.from(
-                list.querySelectorAll(".lesson-reset-cb")
+                list.querySelectorAll(".lesson-reset-cb"),
               )
                 .filter((cb) => cb.checked)
                 .map((cb) => cb.dataset.title)

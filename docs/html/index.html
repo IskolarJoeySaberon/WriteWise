@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <!-- Prevent theme flash: set dark-mode early before CSS loads -->
@@ -18,6 +18,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WriteWise - Home</title>
+    <link rel="icon" type="image/png" href="../images/logo-index.png" />
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/index.css" />
     <link
@@ -79,7 +80,7 @@
     <!-- Hero Section -->
     <section
       class="hero-section"
-      style="background-image: url('../images/index-back.jpg')"
+      style="background-image: url(&quot;../images/index-back.jpg&quot;)"
     >
       <div class="hero-overlay"></div>
       <div class="hero-content">
@@ -103,22 +104,22 @@
 
     <!-- Quick Navigation Tiles -->
     <section class="quick-nav page-fade-in" id="dark-mode">
-      <div class="tile" onclick="location.href='learning.html#lessons'">
+      <div class="tile" onclick="location.href = 'learning.html#lessons'">
         Learning
       </div>
-      <div class="tile" onclick="location.href='chapter-guide.html'">
+      <div class="tile" onclick="location.href = 'chapter-guide.html'">
         Chapter Guides
       </div>
-      <div class="tile" onclick="location.href='grammar.html'">
+      <div class="tile" onclick="location.href = 'grammar.html'">
         Grammar Support
       </div>
-      <div class="tile" onclick="location.href='plagiarism.html'">
+      <div class="tile" onclick="location.href = 'plagiarism.html'">
         Plagiarism Checker
       </div>
-      <div class="tile" onclick="location.href='keywords.html'">
+      <div class="tile" onclick="location.href = 'keywords.html'">
         Keyword Generator
       </div>
-      <div class="tile" onclick="location.href='citations.html'">
+      <div class="tile" onclick="location.href = 'citations.html'">
         Citation Styles
       </div>
     </section>
@@ -175,7 +176,15 @@
             src="https://www.youtube.com/embed/mV0bUQpz468?si=0JjwqkaqHqQnYopr"
             title="YouTube video player"
             frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allow="
+              accelerometer;
+              autoplay;
+              clipboard-write;
+              encrypted-media;
+              gyroscope;
+              picture-in-picture;
+              web-share;
+            "
             referrerpolicy="strict-origin-when-cross-origin"
             allowfullscreen
           ></iframe>
