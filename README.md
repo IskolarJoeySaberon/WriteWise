@@ -4,36 +4,36 @@ Research Writing Guide Application - Web
 
 ## GitHub Pages Hosting
 
-This repo is structured for GitHub Pages using the docs/ folder.
+This repo deploys automatically to GitHub Pages from the `docs/` folder using GitHub Actions.
 
 Deploy steps:
 
-1. Push your changes to the `main` branch (already set up).
+1. Push your changes to the `main` branch.
 2. In GitHub, go to: Settings > Pages.
 3. Under "Build and deployment":
-   - Source: "Deploy from a branch"
-   - Branch: `main`
-   - Folder: `/docs`
-4. Click Save. Pages will build and publish your site.
+	- Source: `GitHub Actions`
+4. The workflow `.github/workflows/deploy-pages.yml` will publish the site.
 
-Site entry point: `docs/index.html`
+Site entry point: `docs/index.html` (redirects to `docs/html/index.html`)
 
 Project structure (simplified):
 
 ```
 docs/
 	index.html
-	chapter-guide.html
-	citations.html
-	contact.html
-	grammar.html
-	keywords.html
-	learning.html
-	lessons.html
-	login.html
-	plagiarism.html
-	reset-password.html
-	tutorials.html
+	html/
+		index.html
+		chapter-guide.html
+		citations.html
+		contact.html
+		grammar.html
+		keywords.html
+		learning.html
+		lessons.html
+		login.html
+		plagiarism.html
+		reset-password.html
+		tutorials.html
 	css/
 	js/
 	images/
