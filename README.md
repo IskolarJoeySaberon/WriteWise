@@ -16,21 +16,6 @@ Deploy steps:
 
 Site entry point: `docs/index.html` (redirects to `docs/html/index.html`)
 
-## Custom Domain
-
-Configured domain: `writewise.scholar.com`
-
-Required DNS record (for subdomain):
-
-- Type: `CNAME`
-- Host/Name: `writewise`
-- Value/Target: `iskolarjoeysaberon.github.io`
-
-Notes:
-
-- Keep `docs/CNAME` in the repo with `writewise.scholar.com`.
-- In GitHub `Settings > Pages`, set the custom domain to `writewise.scholar.com` and enable `Enforce HTTPS` after DNS propagates.
-
 Project structure (simplified):
 
 ```
