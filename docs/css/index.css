@@ -4,7 +4,9 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   background: var(--bg);
-  transition: background 0.3s ease, color 0.3s ease; /* transition from dark mode */
+  transition:
+    background 0.3s ease,
+    color 0.3s ease; /* transition from dark mode */
 }
 
 .hero-section {
@@ -13,7 +15,12 @@ body {
   position: relative;
   color: white;
   text-align: center;
-  padding: 6rem 2rem 4rem;
+  padding: 6rem 2rem 5rem;
+  min-height: calc(100vh - 64px);
+  min-height: calc(100svh - 64px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-content h1 {
@@ -32,18 +39,29 @@ body {
   background-size: cover;
   background-position: center;
   color: white;
-  padding: 4rem 2rem;
+  padding: 6rem 2rem 5rem;
   text-align: center;
+  min-height: calc(100vh - 64px);
+  min-height: calc(100svh - 64px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4); /* Adjust 0.4 to darken more */
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 1;
+}
+
+/* Keep hash navigation aligned below the sticky header */
+#tools {
+  scroll-margin-top: 90px;
+}
+
+#features {
+  scroll-margin-top: 90px;
 }
 
 .hero-content {
@@ -122,11 +140,11 @@ body {
   padding: 12px; /* reduced padding to tighten layout */
   box-sizing: border-box; /* include padding in width */
 }
+
 .sidebar.show {
   left: 0;
 }
 
-/* Add spacing below top controls before the nav links */
 .sidebar .sidebar-nav {
   margin-top: 20px; /* pushes link group away from header region */
 }
@@ -316,25 +334,112 @@ body {
 
 .quick-nav {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 15px;
-  padding: 40px 20px;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 22px;
+  min-height: calc(100vh - 64px);
+  min-height: calc(100svh - 64px);
+  align-content: center;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 4vw, 3rem) clamp(1.25rem, 4vw, 2.5rem);
   background-color: #ffffff;
   text-align: center;
 }
 
+.quick-nav-header {
+  grid-column: 1 / -1;
+  margin-bottom: 0.5rem;
+}
+
+.quick-nav-header h2 {
+  margin: 0;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  color: var(--header-bg);
+  font-weight: 600;
+}
+
+.quick-nav-header p {
+  margin: 0.6rem auto 0;
+  max-width: 680px;
+  color: #555555;
+  font-size: 0.95rem;
+}
+
 .tile {
   background-color: #e6f0ff;
-  padding: 30px 15px;
+  min-height: 88px;
+  padding: 14px 14px;
   border-radius: 10px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   font-weight: 600;
+  color: #111111;
+  font-size: 0.98rem;
+  line-height: 1.35;
   cursor: pointer;
-  transition: transform 0.3s, background-color 0.3s;
+  transition:
+    transform 0.2s,
+    background-color 0.2s;
+  box-shadow: none;
 }
 
 .tile:hover {
-  transform: scale(1.05);
-  background-color: #c3d9ec;
+  transform: translateY(-2px);
+  background-color: #d8e8ff;
+}
+
+.tile:active {
+  transform: translateY(-1px);
+}
+
+.tile:focus-visible {
+  outline: 3px solid #1f5fbf;
+  outline-offset: 2px;
+}
+
+.dark-mode .quick-nav {
+  background-color: #121212;
+}
+
+.dark-mode .quick-nav-header h2 {
+  color: #e0e0e0;
+}
+
+.dark-mode .quick-nav-header p {
+  color: #bdbdbd;
+}
+
+.dark-mode .tile {
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+}
+
+.dark-mode .tile:hover {
+  background-color: #333333;
+}
+
+@media (max-width: 768px) {
+  .quick-nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    min-height: auto;
+    padding: 1.5rem 1rem 2rem;
+  }
+
+  .tile {
+    min-height: 74px;
+    font-size: 0.93rem;
+    padding: 12px 10px;
+  }
+}
+
+@media (max-width: 420px) {
+  .quick-nav {
+    grid-template-columns: 1fr;
+  }
 }
 
 .features-section {
@@ -527,7 +632,9 @@ input#topicInput:focus {
   border-radius: 6px;
   cursor: pointer;
   font-weight: bold;
-  transition: background 0.3s ease, transform 0.2s ease;
+  transition:
+    background 0.3s ease,
+    transform 0.2s ease;
 }
 
 .btn:hover {
@@ -556,13 +663,15 @@ input#topicInput:focus {
 /* === Hero Section === */
 .hero-section {
   position: relative;
-  min-height: 60vh;
+  min-height: 100vh;
+  min-height: 100svh;
   background-size: cover;
   background-position: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4rem 1rem;
+  padding: 6rem 1rem 4rem;
+  box-sizing: border-box;
   color: #fff;
   text-align: center;
 }
@@ -627,7 +736,9 @@ input#topicInput:focus {
   padding: 0.9rem 1.75rem;
   border-radius: 8px;
   text-decoration: none;
-  transition: transform 0.2s ease, box-shadow 0.2s ease,
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
     background-color 0.2s ease;
 }
 
@@ -776,7 +887,9 @@ input#topicInput:focus {
   border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 1.1rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
   box-sizing: border-box;
   display: block;
 }
