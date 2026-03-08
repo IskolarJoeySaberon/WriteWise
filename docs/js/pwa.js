@@ -18,11 +18,7 @@
     window.addEventListener("beforeinstallprompt", function (e) {
         e.preventDefault();
         deferredPrompt = e;
-
-        // Show the install button
-        if (installBtn) {
-            installBtn.style.display = "inline-block";
-        }
+        // Button is already visible, just store the prompt
     });
 
     // Handle install button click
@@ -33,7 +29,6 @@
                 const { outcome } = await deferredPrompt.userChoice;
                 console.log(`User response: ${outcome}`);
                 deferredPrompt = null;
-                installBtn.style.display = "none";
             } else {
                 // Show browser-specific instructions
                 showInstallInstructions();
@@ -61,8 +56,6 @@
     // Detect if already installed
     window.addEventListener("appinstalled", function () {
         console.log("WriteWise was installed successfully");
-        if (installBtn) {
-            installBtn.style.display = "none";
-        }
+        // Button remains visible for users who want to see install instructions
     });
 })();

@@ -311,6 +311,12 @@ body {
   border-radius: 30px;
   text-decoration: none;
   transition: background-color 0.3s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  cursor: pointer;
 }
 
 .btn {
@@ -344,6 +350,7 @@ body {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
 }
 
