@@ -18,11 +18,12 @@
     window.addEventListener("beforeinstallprompt", function (e) {
         e.preventDefault();
         deferredPrompt = e;
-        // Button is already visible, just store the prompt
     });
 
     // Handle install button click
     if (installBtn) {
+        installBtn.innerHTML = '<i class="fa-solid fa-download"></i> Install App';
+
         installBtn.addEventListener("click", async function () {
             if (deferredPrompt) {
                 deferredPrompt.prompt();
@@ -30,25 +31,19 @@
                 console.log(`User response: ${outcome}`);
                 deferredPrompt = null;
             } else {
-                // Show browser-specific instructions
+                // Fall back to manual instructions if prompt is unavailable.
                 showInstallInstructions();
             }
         });
     }
 
     function showInstallInstructions() {
-        const userAgent = navigator.userAgent.toLowerCase();
-        let instructions = "";
-
-        if (userAgent.includes("firefox")) {
-            instructions = "Firefox: Click the address bar icon (⋮) or go to Menu > More tools > Install this site";
-        } else if (userAgent.includes("safari")) {
-            instructions = "Safari: Tap the Share button (□↑) and select 'Add to Home Screen'";
-        } else if (userAgent.includes("edg")) {
-            instructions = "Edge: Click the menu (⋯) > Apps > Install WriteWise";
-        } else {
-            instructions = "Check your browser menu for 'Install app' or 'Add to home screen' option";
-        }
+        let instructions =
+            "Open your browser menu and look for one of these options:\n" +
+            "- Install app\n" +
+            "- Add to Home screen\n" +
+            "- Install this site\n\n" +
+            "If you do not see it right away, check the three-dot menu, Share menu, or More tools section.";
 
         alert("Install WriteWise:\n\n" + instructions);
     }
