@@ -4,7 +4,14 @@
     }
 
     let deferredPrompt;
+    let resolvePromptReady;
+    const promptReady = new Promise(function (resolve) {
+        resolvePromptReady = resolve;
+    });
     const installBtn = document.getElementById("installBtn");
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isChromiumBased =
+        userAgent.includes("chrome") || userAgent.includes("edg") || userAgent.includes("opr/");
 
     window.addEventListener("load", function () {
         var swPath = location.pathname.includes("/html/") ? "../sw.js" : "./sw.js";
@@ -18,6 +25,7 @@
     window.addEventListener("beforeinstallprompt", function (e) {
         e.preventDefault();
         deferredPrompt = e;
+        resolvePromptReady();
     });
 
     // Handle install button click
@@ -25,6 +33,16 @@
         installBtn.innerHTML = '<i class="fa-solid fa-download"></i> Install App';
 
         installBtn.addEventListener("click", async function () {
+            if (!deferredPrompt && isChromiumBased) {
+                // The install event may arrive a moment after page load on Chromium browsers.
+                await Promise.race([
+                    promptReady,
+                    new Promise(function (resolve) {
+                        setTimeout(resolve, 1500);
+                    })
+                ]);
+            }
+
             if (deferredPrompt) {
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;

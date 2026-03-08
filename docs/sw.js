@@ -1,4 +1,4 @@
-const CACHE_NAME = "writewise-cache-v1";
+const CACHE_NAME = "writewise-cache-v2";
 const APP_SHELL = [
     "./",
     "./index.html",
@@ -51,6 +51,19 @@ self.addEventListener("fetch", (event) => {
                     const cachedHome = await caches.match("./html/index.html");
                     return cachedHome || caches.match("./index.html");
                 })
+        );
+        return;
+    }
+
+    if (url.pathname.endsWith("/js/pwa.js")) {
+        event.respondWith(
+            fetch(request)
+                .then((response) => {
+                    const responseClone = response.clone();
+                    caches.open(CACHE_NAME).then((cache) => cache.put(request, responseClone));
+                    return response;
+                })
+                .catch(() => caches.match(request))
         );
         return;
     }
