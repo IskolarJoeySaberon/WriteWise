@@ -332,6 +332,34 @@ body {
   background-color: #e6f0ff;
 }
 
+.btn-install {
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-install:hover {
+  background-color: #218838;
+}
+
+.dark-mode .btn-install {
+  background-color: #28a745;
+  color: #ffffff;
+}
+
+.dark-mode .btn-install:hover {
+  background-color: #20803d;
+}
+
 .quick-nav {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
